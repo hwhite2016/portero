@@ -8,15 +8,35 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
+//use Laravel\Fortify\TwoFactorAuthenticatable;
+//use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+
+
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasPushSubscriptions;
+    use HasFactory, Notifiable, HasPushSubscriptions, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    //Relacion muchos a muchos
+    public function conjuntos(){
+    	return $this->belongsToMany(Conjunto::class, 'users_conjuntos');
+    }
+
+    public function adminlte_image()
+    {
+        return 'https://picsum.photos/300/300';
+    }
+
+    public function adminlte_desc()
+    {
+        return 'Super Administrador';
+    }
+
+    public function adminlte_profile_url()
+    {
+        return 'user/profile';
+    }
+
     protected $fillable = [
         'name',
         'email',

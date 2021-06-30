@@ -1,23 +1,23 @@
 <template>
   <div>
     <!-- Send notification button -->
-    <button
+    <!-- <button
       :disabled="loading"
       type="button"
       class="btn btn-success btn-send" @click="sendNotification"
     >
       Send Notification
-    </button>
+    </button> -->
 
     <!-- Enable/Disable push notifications -->
     <button
       :disabled="pushButtonDisabled || loading"
       type="button"
-      class="btn btn-primary"
-      :class="{ 'btn-primary': !isPushEnabled, 'btn-danger': isPushEnabled }"
+
+      :class="{ 'btn-danger btn-sm fas fa-bell-slash': !isPushEnabled, 'btn-success btn-sm fas fa-bell': isPushEnabled }"
       @click="togglePush"
     >
-      {{ isPushEnabled ? 'Disable' : 'Enable' }} Push Notifications
+      {{ isPushEnabled ? 'ON' : 'OFF' }}
     </button>
   </div>
 </template>

@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Events\EntregaEvent;
+use App\Listeners\AddSessionData;
+use App\Listeners\EntregaListener;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use App\Models\Visitante;
+use App\Observers\VisitanteObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +25,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        Logout::class => [
+            'App\Listeners\DeleteSessionData',
+        ],
+        Login::class => [
+            AddSessionData::class,
+        ],
+        EntregaEvent::class => [
+            EntregaListener::class,
+        ],
     ];
 
     /**
@@ -27,6 +43,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Visitante::observe(VisitanteObserver::class);
     }
 }

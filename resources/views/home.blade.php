@@ -10,9 +10,13 @@
                 <div class="panel-body text-center">
                     {{-- See resources/assets/js/components/NotificationsDemo.vue --}}
                     <notifications-demo></notifications-demo>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script src="/js/app.js"></script>
 @endsection

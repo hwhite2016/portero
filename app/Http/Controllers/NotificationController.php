@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\NotificationRead;
 use App\Events\NotificationReadAll;
 use App\Notifications\HelloNotification;
+use App\Notifications\EntregaNotification;
 use Illuminate\Http\Request;
 use NotificationChannels\WebPush\PushSubscription;
 
@@ -39,6 +40,7 @@ class NotificationController extends Controller
 
         $notifications = $query->get()->each(function ($n) {
             $n->created = $n->created_at->toIso8601String();
+            //$n->created = $n->created_at->diffForHumans();
         });
 
         $total = $user->unreadNotifications->count();
@@ -55,6 +57,7 @@ class NotificationController extends Controller
     public function store(Request $request)
     {
         $request->user()->notify(new HelloNotification);
+        //$request->user()->notify(new EntregaNotification);
 
         return response()->json('Notification sent.', 201);
     }

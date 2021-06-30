@@ -6,8 +6,13 @@ import Echo from 'laravel-echo'
 import VueTimeago from 'vue-timeago'
 
 Vue.use(VueTimeago, {
-  locale: 'en-US',
-  locales: { 'en-US': require('vue-timeago/locales/en-US.json') }
+   locale: 'en-US',
+   locales: { 'en-US': require('vue-timeago/locales/en-US.json') }
+
+  // locale: 'en',
+  // locales: {'zh-CN': require('date-fns/locale/zh_cn') }
+
+
 })
 
 window.Vue = Vue

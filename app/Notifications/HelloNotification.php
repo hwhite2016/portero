@@ -20,7 +20,7 @@ class HelloNotification extends Notification
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -43,27 +43,44 @@ class HelloNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'title' => 'Hello from Laravel!',
-            'body' => 'Thank you for using our application.',
-            'action_url' => 'https://laravel.com',
+            'title' => 'Domicilio !!',
+            'body' => 'Su pedido esta en la recepcion.',
+            'action_url' => '/admin/notificacion/0',
+            'icono' => 'fas fa-bell mr-2',
             'created' => Carbon::now()->toIso8601String(),
         ];
+
+        // return [
+        //     'entregaid' => $this->entrega->id,
+        //     'icono' => 'fas fa-concierge-bell',
+        //     'title' => 'Domicilio',
+        //     'body' => 'Su pedido esta en la recepcion.',
+        //     'action_url' => '/admin/notificacion/0',
+        //     'tipoentregaid' => $this->entrega->tipoentregaid,
+        //     'entregareceptor' => $this->entrega->entregareceptor,
+        //     'entregadestinatario' => $this->entrega->entregadestinatario,
+        //     'fecharecibo' => $this->entrega->created_at,
+        //     'descripcion' => $this->entrega->entregaobservacion,
+
+        // ];
     }
 
-    /**
-     * Get the web push representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @param  mixed  $notification
-     * @return \Illuminate\Notifications\Messages\DatabaseMessage
-     */
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title('Hello from Laravel!')
+            ->title('Domicilio !!')
             ->icon('/notification-icon.png')
-            ->body('Thank you for using our application.')
+            ->body('Su pedido esta en la recepcion.')
             ->action('View app', 'view_app')
             ->data(['id' => $notification->id]);
+
+        // return (new WebPushMessage)
+
+        //     ->title('Domicilio !!')
+        //     ->icon('/notification-icon.png')
+        //     ->body('Su pedido esta en la recepcion.')
+        //     ->action('View app', 'view_app')
+        //     ->data(['id' => $this->entrega->id]);
+
     }
 }

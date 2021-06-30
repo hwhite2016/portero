@@ -1,37 +1,37 @@
 <template>
-  <li ref="dropdown" class="dropdown dropdown-notifications">
-    <a class="dropdown-toggle" href="#" @click.prevent="toggleDropdown">
+<li ref="dropdown" class="dropdown dropdown-notifications">
+    <a class="dropdown-toggle nav-link" href="#" @click.prevent="toggleDropdown">
       <i :data-count="total" class="fa fa-bell notification-icon" :class="{ 'hide-count': !hasUnread }" />
     </a>
 
     <div class="dropdown-container">
+
       <div class="dropdown-toolbar">
         <div v-show="hasUnread" class="dropdown-toolbar-actions">
-          <a href="#" @click.prevent="markAllRead">Mark all as read</a>
+          <a href="#" @click.prevent="markAllRead">Marcar como leidas</a>
         </div>
 
         <h3 class="dropdown-toolbar-title">
-          Notifications ({{ total }})
+          Notificaciones ({{ total }})
         </h3>
       </div>
 
-      <ul class="dropdown-menu">
-        <notification v-for="notification in notifications"
-                      :key="notification.id"
-                      :notification="notification"
-                      @read="markAsRead(notification)"
-        />
+        <ul class="dropdown-item">
+          <notification v-for="notification in notifications"
+                        :key="notification.id"
+                        :notification="notification"
+                        @read="markAsRead(notification)"
+          />
 
-        <li v-if="!hasUnread" class="notification">
-          You don't have any unread notifications.
-        </li>
-      </ul>
-
-      <div v-if="hasUnread" class="dropdown-footer text-center">
-        <a href="#" @click.prevent="fetch(null)">View All</a>
-      </div>
+          <li v-if="!hasUnread" class="notification">
+            No tiene notificaciones pendientes.
+          </li>
+        </ul>
+        <div v-if="hasUnread" class="dropdown-footer text-center">
+          <a href="/admin/notificacion/0" @click.prevent="fetch(null)">Ver todas</a>
+        </div>
     </div>
-  </li>
+</li>
 </template>
 
 <script>
@@ -77,6 +77,8 @@ export default {
             return {
               id: id,
               title: data.title,
+              icono: data.icono,
+              empresa: data.empresa,
               body: data.body,
               created: created,
               action_url: data.action_url
