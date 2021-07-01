@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Desktop App </title>
+  <title>Portero </title>
   <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}" type="image/x-icon">
   <!-- Bootstrap , fonts & icons  -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
@@ -86,17 +86,20 @@
               </ul>
             </nav>
           </div>
-          <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
+          <!-- Menu block wrapper-->
+          <div class="header-btns  header-btn-l-17 ms-auto  d-xs-inline-flex align-items-center">
                 @if (Route::has('login'))
-                        @if (Auth::check())
-                            <a class="btn sign-in-btn focus-reset" href="{{ url('/home') }}">Home</a>
-                        @else
-                            <a class="btn sign-in-btn focus-reset" href="{{ route('admin.index') }}">Iniciar Sesión</a>
-                        @endif
+                    @if (Auth::check())
+                        <a class="btn sign-in-btn focus-reset" href="{{ url('/admin') }}">Home</a>
+                    @else
+                        <a class="btn sign-in-btn focus-reset" href="{{ route('admin.index') }}">Iniciar Sesión</a>
+                    @endif
                 @endif
-            <a class="start-trail-btn btn focus-reset" href="{{ url('/register') }}">
-              Prueba 15 dias gratis
-            </a>
+                <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
+                <a class="start-trail-btn btn focus-reset" href="{{ url('/register') }}">
+                    Prueba 15 dias gratis
+                </a>
+                </div>
           </div>
           <!-- mobile menu trigger -->
           <div class="mobile-menu-trigger">
