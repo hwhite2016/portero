@@ -1,16 +1,3 @@
-
-                @if (Route::has('login'))
-                    <div class="top-right links">
-                        @if (Auth::check())
-                            <a href="{{ url('/home') }}">Home</a>
-                        @else
-                            <a href="{{ route('admin.index') }}" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">Ingresar</a>
-                            {{-- <a href="{{ route('admin.index') }}">Ingresar</a>
-                            <a href="{{ url('/register') }}">Registrarse</a> --}}
-                        @endif
-                    </div>
-                @endif
-
 <!DOCTYPE html>
 <html lang="es">
 
