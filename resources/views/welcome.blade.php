@@ -6,12 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Desktop App </title>
-  <link rel="shortcut icon" href="image/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="{{ asset('image/favicon.png') }}" type="image/x-icon">
   <!-- Bootstrap , fonts & icons  -->
-  <link rel="stylesheet" href="./css/bootstrap.css">
-  <link rel="stylesheet" href="./fonts/icon-font/css/style.css">
-  <link rel="stylesheet" href="./fonts/typography-font/typo.css">
-  <link rel="stylesheet" href="./fonts/fontawesome-5/css/all.css">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('fonts/icon-font/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('fonts/typography-font/typo.css') }}">
+  <link rel="stylesheet" href="{{ asset('fonts/fontawesome-5/css/all.css') }}">
   <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -19,10 +19,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <!-- Plugin'stylesheets  -->
-  <link rel="stylesheet" href="./plugins/aos/aos.min.css">
-  <link rel="stylesheet" href="./plugins/fancybox/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="{{ asset('plugins/aos/aos.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/fancybox/jquery.fancybox.min.css') }}">
   <!-- Vendor stylesheets  -->
-  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <!-- Custom stylesheet -->
 </head>
 
@@ -43,9 +43,9 @@
           <div class="brand-logo">
             <a href="#">
               <!-- light version logo (logo must be black)-->
-              <img src="image/logo/logo-black.png" alt="" class="light-version-logo">
+              <img src="{{ asset('image/logo/logo-black.png') }}" alt="" class="light-version-logo">
               <!-- Dark version logo (logo must be White)-->
-              <img src="image/logo/logo-white.png" alt="" class="dark-version-logo">
+              <img src="{{ asset('image/logo/logo-white.png') }}" alt="" class="dark-version-logo">
             </a>
           </div>
           <div class="menu-block-wrapper">
@@ -536,13 +536,13 @@
     </footer>
   </div>
   <!-- Vendor Scripts -->
-  <script src="js/vendor.min.js"></script>
+  <script src="{{ asset('js/vendor.min.js') }}"></script>
   <!-- Plugin's Scripts -->
-  <script src="./plugins/fancybox/jquery.fancybox.min.js"></script>
-  <script src="./plugins/aos/aos.min.js"></script>
-  <script src="./plugins/menu/menu.js"></script>
+  <script src="{{ asset('plugins/fancybox/jquery.fancybox.min.js') }}"></script>
+  <script src="{{ asset('plugins/aos/aos.min.js') }}"></script>
+  <script src="{{ asset('plugins/menu/menu.js') }}"></script>
   <!-- Activation Script -->
-  <script src="js/custom.js"></script>
+  <script src="{{ asset('js/custom.js') }}"></script>
 </body>
 
 </html>
