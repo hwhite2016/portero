@@ -64,16 +64,16 @@
                   </a>
                   <ul class="sub-menu" id="submenu-9">
                     <li class="sub-menu--item">
-                      <a href="#">Dropdown 01</a>
+                      <a href="#">Control de acceso</a>
                     </li>
                     <li class="sub-menu--item">
-                      <a href="#">Dropdown 02</a>
+                      <a href="#">Servicio de notificaciones</a>
                     </li>
                     <li class="sub-menu--item">
-                      <a href="#">Dropdown 03</a>
+                      <a href="#">Gestion de reserva de zonas comunes</a>
                     </li>
                     <li class="sub-menu--item">
-                      <a href="#">Dropdown 04</a>
+                      <a href="#">PQRS</a>
                     </li>
                   </ul>
                 </li>
@@ -81,7 +81,7 @@
                   <a href="#pricing" class="nav-link-item">Precios</a>
                 </li>
                 <li class="nav-item">
-                  <a href="https://uxtheme.net/product-support/" class="nav-link-item">Contactenos</a>
+                  <a href="#" class="nav-link-item">Contactenos</a>
                 </li>
               </ul>
             </nav>
