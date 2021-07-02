@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
 //use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -24,7 +25,14 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        return 'https://picsum.photos/300/300';
+        //return 'https://picsum.photos/300/300';
+        $auth_nombre = Auth::user()->name;
+        $arr_nombre = explode(' ', $auth_nombre);
+        $nombre = $arr_nombre[0];
+        $apellido = $arr_nombre[1];
+        if ($apellido <> '') $nombre = $nombre .'+'.$apellido;
+
+        return 'https://ui-avatars.com/api?name='.$nombre.'&color=5F91E2&background=EBF4FF&bold=true';
     }
 
     public function adminlte_desc()
