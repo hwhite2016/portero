@@ -41,7 +41,7 @@
       if (event.action === 'some_action') {
         // Do something...
       } else {
-        self.clients.openWindow('/')
+        self.clients.openWindow('/admin/notificacion/0')
       }
     },
 
