@@ -41,7 +41,7 @@
       if (event.action === 'some_action') {
         // Do something...
       } else {
-        self.clients.openWindow('/admin/notificacion/0')
+        self.clients.openWindow('https://www.portero.com.co/admin/notificacion/0')
       }
     },
 
