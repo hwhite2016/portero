@@ -25,14 +25,18 @@ class User extends Authenticatable
 
     public function adminlte_image()
     {
-        //return 'https://picsum.photos/300/300';
-        $auth_nombre = Auth::user()->name;
-        $arr_nombre = explode(' ', $auth_nombre);
-        $nombre = $arr_nombre[0];
-        $apellido = $arr_nombre[1];
-        if ($apellido <> '') $nombre = $nombre .'+'.$apellido;
+        if (Auth::user()){
+            $auth_nombre = Auth::user()->name;
+            $arr_nombre = explode(' ', $auth_nombre);
+            $nombre = $arr_nombre[0];
+            $apellido = '';
+            if (count($arr_nombre) > 1)  $apellido = $arr_nombre[1];
+            if ($apellido <> '') $nombre = $nombre .'+'.$apellido;
 
-        return 'https://ui-avatars.com/api?name='.$nombre.'&color=5F91E2&background=EBF4FF&bold=true';
+            return 'https://ui-avatars.com/api?name='.$nombre.'&color=5F91E2&background=EBF4FF&bold=true';
+        }else{
+            return 'https://picsum.photos/300/300';
+        }
     }
 
     public function adminlte_desc()
