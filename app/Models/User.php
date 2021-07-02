@@ -32,7 +32,7 @@ class User extends Authenticatable
         $apellido = $arr_nombre[1];
         if ($apellido <> '') $nombre = $nombre .'+'.$apellido;
 
-        return 'https://ui-avatars.com/api?name='.$nombre.'&color=5F91E2&background=EBF4FF&bold=true ';
+        return 'https://ui-avatars.com/api?name='.$nombre.'&color=5F91E2&background=EBF4FF&bold=true';
     }
 
     public function adminlte_desc()
