@@ -80,7 +80,7 @@ class EntregaNotification extends Notification
             ->title('Portero')
             ->icon('/notification-icon.png')
             ->body('Tiene un '. strtolower($this->entrega->title) .' en recepción.')
-            ->action('Ver app', 'view_app')
+            ->action('Ver app', url('/admin/notificacion/0'))
             ->data(['id' => $this->entrega->id]);
 
         // return (new WebPushMessage)
