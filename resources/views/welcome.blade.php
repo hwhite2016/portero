@@ -24,6 +24,21 @@
   <!-- Vendor stylesheets  -->
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <!-- Custom stylesheet -->
+  <style>
+        .elevation-2 {
+            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23)!important;
+        }
+        .user-image {
+            float: none;
+            height: 2.1rem;
+            line-height: 10px;
+            margin-right: .4rem;
+            margin-top: -8px;
+        }
+        .img-circle {
+            border-radius: 50%;
+        }
+  </style>
 </head>
 
 <body data-theme-mode-panel-active data-theme="light" style="font-family: 'Mazzard H';">
@@ -89,10 +104,14 @@
           <!-- Menu block wrapper-->
           <div class="header-btns  header-btn-l-17 ms-auto  d-xs-inline-flex align-items-center">
                 @if (Route::has('login'))
-                    @if (Auth::check())
-                        <a class="btn sign-in-btn focus-reset" href="{{ url('/admin') }}">Home</a>
+                    @if (Auth::user())
+                        <a class="btn sign-in-btn focus-reset" href="{{ url('admin/notificacion/0') }}">
+                            <i class="fas fa-user" style="color: #50E3C2"></i>&nbsp; {{Auth::user()->name}}
+                        </a>
                     @else
-                        <a class="btn sign-in-btn focus-reset" href="{{ route('admin.index') }}">Iniciar Sesión</a>
+                        <a class="btn sign-in-btn focus-reset" href="{{ route('admin.index') }}">
+                            <i class="fas fa-sign-in-alt" style="color: #50E3C2"></i>&nbsp; Iniciar Sesión
+                        </a>
                     @endif
                 @endif
                 <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">

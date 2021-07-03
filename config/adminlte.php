@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
-    'title_prefix' => '',
+    'title' => 'Portero',
+    'title_prefix' => 'Portero',
     'title_postfix' => '',
 
     /*
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -45,12 +45,13 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>P</b>ortero',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img2' => 'vendor/adminlte/dist/img/AdminLTELogo2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'Portero.com.co',
 
     /*
     |--------------------------------------------------------------------------
@@ -102,12 +103,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-info',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-block btn-info',
 
     /*
     |--------------------------------------------------------------------------
@@ -247,7 +248,7 @@ return [
             'text'        => 'PQRS',
             'route'       => 'admin.index',
             'icon'        => 'far fa-envelope',
-            'can'         => 'admin.index',
+            'can'         => 'admin.dashboard.index',
             'label'       => 'desarrollo',
             'label_color' => 'warning',
         ],

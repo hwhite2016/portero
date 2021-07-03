@@ -17,7 +17,7 @@ class CreatePersonasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tipodocumentoid');
             $table->foreign('tipodocumentoid')->references('id')->on('tipo_documentos')->onDelete('cascade');
-            $table->string('personadocumento', 20)->unique();
+            $table->string('personadocumento', 30)->unique();
             $table->string('personanombre', 50);
             $table->string('personafechanacimiento', 8)->nullable();
             $table->string('personacelular', 15)->nullable();

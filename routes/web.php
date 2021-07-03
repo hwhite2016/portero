@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\HomeController as AdminHomeController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PushSubscriptionController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +24,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/inicio', function () {
-    return view('inicio');
-});
+// Route::get('/inicio', function () {
+//     return view('inicio');
+// });
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [AdminHomeController::class, 'index']);
 
 // Notifications
 Route::post('notifications', [NotificationController::class, 'store']);
@@ -39,6 +42,9 @@ Route::post('notifications/{id}/dismiss', [NotificationController::class, 'dismi
 // Push Subscriptions
 Route::post('subscriptions', [PushSubscriptionController::class, 'update']);
 Route::post('subscriptions/delete', [PushSubscriptionController::class, 'destroy']);
+
+Route::get('login/{driver}', [LoginController::class, 'redirectToProvider']);
+Route::get('login/{driver}/callback', [LoginController::class, 'handleProviderCallback']);
 
 // Manifest file (optional if VAPID is used)
 Route::get('manifest.json', function () {

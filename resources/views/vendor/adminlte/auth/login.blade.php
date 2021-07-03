@@ -21,6 +21,7 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
+
     <form action="{{ $login_url }}" method="post">
         {{ csrf_field() }}
 
@@ -59,7 +60,7 @@
         {{-- Login field --}}
         <div class="row">
             <div class="col-7">
-                <div class="icheck-primary">
+                <div class="icheck-info">
                     <input type="checkbox" name="remember" id="remember">
                     <label for="remember">{{ __('adminlte::adminlte.remember_me') }}</label>
                 </div>
@@ -73,13 +74,19 @@
         </div>
 
     </form>
+
+    <p class="mt-3 mb-2 text-center lead">-o-</p>
+
+    <a href="{{url('login/facebook')}}" class="btn btn-block btn-primary"><i class="fab fa-facebook mr-2"></i> Inicia sesión con Facebook</a>
+    <a href="{{url('login/google')}}" class="btn btn-block btn-danger"><i class="fab fa-google mr-2"></i> Inicia sesión con Google</a>
+
 @stop
 
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($password_reset_url)
         <p class="my-0">
-            <a href="{{ $password_reset_url }}">
+            <a class="text-info" href="{{ $password_reset_url }}">
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
@@ -88,7 +95,7 @@
     {{-- Register link --}}
     @if($register_url)
         <p class="my-0">
-            <a href="{{ $register_url }}">
+            <a class="text-info" href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>
