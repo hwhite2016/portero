@@ -75,10 +75,10 @@
 
     </form>
 
-    <p class="mt-3 mb-2 text-center lead">-o-</p>
+    {{-- <p class="mt-3 mb-2 text-center lead">-o-</p>
 
     <a href="{{url('login/facebook')}}" class="btn btn-block btn-primary"><i class="fab fa-facebook mr-2"></i> Inicia sesión con Facebook</a>
-    <a href="{{url('login/google')}}" class="btn btn-block btn-danger"><i class="fab fa-google mr-2"></i> Inicia sesión con Google</a>
+    <a href="{{url('login/google')}}" class="btn btn-block btn-danger"><i class="fab fa-google mr-2"></i> Inicia sesión con Google</a> --}}
 
 @stop
 
@@ -93,11 +93,11 @@
     @endif
 
     {{-- Register link --}}
-    @if($register_url)
+    {{-- @if($register_url)
         <p class="my-0">
             <a class="text-info" href="{{ $register_url }}">
                 {{ __('adminlte::adminlte.register_a_new_membership') }}
             </a>
         </p>
-    @endif
+    @endif --}}
 @stop

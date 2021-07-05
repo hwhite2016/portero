@@ -681,6 +681,21 @@ return [
                 ],
             ],
         ],
+        'Step' => [
+            'active' => false,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css',
+                ],
+            ],
+        ],
         'Calendar' => [
             'active' => false,
             'files' => [

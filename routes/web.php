@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PushSubscriptionController;
+use App\Http\Controllers\ContactanosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -45,6 +46,9 @@ Route::post('subscriptions/delete', [PushSubscriptionController::class, 'destroy
 
 Route::get('login/{driver}', [LoginController::class, 'redirectToProvider']);
 Route::get('login/{driver}/callback', [LoginController::class, 'handleProviderCallback']);
+
+Route::get('/contactanos', [ContactanosController::class, 'index'])->name('contactanos.index');
+Route::post('/contactanos', [ContactanosController::class, 'store'])->name('contactanos.store');
 
 // Manifest file (optional if VAPID is used)
 Route::get('manifest.json', function () {

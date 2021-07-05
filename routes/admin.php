@@ -70,6 +70,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return view('admin.zona.feed');
     });
 
+    // Route::get('/registro', function(){
+    //     return view('registro');
+    // });
+
 
 });
 

@@ -1097,11 +1097,11 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
   }
 
   .reveal-header .btn {
-    color: #fff !important;
+    color: rgb(255, 255, 255) !important;
   }
 
   .reveal-header .btn:hover {
-    color: #fff !important;
+    color: rgb(255, 255, 255) !important;
   }
 
   .sticky-menu-bg.reveal-header {
@@ -2146,18 +2146,38 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
     font-family: Karla;
     font-style: normal;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 19px;
     text-align: center;
     letter-spacing: -1px;
     color: #0F3D33;
     min-width: 163px;
-    height: 50px;
+    height: 40px;
     background: #50E3C2;
     box-sizing: border-box;
     border-radius: 3px;
     margin-left: 15px;
   }
+
+  .elevation-2 {
+    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23)!important;
+  }
+  .user-image {
+    float: none;
+    height: 2.1rem;
+    line-height: 10px;
+    margin-right: .4rem;
+    margin-top: -8px;
+  }
+  .img-circle {
+    border-radius: 50%;
+  }
+
+  .attention {
+    -webkit-animation: attention 5s infinite;
+    animation: attention 5s infinite;
+  }
+  @-webkit-keyframes attention{9%{transform:none}12%{transform:scale(1.05)}16%{transform:scale(.95)}20%{transform:scale(1.03)}24%{transform:scale(1)}}@keyframes attention{9%{transform:none}12%{transform:scale(1.05)}16%{transform:scale(.95)}20%{transform:scale(1.03)}24%{transform:scale(1)}}
 
   /*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
                Feature Area-L-17

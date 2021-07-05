@@ -24,22 +24,8 @@
   <!-- Vendor stylesheets  -->
   <link rel="stylesheet" href="{{ asset('css/main.css') }}">
   <!-- Custom stylesheet -->
-  <style>
-        .elevation-2 {
-            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23)!important;
-        }
-        .user-image {
-            float: none;
-            height: 2.1rem;
-            line-height: 10px;
-            margin-right: .4rem;
-            margin-top: -8px;
-        }
-        .img-circle {
-            border-radius: 50%;
-        }
-  </style>
-</head>
+
+ </head>
 
 <body data-theme-mode-panel-active data-theme="light" style="font-family: 'Mazzard H';">
   <div class="site-wrapper overflow-hidden position-relative">
@@ -96,7 +82,7 @@
                   <a href="#pricing" class="nav-link-item">Precios</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link-item">Contactenos</a>
+                  <a href="{{ url('/register') }}" class="nav-link-item">Registrarme</a>
                 </li>
               </ul>
             </nav>
@@ -115,9 +101,9 @@
                     @endif
                 @endif
                 <div class="header-btns  header-btn-l-17 ms-auto d-none d-xs-inline-flex align-items-center">
-                <a class="start-trail-btn btn focus-reset" href="{{ url('/register') }}">
-                    Prueba 15 dias gratis
-                </a>
+                    <a class="start-trail-btn btn btn-sm focus-reset attention" href="{{ route('contactanos.index') }}">
+                        Contáctanos
+                    </a>
                 </div>
           </div>
           <!-- mobile menu trigger -->
@@ -135,8 +121,8 @@
         <div class="row position-relative justify-content-center">
           <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             <div class="content text-center">
-              <h1>Software para propiedad horizontal</h1>
-              <p>Optimiza tu tiempo y automatiza las actividades diarias. Enfoca tu atención en el bienestar de los residentes.</p>
+              <h1>Plataforma Administrativa, ideal para edificios y condominios.</h1>
+              <p>Software que permite administrar en tiempo real los servicios prestados a los residentes.</p>
               <a href="#" class="btn">Comience la prueba gratuita de 15 días</a>
               <span>No requiere tarjeta de crédito</span>
             </div>
@@ -202,10 +188,9 @@
               </div>
               <div class="offset-xxl-1 col-xxl-5 col-xl-6 col-lg-6 col-md-8" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
                 <div class="content section-heading-11">
-                  <h2> Lider en gestión y logística.</h2>
-                  <p>Propiedata es la plataforma mas completa para la administración de propiedad horizontal.
-                    Con Propiedata tienes modulos de gestión, comunicación, asambleas, citofonia, control de ingreso,
-                    contabilidad, reportes y mucho más.
+                  <h2> Gestión y logística en copropiedades.</h2>
+                  <p>Es la herramienta que permite a un Administrador de Propiedad Horizontal optimizar y centralizar toda la información
+                      de la copropiedad y así gestionar de manera efectiva y segura toda la información de sus clientes.
 
                   </p>
                   <a href="#" class="btn focus-reset">Comience la prueba gratuita de 15 días</a>
@@ -294,13 +279,17 @@
                   class="dynamic-value" data-active="" data-monthly="" data-yearly=""></span></h2>
                 </div>
               </div>
-              <p>Good for small business launching their products less then once a year</p>
+              <p>Plataforma administrativa</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Unlimited Blocks</li>
-                  <li> <i class="icon icon-check-2-2"></i> 5GB Clould Storages</li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Custom Domain Names</del></li>
-                  <li><del> <i class="icon icon-check-2-2"></i>Unlimited Emails</del></li>
+                  <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
+                  <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
+                  <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
+                  <li><del> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
+                  <li><del> <i class="icon icon-check-2-2"></i> Pagos de administración </del></li>
+                  <li><del> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes </del></li>
+                  <li><del> <i class="icon icon-check-2-2"></i>PQRs y Tickets</del></li>
+                  <li><del> <i class="icon icon-check-2-2"></i>Gestión de cartera</del></li>
                 </ul>
               </div>
               <div class="price-btn">
@@ -322,13 +311,17 @@
                   class="dynamic-value" data-active="/ por Unidad" data-monthly="/ por Unidad" data-yearly="/ por Unidad"></span></h2>
                 </div>
               </div>
-              <p>Good for small business launching their products less then once a year</p>
+              <p>Plataforma administrativa</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Unlimited Blocks</li>
-                  <li> <i class="icon icon-check-2-2"></i> 5GB Clould Storages</li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Custom Domain Names</del></li>
-                  <li><del> <i class="icon icon-check-2-2"></i>Unlimited Emails</del></li>
+                  <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
+                  <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
+                  <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
+                  <li> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
+                  <li> <i class="icon icon-check-2-2"></i> Pagos de administración</li>
+                  <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
+                  <li> <i class="icon icon-check-2-2"></i> PQRs y Tickets</li>
+                  <li><del> <i class="icon icon-check-2-2"></i> Gestión de cartera</del></li>
                 </ul>
               </div>
               <div class="price-btn">
@@ -352,10 +345,14 @@
               <p>Good for small business launching their products less then once a year</p>
               <div class="price-body">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Unlimited Blocks</li>
-                  <li> <i class="icon icon-check-2-2"></i> 5GB Clould Storages</li>
-                  <li> <i class="icon icon-check-2-2"></i> Custom Domain Names</li>
-                  <li> <i class="icon icon-check-2-2"></i>Unlimited Emails</li>
+                    <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
+                    <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
+                    <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
+                    <li> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
+                    <li> <i class="icon icon-check-2-2"></i> Pagos de administración</li>
+                    <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
+                    <li> <i class="icon icon-check-2-2"></i> PQRs y Tickets</li>
+                    <li> <i class="icon icon-check-2-2"></i> Gestión de cartera</del></li>
                 </ul>
               </div>
               <div class="price-btn">
@@ -373,7 +370,7 @@
         <div class="row justify-content-center">
           <div class="col-xl-9 col-lg-11 col-md-12">
             <div class="content text-center">
-              <p>We are proud to have some big brands as our customer</p>
+              <p>Ellos ya usan PORTERO, ¿y Tú?</p>
             </div>
             <div class="brand-area-l-17-items d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap ">
               <div class="single-brand " data-aos="fade-right" data-aos-duration="500" data-aos-once="true">
@@ -394,23 +391,31 @@
       </div>
     </div>
     <!--Testimonial Area-->
+
     <div class="testimonial-area-l-17">
       <div class="container">
         <div class="row justify-content-center no-gutters border-collapse-1">
-          <div class="col-lg-4 col-md-6 col-sm-9 p-0">
+
+            <div class="col-12 col-lg-12 text-center aos-init aos-animate mb-4" data-aos="fade-down" data-aos-duration="800" data-aos-once="true">
+                <div class="content section-heading-11">
+                  <h2>Casos de Éxito</h2>
+                  <p>Conoce algunos Administradores que ya usan PORTERO y nos cuentan sus experiencias:</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-9 p-0">
             <div class="testimonial-card border h-100">
               <img src="image/l8/quote.png" alt="">
               <p>
-                “You made it so simple. My new site is so much faster and
-                easier to work with than my old site. I just choose the page, make the change and click save. ”
+                “La mejor plataforma que he conocido, permite una mejor interacción a los residentes con los diferentes beneficios que brindan los conjuntos.”
               </p>
               <div class="d-flex align-items-center">
                 <div class="customer-img mr-4">
                   <img src="image/l8/client-img-1.png" alt="">
                 </div>
                 <div class="user-identity">
-                  <h5>Sallie Lawson</h5>
-                  <span>Founder of Crips</span>
+                  <h5>Ricardo Solipa</h5>
+                  <span>Administrador Sorrento</span>
                 </div>
               </div>
             </div>
@@ -419,15 +424,15 @@
             <div class="testimonial-card border h-100">
               <img src="image/l8/quote.png" alt="" class="mb-12">
               <p>
-                “Simply the best. Better than all the rest. I’d recommend this product to beginners and advanced users.”
+                “Excelente aplicativo, ahorra tiempo, le permite al residente estar informado las actividades del conjunto y así mismo mantener una comunicación más directa y eficaz con el administrador.”
               </p>
               <div class="d-flex align-items-center">
                 <div class="customer-img">
                   <img src="image/l8/client-img-2.png" alt="">
                 </div>
                 <div class="user-identity">
-                  <h5>Sallie Lawson</h5>
-                  <span>Founder of Crips</span>
+                  <h5>Eliana Zambrano</h5>
+                  <span>Administrador Siena</span>
                 </div>
               </div>
             </div>
@@ -436,15 +441,15 @@
             <div class="testimonial-card border h-100">
               <img src="image/l8/quote.png" alt="" class="mb-12">
               <p>
-                “This is a top quality product. No need to think twice before purchasing, you simply could not go wrong”
+                “Ha sido de gran ayuda contar con esta herramienta, ya que en linea y desde cualquier lugar como administradora puedo acceder a publicar y socializar con los residentes informaciones de la copropiedad.”
               </p>
               <div class="d-flex align-items-center">
                 <div class="customer-img mr-4">
                   <img src="image/l8/client-img-3.png" alt="">
                 </div>
                 <div class="user-identity">
-                  <h5>Sallie Lawson</h5>
-                  <span>Founder of Crips</span>
+                  <h5>Joel Ferrer</h5>
+                  <span>Administrador Olivenza</span>
                 </div>
               </div>
             </div>
@@ -531,15 +536,15 @@
           <div class="row align-items-center">
             <div class="col-lg-4 col-md-4">
               <div class="copyright">
-                <p> &copy; Grayic 2020 All right reserved. </p>
+                <p> &copy; Grayic 2021 Todos los derechos reservados. </p>
               </div>
             </div>
             <div class="col-lg-5 col-md-6">
               <div class="footer-menu">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li> <a href="#features">Terms & Conditions</a> </li>
-                  <li><a href="#features"> Site map</a></li>
+                  <li><a href="#">Politica de privacidad</a></li>
+                  <li> <a href="#features">Terminos & Condiciones</a> </li>
+                  {{-- <li><a href="#features"> Mapa del sitio</a></li> --}}
                 </ul>
               </div>
             </div>
