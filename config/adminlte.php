@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>P</b>ortero',
+    'logo' => '<b>Portero</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img2' => 'vendor/adminlte/dist/img/AdminLTELogo2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',

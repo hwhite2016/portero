@@ -33,29 +33,26 @@ class NotificationsController extends Controller
 
     public function markNotificacion(Request $request)
     {
-        if($request->input('estado') == 0){
-             Auth::user()->unreadNotifications
-            ->when($request->input('id'), function($query) use ($request){
-                return $query->where('id', $request->input('id'));
-            })->markAsread();
-        }else{
+        if($request->input('accion') == 'mark'){
+            if($request->input('estado') == 0){
+                Auth::user()->unreadNotifications
+                ->when($request->input('id'), function($query) use ($request){
+                    return $query->where('id', $request->input('id'));
+                })->markAsread();
+            }else{
 
+                $Notification = Auth::user()->Notifications->find($request->input('id'));
+                if($Notification){
+                    $Notification->update(['read_at' => NULL]);
+                }
+
+            }
+        }else{
             $Notification = Auth::user()->Notifications->find($request->input('id'));
             if($Notification){
-                $Notification->update(['read_at' => NULL]);
+                $Notification->delete();
             }
-
-        }
-
-        return response()->noContent();
-    }
-
-    public function delNotificacion(Request $request)
-    {
-        Auth::user()->unreadNotifications
-        ->when($request->input('id'), function($query) use ($request){
-            return $query->where('id', $request->input('id'));
-        })->delete();
+         }
         return response()->noContent();
     }
 
