@@ -258,17 +258,17 @@ return [
             'can'         => 'admin.index',
             'submenu' => [
                 [
-                    'shift'    => 'ml-3' ,
+                    // 'shift'    => 'ml-3' ,
                     'text' => 'No leidas',
                     'url'  => 'admin/notificacion/0',
-                    'icon' => 'fas fa-eye-slash',
+                    // 'icon' => 'fas fa-eye-slash',
                     'can'  => 'admin.index',
                 ],
                 [
-                    'shift'    => 'ml-3' ,
+                    // 'shift'    => 'ml-3' ,
                     'text' => 'Leidas',
                     'url'  => 'admin/notificacion/1',
-                    'icon' => 'fas fa-eye',
+                    // 'icon' => 'fas fa-eye',
                     'can'  => 'admin.index',
                 ],
             ],
@@ -305,17 +305,17 @@ return [
             'can'  => 'admin.visitantes.index',
             'submenu' => [
                 [
-                    'shift'    => 'ml-3' ,
+                    // 'shift'    => 'ml-3' ,
                     'text' => 'Ingresar Visitantes',
                     'route'  => 'admin.visitantes.index',
-                    'icon' => 'fas fa-user-clock',
+                    // 'icon' => 'fas fa-user-clock',
                     'can'  => 'admin.visitantes.index',
                 ],
                 [
-                    'shift'    => 'ml-3' ,
+                    // 'shift'    => 'ml-3' ,
                     'text' => 'Historial Visitantes',
                     'route'  => 'admin.visitantes.getVisitantes',
-                    'icon' => 'fas fa-user-clock',
+                    // 'icon' => 'fas fa-user-clock',
                     'can'  => 'admin.visitantes.index',
                 ],
             ],

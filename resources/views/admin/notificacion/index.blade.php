@@ -10,62 +10,86 @@
 @stop
 
 @section('content')
+
+
+<!-- Main content -->
+<section class="content">
     <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                    <span class="text text-primary">
-                        <i class="far fa-envelope-open"></i> Notificaciones
-                    </span>
-                    <span class="count_notifications"></span>
-                </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
 
-                @if(Auth::user())
-                    @forelse ($notificaciones as $notification)
-
-                        <div class="alert alert-default-{{$color}} alert-dismissible fade show" role="alert">
-                            <button type="submit" class="float-right mark-as-read btn btn-outline btn-sm" data-toggle="tooltip" title="Marcar como leida" data-id="{{$notification->id}}">
-                                <i class="far fa-envelope-open"></i>
-                            </button>
-
-                            <i class="{{$notification->data['icono']}}"></i>
-                            <strong>{{$notification->data['title']}}</strong>
-                            <small class="ml-1">({{$notification->created_at->diffForHumans()}})</small>
-                            <p class="mb-0">Recibido por: {{$notification->data['entregareceptor']}}</p>
-                            <p class="mb-0">Para: {{$notification->data['entregadestinatario']}}</p>
-                            <p class="mb-0">{{$notification->data['descripcion']}}</p>
-
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+      <!-- Timelime example  -->
+      <div class="row">
+        <div class="col-md-12">
+          <!-- The time line -->
+          <div class="timeline">
 
 
+            <!-- timeline time label -->
+            <div class="time-label mt-4">
+              <span class="bg-{{$color}}"><i class="far fa-bell"></i> Notificaciones</span>
+            </div>
+            <!-- /.timeline-label -->
+
+            @if(Auth::user())
+                @forelse ($notificaciones as $notification)
+                    <!-- timeline item -->
+                    <div class="alert">
+                        <i class="{{$notification->data['icono']}} bg-blue"></i>
+                        <div class="timeline-item">
+                            <span class="time"><i class="fas fa-clock"></i> {{$notification->created_at->diffForHumans()}}</span>
+                            <h3 class="timeline-header"><span class="text-primary font-weight-bold">{{$notification->data['title']}}:</span> {{$notification->data['body']}}</h3>
+
+                            <div class="timeline-body">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <p class="mb-0">{{$notification->data['empresa']}}</p>
+                                <p class="mb-0">Recibido por: {{$notification->data['entregareceptor']}}</p>
+                                <p class="mb-0">{{$notification->data['descripcion']}}</p>
+
+                            </div>
+                            @if($id == 0)
+                                <div class="timeline-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm mark-as-read" title="Marcar como leida" data-id="{{$notification->id}}"><i class="far fa-envelope-open"></i> Marcar como leida</button>
+                                </div>
+                            @else
+                                <div class="timeline-footer">
+                                    <button type="submit" class="btn btn-success btn-sm mark-as-not-read" title="Marcar como no leida" data-id="{{$notification->id}}"><i class="far fa-envelope-open"></i> Marcar como no leida</button>
+                                </div>
+                            @endif
                         </div>
-                        @if ($loop->last)
-                            <a href="#" id="mark-all">Marcar todas como leidas</a>
+                    </div>
+                    <!-- END timeline item -->
+
+
+                    @if ($loop->last)
+                        @if($id == 0)
+                            <div class="ml-4"><a href="#" id="mark-all" class="ml-4">Marcar todas como leidas</a></div>
 
                         @endif
+                    @endif
 
-                    @empty
-                        No hay notificaciones
-                    @endforelse
-                @endif
-              </div>
-              <!-- /.card-body -->
+                @empty
+                    <div class="ml-4"><span class="ml-4">No hay notificaciones</span></div>
+                @endforelse
+            @endif
+
+
+            <!-- timeline time label -->
+
+
+            <div>
+              <i class="fas fa-clock bg-gray"></i>
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
-
         </div>
-        <!-- /.row -->
+        <!-- /.col -->
       </div>
-      <!-- /.container-fluid -->
+    </div>
+    <!-- /.timeline -->
+
+  </section>
+  <!-- /.content -->
+
 @stop
 
 @section('footer')
@@ -73,6 +97,20 @@
 @stop
 
 @section('css')
+
+<style>
+    .timeline>div>.timeline-item {
+    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+    border-radius: .25rem;
+    background-color: #fff;
+    color: #495057;
+    margin-left: 40px;
+    margin-right: -30px;
+    margin-top: 0;
+    padding: 0;
+    position: relative;
+}
+</style>
 
 @stop
 
@@ -84,12 +122,13 @@
     </script>
    @endif
    <script>
-       function sendMarkRequest(id=null) {
+       function sendMarkRequest(id=null, estado=null) {
           return $.ajax("{{route('markNotificacion')}}", {
               method: 'POST',
               data: {
                   _token: "{{csrf_token()}}",
-                  id
+                  id,
+                  estado
               }
           });
        }
@@ -97,7 +136,15 @@
            $('[data-toggle="tooltip"]').tooltip();
 
            $('.mark-as-read').click(function(){
-               let request = sendMarkRequest($(this).data('id'));
+               let request = sendMarkRequest($(this).data('id'), 0);
+
+               request.done(()=>{
+                   $(this).parents('div.alert').remove();
+               });
+           });
+
+           $('.mark-as-not-read').click(function(){
+               let request = sendMarkRequest($(this).data('id'), 1);
 
                request.done(()=>{
                    $(this).parents('div.alert').remove();
@@ -105,7 +152,15 @@
            });
 
            $('#mark-all').click(function(){
-               let request = sendMarkRequest();
+               let request = sendMarkRequest(null, 0);
+
+               request.done(()=>{
+                   $('div.alert').remove();
+               });
+           });
+
+           $('#mark-all-not').click(function(){
+               let request = sendMarkRequest(null, 1);
 
                request.done(()=>{
                    $('div.alert').remove();

@@ -61,10 +61,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/notificacion/{id?}', [NotificationsController::class, 'show'])->name('admin.notificaciones.show');
     Route::get('/countNotification', [NotificationsController::class, 'countNotification'])->name('admin.notificaciones.countNotification');
     Route::post('/markNotificacion', [NotificationsController::class, 'markNotificacion'])->name('markNotificacion');
+
     Route::get('/markAsRead', function(){
         Auth::user()->unreadNotifications->markAsRead();
         return redirect()->back();
     })->name('markAsRead');
+
+    Route::get('/markAsNotRead', function(){
+        Auth::user()->unreadNotifications->update(['read_at' => NULL]);
+        return redirect()->back();
+    })->name('markAsNotRead');
 
     Route::get('/algo', function(){
         return view('admin.zona.feed');
