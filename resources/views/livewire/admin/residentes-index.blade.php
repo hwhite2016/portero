@@ -3,12 +3,13 @@
     	<div class="card-header">
     		<div class="row">
   				<div class="col-12">
-                    <div class="input-group">
+                    <input id="search" wire:model="search" class="form-control" placeholder="No. del apartamento, nombre residente, placa del vehiculo ..."/>
+                    {{-- <div class="input-group">
                         <input id="search" wire:model="search" class="form-control" placeholder="No. del apartamento, nombre residente, placa del vehiculo ..."/>
                         <div class="input-group-prepend">
                             <a href="#" id="getResidente" class="input-group-text"><i class="fas fa-search"></i></a>
                         </div>
-                    </div>
+                    </div> --}}
 
     			</div>
     		</div>
@@ -39,7 +40,7 @@
                                         @endphp
 
                                         @foreach($residentes as $residente => $valor)
-                                            <span><i class="fas fa-caret-right"></i>  {{$residente}}</span><span class="badge badge-{{($valor=='Propietario'?'success':'secondary')}} float-right">{{$valor}}</span><br>
+                                            <span><i class="fas fa-caret-right"></i> ****{{substr($residente, 4, 50)}}</span><span class="badge badge-{{($valor=='Propietario'?'success':'secondary')}} float-right">{{$valor}}</span><br>
                                         @endforeach
                                     </p>
 
