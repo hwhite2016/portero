@@ -15,6 +15,6 @@ class PersonaConjunto extends Model
     }
 
     public function persona(){
-        return $this->belongsTo(User::class, 'persona_id');
+        return $this->belongsTo(Persona::class, 'persona_id');
     }
 }

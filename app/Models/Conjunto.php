@@ -24,6 +24,10 @@ class Conjunto extends Model
     	return $this->belongsToMany(User::class, 'users_conjuntos');
     }
 
+    public function personas(){
+    	return $this->belongsToMany(Persona::class, 'persona_conjuntos');
+    }
+
     //use SoftDeletes; //Implementamos
 
     //protected $dates = ['deleted_at']; //Registramos la nueva columna

@@ -42,4 +42,14 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
+    'mercadopago' => [
+        'key' => env('MP_PUBLIC_KEY'),
+        'token' => env('MP_ACCESS_TOKEN'),
+    ],
+
+    'epayco' => [
+        'apiKey' => env('EPAYCO_PUBLIC_API_KEY'),
+        'privateKey' => env('EPAYCO_PRIVATE_API_KEY'),
+    ],
+
 ];

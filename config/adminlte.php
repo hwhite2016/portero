@@ -70,7 +70,7 @@ return [
     'usermenu_header_class' => 'bg-info',
     'usermenu_image' => true,
     'usermenu_desc' => true,
-    'usermenu_profile_url' => false,
+    'usermenu_profile_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -296,6 +296,12 @@ return [
             'text'        => 'Recepcion',
             'route'         => 'admin.entregas.index',
             'icon'        => 'fas fa-concierge-bell',
+            'can'          => 'admin.visitantes.index',
+        ],
+        [
+            'text'        => 'Residentes',
+            'route'         => 'admin.residentes.list',
+            'icon'        => 'fas fa-user-check',
             'can'          => 'admin.visitantes.index',
         ],
         [

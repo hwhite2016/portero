@@ -15,7 +15,7 @@
                 {!! Form::hidden('mascotas', 1) !!}
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
-                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la copropiedad']) !!}
                     @error('conjuntoid')
                         <small class="text-danger">
                             {{$message}}

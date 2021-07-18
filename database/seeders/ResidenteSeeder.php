@@ -21,11 +21,17 @@ class ResidenteSeeder extends Seeder
         TipoResidente::create(['tiporesidentenombre' => 'Servicio Domestico']);
         //TipoResidente::create(['tiporesidentenombre' => 'Otros']);
 
-        Relation::create(['relationname' => 'Principal (Cabeza)']);
+        Relation::create(['relationname' => 'Titular']);
         Relation::create(['relationname' => 'Esposo(a)']);
         Relation::create(['relationname' => 'Hijo(a)']);
+        Relation::create(['relationname' => 'Padre']);
+        Relation::create(['relationname' => 'Madre']);
+        Relation::create(['relationname' => 'Hermano(a)']);
         Relation::create(['relationname' => 'Abuelo(a)']);
-        Relation::create(['relationname' => 'Familiar']);
+        Relation::create(['relationname' => 'Nieto(a)']);
+        Relation::create(['relationname' => 'Tio(a)']);
+        Relation::create(['relationname' => 'Primo(a)']);
+        Relation::create(['relationname' => 'Suegro(a)']);
         Relation::create(['relationname' => 'Otro']);
     }
 }

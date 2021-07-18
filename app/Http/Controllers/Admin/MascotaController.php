@@ -53,7 +53,11 @@ class MascotaController extends Controller
     public function createModal(Request $request, $id)
     {
         $tipo_mascotas = Tipomascota::all()->pluck('tipomascotanombre', 'id');
-        $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
+        $conjuntos = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+            ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+            ->select('conjuntonombre','conjuntos.id')
+            ->where('unidads.id', '=', $id)
+            ->pluck('conjuntonombre', 'id');
 
         $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
             ->select(

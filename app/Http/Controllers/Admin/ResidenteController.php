@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Bloque;
 use Illuminate\Http\Request;
+use illuminate\Database\Eloquent\Collection;
 use App\Models\Residente;
 use App\Models\Unidad;
 use App\Models\TipoDocumento;
@@ -12,6 +14,7 @@ use App\Models\TipoResidente;
 use App\Models\Persona;
 use App\Models\Relation;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class ResidenteController extends Controller
 {
@@ -25,7 +28,6 @@ class ResidenteController extends Controller
 
     public function index()
     {
-
         $residentes = Residente::join("unidads","unidads.id", "=", "residentes.unidadid")
              ->join('bloques','bloques.id','=','unidads.bloqueid')
              ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
@@ -37,6 +39,26 @@ class ResidenteController extends Controller
              ->orderBy('personanombre', 'ASC')
              ->get();
              return view('admin.residente.index')->with('residentes', $residentes);
+    }
+
+    public function list()
+    {
+        $unidades = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+             ->join('residentes','unidads.id','=','residentes.unidadid')
+             ->leftJoin('vehiculos','unidads.id','=','vehiculos.unidadid')
+             ->leftJoin('tipo_vehiculos','tipo_vehiculos.id','=','vehiculos.tipovehiculoid')
+             ->join('personas','personas.id','=','residentes.personaid')
+             ->join('tipo_residentes','tipo_residentes.id','=','residentes.tiporesidenteid')
+             ->select('conjuntonombre','bloquenombre','unidadnombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' - ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(tipovehiculonombre,0), coalesce(vehiculoplaca,0)) AS vehiculos"))
+             ->whereIn('conjuntos.id', session('dependencias'))
+             ->GroupByRaw('conjuntonombre, bloquenombre, unidadnombre')
+             ->orderBy('bloquenombre', 'ASC')
+             ->orderBy('unidadnombre', 'ASC')
+             ->get();
+        //return $unidades;
+
+        return view('admin.residente.list')->with('unidades', $unidades);
     }
 
     public function create(Request $request)
@@ -63,14 +85,18 @@ class ResidenteController extends Controller
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $tipo_residentes = TipoResidente::all()->pluck('tiporesidentenombre', 'id');
         $relations = Relation:: all()->pluck('relationname', 'id');
-        $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
+
+        $conjuntos = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+            ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+            ->select('conjuntonombre','conjuntos.id')
+            ->where('unidads.id', '=', $id)
+            ->pluck('conjuntonombre', 'id');
+
 
         $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
             ->select(
             Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
             ->where('unidads.id', '=', $id)
-            ->whereIn('conjuntoid', session('dependencias'))
-            ->orderBy('unidad','ASC')
             ->pluck('unidad', 'unidads.id');
 
         //$unidads->prepend('Seleccione la unidad', '');
@@ -82,6 +108,7 @@ class ResidenteController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'conjuntoid'=>'required',
             'unidadid'=>'required',
@@ -108,14 +135,16 @@ class ResidenteController extends Controller
             $user = User::where('personaid','=',$persona->id)->first();
         }else{
 
+            $psswd = substr( md5(microtime()), 1, 8);
             $user = User::create([
+                'personaid' => $persona->id,
                 'name' => $request->get('personanombre'),
                 'email' => $request->get('personacorreo'),
-                'password' => bcrypt($request->get('password'))
+                'password' => bcrypt($psswd)
             ]);
         }
 
-        if (!Residente::where('personaid', '=', $persona->id)->exists()) {
+        if (!Residente::where('personaid', '=', $persona->id)->whereUnidadid($request->get('unidadid'))->exists()) {
             Residente::create([
                 'personaid'=>$persona->id,
                 'unidadid'=>$request->get('unidadid'),
@@ -124,13 +153,18 @@ class ResidenteController extends Controller
             ]);
         }
 
-        $persona->conjuntos()->sync($request->conjuntos);
-        $user->roles()->sync(5);
+        //$persona->conjuntos()->sync($request->conjuntoid);
+        $persona->conjuntos()->detach($request->conjuntoid);
+        $persona->conjuntos()->attach($request->conjuntoid);
+        $user->assignRole($request->rol);
+        //$user->roles()->sync($request->rol);
 
-        if(!$request->get('residentes'))
+        if(!$request->get('residentes')){
+
             return redirect()->route('admin.residentes.index')->with('info','El residente fue agregado de forma exitosa');
-        else
-        return redirect()->route('admin.unidads.edit', $request->get('unidadid'))->with('info','El residente fue agregado de forma exitosa');
+        }else{
+            return redirect()->route('admin.unidads.edit', $request->get('unidadid'))->with('info','El residente fue agregado de forma exitosa');
+        }
     }
 
     public function show($id)
@@ -182,8 +216,8 @@ class ResidenteController extends Controller
             'relationid'=>$request->get('relationid'),
         ]);
 
-        // $user = User::wherePersonaid($residente->personaid)->first();
-        // $user->roles()->sync(5);
+        //$user = User::wherePersonaid($residente->personaid)->first();
+        //$user->assignRole($request->rol);
 
         return redirect()->route('admin.residentes.index')->with('info','El residente fue actualizado de forma exitosa');
 
@@ -191,8 +225,51 @@ class ResidenteController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        $remover_rol = false;
+        $remover_conjunto = false;
+        $conjunto = Residente::join('unidads', 'unidads.id', 'residentes.unidadid')
+            ->join('bloques', 'bloques.id', 'unidads.bloqueid')
+            ->select('residentes.id', 'unidadnombre', 'bloques.conjuntoid')
+            ->where('residentes.id', $id)
+            ->first();
+
         $residente = Residente::find($id);
         $residente->delete();
+
+        $user_rol = User::where('users.personaid', $residente->personaid)
+            ->select('residentes.id as residente_id', 'users.id as user_id', 'users.personaid as persona id', 'users.name', 'residentes.unidadid')
+            ->join('residentes', 'residentes.personaid', 'users.personaid')
+            ->get();
+
+        $user_conjunto = User::where('users.personaid', $residente->personaid)
+            ->select('residentes.id as residente_id', 'users.id as user_id', 'users.personaid as persona id', 'users.name', 'residentes.unidadid','conjuntoid')
+            ->join('residentes', 'residentes.personaid', 'users.personaid')
+            ->join('unidads', 'unidads.id', 'residentes.unidadid')
+            ->join('bloques', 'bloques.id', 'unidads.bloqueid')
+            ->where('bloques.conjuntoid', '=', $conjunto->conjuntoid)
+            ->get();
+
+        if($user_rol->count() <= 0) $remover_rol = true;
+        if($user_conjunto->count() <= 0) $remover_conjunto = true;
+
+        if ($remover_rol){
+            $user = User::where('users.personaid', $residente->personaid)->first();
+            $user->removeRole('residente');
+        }
+
+        if ($remover_conjunto){
+            $persona = Persona::where('id', $residente->personaid)->first();
+            $persona->conjuntos()->detach($conjunto->conjuntoid);
+            //$persona->removeConjunto($request->conjuntoid);
+        }
+
+        //return $user;
+
+        //$user->removeRole($user->roles->first());
+        //$user->roles()->sync();
+        //$user->syncRoles($roles);
+
+        // $user->roles()->sync($request->rol);
 
         if(!$request->get('residentes'))
             return redirect()->route('admin.residentes.show', $residente->unidadid)->with('info','El residente fue eliminado exitosamente');

@@ -59,11 +59,12 @@ class PersonaController extends Controller
                 $user = User::where('personaid','=',$persona->id)->first();
             }else{
 
+                $psswd = substr( md5(microtime()), 1, 8);
                 $user = User::create([
                     'personaid' => $persona->get('id'),
                     'name' => $request->get('personanombre'),
                     'email' => $request->get('personacorreo'),
-                    'password' => bcrypt($request->get('password'))
+                    'password' => bcrypt($psswd)
                 ]);
             }
             //$user = User::wherePersonaid($persona->id)->first();

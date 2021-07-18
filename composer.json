@@ -9,6 +9,8 @@
   "license": "MIT",
   "require": {
     "php": "^7.3|^8.0",
+    "doctrine/inflector": "1.*",
+    "epayco/epayco-php": "^1.4",
     "fideloper/proxy": "^4.4",
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.0.1",
@@ -22,6 +24,7 @@
     "laravel/ui": "^3.2",
     "laravelcollective/html": "^6.2",
     "livewire/livewire": "^2.4",
+    "mercadopago/dx-php": "^2.3",
     "pusher/pusher-php-server": "^4.1",
     "spatie/laravel-permission": "^4.2"
   },

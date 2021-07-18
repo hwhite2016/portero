@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<title>Contact V17</title>
+<title>Portero</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -103,6 +103,7 @@
                 <div class="txt5 mt-4">Informacion de contacto </div>
                 <div class="txt4 mt-4"><i class="fa fa-envelope-o mr-2" aria-hidden="true"></i> support@portero.com.co </div>
                 <div class="txt4 mt-4"><i class="fa fa-phone mr-2" aria-hidden="true"></i> +57 (300) 742 4455 </div>
+
             </div>
 
         </div>

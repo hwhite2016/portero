@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('/personas', PersonaController::class)->names('admin.personas');
     Route::resource('/residentes', ResidenteController::class)->names('admin.residentes');
     Route::get('/residenteModal/{id}', [ResidenteController::class, 'createModal'])->name('admin.residentes.createModal');
+    Route::get('/list', [ResidenteController::class, 'list'])->name('admin.residentes.list');
     Route::resource('/vehiculos', VehiculoController::class)->names('admin.vehiculos');
     Route::get('/vehiculoModal/{id}', [VehiculoController::class, 'createModal'])->name('admin.vehiculos.createModal');
     Route::resource('/mascotas', MascotaController::class)->names('admin.mascotas');
@@ -72,8 +73,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         return redirect()->back();
     })->name('markAsNotRead');
 
-    Route::get('/algo', function(){
-        return view('admin.zona.feed');
+    Route::get('/orders', function(){
+        return view('admin.orders.payment');
+    });
+    Route::get('/invoice-print', function(){
+        return view('admin.orders.invoice-print');
     });
 
     // Route::get('/registro', function(){

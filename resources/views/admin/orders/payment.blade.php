@@ -1,0 +1,203 @@
+@extends('adminlte::page')
+
+@section('title', 'Paises')
+
+@section('content_header')
+    <h1>Pago Administración</h1>
+@stop
+
+@section('content')
+
+@php
+    // SDK de Epayco
+    require base_path('vendor/autoload.php');
+    // Agrega credenciales
+    $epayco = new Epayco\Epayco(array(
+        "apiKey" => config('services.epayco.apiKey'),
+        "privateKey" => config('services.epayco.privateKey'),
+        "lenguage" => "ES",
+        "test" => true
+    ));
+@endphp
+
+<section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="callout callout-info">
+            <h5><i class="fas fa-info"></i> Nota:</h5>
+            Recuerde que estando a paz y salvo con las cuotas de la administracion podra disfrutar de todos los beneficios que ofrece
+            el conjunto como por ejemplo, reserva de las zonas comunes, notificación de recepcion de paqueteria, anuncio de visitantes etc.
+          </div>
+
+
+          <!-- Main content -->
+          <div class="invoice p-3 mb-3">
+            <!-- title row -->
+            <div class="row">
+              <div class="col-12">
+                <h4>
+                  <i class="fas fa-globe"></i> Conjunto Residencial Siena.
+                  <small class="float-right">Fecha: 01/07/2021</small>
+                </h4>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+              <div class="col-sm-4 invoice-col">
+                De
+                <address>
+                  <strong>Administracion.</strong><br>
+                  Tv. 44 # 102 - 167, Miramar<br>
+                  Barranquilla, Atlantico<br>
+                  Telefono: (804) 123-5432<br>
+                  Email: siena@gmail.com
+                </address>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                Para
+                <address>
+                  <strong>Eliana Solipa Zambrano</strong><br>
+                  Torre 6, Apto. 348<br>
+                  Conjunto Siena<br>
+                  Telefono: (316) 697-8010<br>
+                  Email: eliana@wikisoft.co
+                </address>
+              </div>
+              <!-- /.col -->
+              <div class="col-sm-4 invoice-col">
+                <b>Factura #007612</b><br>
+                <br>
+                <b>Nro. de Orden:</b> 4F3S8J<br>
+                <b>Fecha de pago:</b> 2021/07/01<br>
+                <b>Pronto pago:</b> 2021/07/10<br>
+                <b>Cuenta:</b> Av Villas: 65234-968-34567
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Table row -->
+            <div class="row">
+              <div class="col-12 table-responsive">
+                <table class="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Servicio</th>
+                    <th>Description</th>
+                    <th>Subtotal</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Cuota Administracion</td>
+                    <td>Cuota administracion mes de Julio</td>
+                    <td>$172.000</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+              <!-- accepted payments column -->
+              <div class="col-6">
+                <p class="lead">Metodos de pago:</p>
+                <img src="../vendor/adminlte/dist/img/credit/visa.png" alt="Visa">
+                <img src="../vendor/adminlte/dist/img/credit/mastercard.png" alt="Mastercard">
+                <img src="../vendor/adminlte/dist/img/credit/american-express.png" alt="American Express">
+                <img src="../vendor/adminlte/dist/img/credit/dinners.png" alt="Paypal">
+
+                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                    Puede elegir desde uno hasta varios canales.
+                </p>
+              </div>
+              <!-- /.col -->
+              <div class="col-6">
+                <p class="lead">Monto adeudado 2/22/2014</p>
+
+                <div class="table-responsive">
+                  <table class="table">
+                    <tr>
+                      <th style="width:50%">Subtotal:</th>
+                      <td>$172.000</td>
+                    </tr>
+                    <tr>
+                      <th>Descuento pronto pago (5%)</th>
+                      <td>- $7.000</td>
+                    </tr>
+                    <tr>
+                      <th>Otros descuentos:</th>
+                      <td>$0.00</td>
+                    </tr>
+                    <tr>
+                      <th>Total:</th>
+                      <td>$165.000</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+              <div class="col-12">
+                <a href="{{url('admin/orders/invoice-print')}}" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                {{-- <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                  Payment
+                </button> --}}
+
+                <form class="float-right">
+                    <script
+                        src="https://checkout.epayco.co/checkout.js"
+                        class="epayco-button"
+                        data-epayco-key=c36a1b917258e3073bfbf773c11dd5a0
+                        data-epayco-amount="165000"
+                        data-epayco-name="Pago cuota de administración"
+                        data-epayco-description="Pago cuota de administración"
+                        data-epayco-currency="cop"
+                        data-epayco-country="co"
+                        data-epayco-test="true"
+                        data-epayco-external="false"
+                        data-epayco-button="../image/logo/boton_pago.png"
+                        data-epayco-response="https://ejemplo.com/respuesta.html"
+                        data-epayco-confirmation="https://ejemplo.com/confirmacion">
+                    </script>
+                </form>
+                <div class="cho-container float-right"></div>
+
+                <button type="button" class="pagar btn btn-primary float-right" style="margin-right: 5px;">
+                  <i class="fas fa-download"></i> Generar PDF
+                </button>
+
+              </div>
+            </div>
+          </div>
+          <!-- /.invoice -->
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+
+@stop
+
+@section('footer')
+    @include('admin.partial.footer')
+@stop
+
+@section('css')
+    <!-- /<link rel="stylesheet" href="/css/admin_custom.css">-->
+@stop
+
+@section('js')
+
+@stop
