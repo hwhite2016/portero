@@ -26,11 +26,4 @@
 			toastr.success("{{session('info')}}")
 		</script>
 	@endif
-
-    <script>
-        $("#getResidente").click(function() {
-            $(".card").removeClass('collapsed-card');
-        });
-    </script>
-
 @stop

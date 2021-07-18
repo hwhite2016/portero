@@ -20,11 +20,11 @@
                 <div class="row">
                     @foreach($unidades as $unidad)
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4	col-xxl-3">
-                            <div class="card card-primary collapsed-card">
+                            <div class="card card-primary {{($unidades->count()<=2?'':'collapsed-card')}}">
                                 <div class="card-header">
                                     <h3 class="card-title">{{$unidad->bloquenombre}} / {{$unidad->unidadnombre}}</h3>
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{($unidades->count()<=2?'minus':'plus')}}"></i>
                                         </button>
                                       </div>
                                       <!-- /.card-tools -->
