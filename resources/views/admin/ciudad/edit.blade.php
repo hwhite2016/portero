@@ -4,12 +4,13 @@
 
 @section('plugins.Select2', 'true')
 
+
 @section('content_header')
     {{-- <h1 class="ml-3">Editar Ciudad</h1> --}}
 @stop
 
-@section('content')    
-    
+@section('content')
+
 <div class="card card-primary">
     {!! Form::model($ciudad, ['route'=>['admin.ciudads.update', $ciudad], 'method'=>'put']) !!}
     @csrf
@@ -26,33 +27,33 @@
 
         <div class="form-group"> <!-- Nombre de la ciudad -->
             {{ Form::label('ciudadnombre', 'Nombre de la ciudad') }}
-            {{ Form::text('ciudadnombre', $ciudad->ciudadnombre, array('placeholder' => 'Ingresa una ciudad', 'class' => 'form-control')) }} 
+            {{ Form::text('ciudadnombre', $ciudad->ciudadnombre, array('placeholder' => 'Ingresa una ciudad', 'class' => 'form-control')) }}
             @error('ciudadnombre')
                 <small class="text-danger">
                     {{$message}}
                 </small>
-            @enderror 
-        </div>      
+            @enderror
+        </div>
 
         <div class="form-group"> <!-- Codigo de la ciudad -->
             {{ Form::label('ciudadcodigo', 'Codigo de la ciudad') }}
-            {{ Form::number('ciudadcodigo', $ciudad->ciudadcodigo, array('placeholder' => 'Ingresa el codigo de la ciudad', 'class' => 'form-control')) }} 
+            {{ Form::number('ciudadcodigo', $ciudad->ciudadcodigo, array('placeholder' => 'Ingresa el codigo de la ciudad', 'class' => 'form-control')) }}
             @error('ciudadcodigo')
                 <small class="text-danger">
                     {{$message}}
                 </small>
-            @enderror 
+            @enderror
         </div>
 
         <div class="form-group"> <!-- Abreviatura de la ciudad -->
             {{ Form::label('ciudadabreviatura', 'Abreviatura de la ciudad') }}
-            {{ Form::text('ciudadabreviatura', $ciudad->ciudadabreviatura, array('placeholder' => 'Ingresa el nombre de la ciudad abreviado', 'class' => 'form-control')) }} 
+            {{ Form::text('ciudadabreviatura', $ciudad->ciudadabreviatura, array('placeholder' => 'Ingresa el nombre de la ciudad abreviado', 'class' => 'form-control')) }}
             @error('ciudadabreviatura')
                 <small class="text-danger">
                     {{$message}}
                 </small>
-            @enderror 
-        </div>      
+            @enderror
+        </div>
 
     </div>
     <!-- /.card-body -->
@@ -67,13 +68,13 @@
             </div>
         </div>
     </div>
-    <!-- /.card-footer -->  
+    <!-- /.card-footer -->
     {!! Form::close() !!}
 </div>
 @stop
 
-@section('footer') 
-    @include('admin.partial.footer') 
+@section('footer')
+    @include('admin.partial.footer')
 @stop
 
 @section('css')
@@ -85,6 +86,8 @@
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
-    })  
+
+
+    })
 </script>
 @stop

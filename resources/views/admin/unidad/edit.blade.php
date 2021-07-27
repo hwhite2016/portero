@@ -6,6 +6,7 @@
 @section('plugins.Inputmask', 'true')
 @section('plugins.Toastr', 'true')
 @section('plugins.Sweetalert2', 'true')
+@section('plugins.Timepicker', 'true')
 
 @section('content_header')
     {{-- <h1 class="ml-3">Crear Unidad</h1> --}}

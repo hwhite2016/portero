@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CondominioController;
 use App\Http\Controllers\Admin\BloqueController;
 use App\Http\Controllers\Admin\ParqueaderoController;
 use App\Http\Controllers\Admin\ClaseUnidadController;
+use App\Http\Controllers\Admin\EmpleadoController;
 use App\Http\Controllers\Admin\UnidadController;
 use App\Http\Controllers\Admin\PersonaController;
 use App\Http\Controllers\Admin\ResidenteController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Admin\MascotaController;
 use App\Http\Controllers\Admin\VisitanteController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\NotificationsController;
+use App\Http\Controllers\Admin\PqrController;
 use App\Http\Controllers\Admin\ZonaController;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +47,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
     Route::resource('/unidads', UnidadController::class)->names('admin.unidads');
     Route::resource('/personas', PersonaController::class)->names('admin.personas');
+    Route::resource('/empleados', EmpleadoController::class)->names('admin.empleados');
     Route::resource('/residentes', ResidenteController::class)->names('admin.residentes');
     Route::get('/residenteModal/{id}', [ResidenteController::class, 'createModal'])->name('admin.residentes.createModal');
     Route::get('/list', [ResidenteController::class, 'list'])->name('admin.residentes.list');
@@ -62,6 +65,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/notificacion/{id?}', [NotificationsController::class, 'show'])->name('admin.notificaciones.show');
     Route::get('/countNotification', [NotificationsController::class, 'countNotification'])->name('admin.notificaciones.countNotification');
     Route::post('/markNotificacion', [NotificationsController::class, 'markNotificacion'])->name('markNotificacion');
+    Route::resource('/pqrs', PqrController::class)->names('admin.pqrs');
+    Route::get('/motivo', [PqrController::class, 'getMotivo'])->name('admin.pqrs.motivo');
 
     Route::get('/markAsRead', function(){
         Auth::user()->unreadNotifications->markAsRead();

@@ -11,7 +11,7 @@ class WelcomeMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Bienvenido a Portero";
+    public $subject = "Bienvenido a Portero.com.co";
 
     public $contacto;
 

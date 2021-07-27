@@ -40,7 +40,7 @@ class PersonaController extends Controller
     {
          $request->validate([
             'personanombre'=>'required|min:3',
-            'personadocumento'=>'required',
+            'personadocumento'=>'required|alpha_num',
             'conjuntos'=>'required'
          ]);
          $persona = Persona::create([
@@ -92,7 +92,7 @@ class PersonaController extends Controller
     {
         $request->validate([
             'personanombre'=>'required|min:3',
-            'personadocumento'=>'required',
+            'personadocumento'=>'required|min:3|alpha_num',
             'conjuntos'=>'required'
         ]);
 

@@ -91,8 +91,8 @@ class VisitanteController extends Controller
             'conjuntoid'=>'required',
             'unidadid'=>'required',
             'tipodocumentoid'=>'required',
-            'personadocumento'=>'required',
-            'personanombre'=>'required',
+            'personadocumento'=>'required|min:3|alpha_num',
+            'personanombre'=>'required|min:3',
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();

@@ -52,7 +52,7 @@
                         <td> {{ $conjunto->conjuntodireccion }} </td>
                         <td> {{ $conjunto->conjuntocorreo }} </td>
                         <td> {{ $conjunto->conjuntocelular }} </td>
-                        <td align="center">
+                        <td class="text-center">
                           <span class="badge {{$conjunto->conjuntoestado == 1 ? 'bg-success' : 'bg-danger'}}">{{$conjunto->conjuntoestado == 1 ? 'Activo' : 'Inactivo'}}</span>
                         </td>
                         <td>

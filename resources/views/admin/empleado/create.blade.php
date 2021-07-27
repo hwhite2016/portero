@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Residentes')
+@section('title', 'Empleados')
 
 @section('plugins.Select2', 'true')
 @section('plugins.Inputmask', 'true')
@@ -13,33 +13,20 @@
 @section('content')
 
 <div class="card card-primary">
-    {!! Form::open(['route'=>'admin.residentes.store', 'method'=>'post']) !!}
+    {!! Form::open(['route'=>'admin.empleados.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
     <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO RESIDENTE</h1>
+        <h1 class="card-title">CREAR NUEVO EMPLEADO</h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-8">
-                <div class="form-group">
-                    {{ Form::label('conjuntoid', '* Copropiedad') }}
-                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control']) !!}
-                    @error('conjuntoid')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-
-                </div>
-            </div>
-
             <div class="col-12 col-md-4">
                 <div class="form-group">
-                    {{ Form::label('unidadid', '* Unidad') }}
-                    {!! Form::select('unidadid', $unidads, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la vivienda']) !!}
-                    @error('unidadid')
+                    {{ Form::label('conjuntoid', '* Copropiedad') }}
+                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2', 'style'=>'width: 100%']) !!}
+                    @error('conjuntoid')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -101,8 +88,6 @@
                 </div>
             </div>
 
-
-
             <div class="col-md-4">
                 <div class="form-group"> <!-- Correo -->
                     {{ Form::label('personacorreo', 'Correo') }}
@@ -137,11 +122,11 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Tipo -->
-                    {{ Form::label('tiporesidenteid', 'Tipo de residente') }}
-                    {!! Form::select('tiporesidenteid', $tipo_residentes, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo']) !!}
-                    @error('tiporesidenteid')
+                    {{ Form::label('role_id', 'Rol') }}
+                    {!! Form::select('role_id', $roles, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione un rol']) !!}
+                    @error('role_id')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -149,11 +134,11 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="form-group"> <!-- Relacion -->
-                    {{ Form::label('relationid', 'Relacion con el residente principal') }}
-                    {!! Form::select('relationid', $relations, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
-                    @error('relationid')
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Estado -->
+                    {{ Form::label('empleadoestado', 'Estado') }}
+                    {!! Form::select('empleadoestado', ['0'=>'Inactivo','1'=>'Activo'], null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('empleadoestado')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -167,7 +152,7 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        <a class="btn btn-warning" href="{{route('admin.residentes.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
+        <a class="btn btn-warning" href="{{route('admin.empleados.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
         {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
         {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
     </div>

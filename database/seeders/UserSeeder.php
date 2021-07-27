@@ -19,28 +19,28 @@ class UserSeeder extends Seeder
             'name' => 'Victor Lopez',
             'email' => 'victor@wikisoft.co',
             'password' => bcrypt('victor12345')
-        ])->assignRole('superadministrador');
+        ])->assignRole('_superadministrador');
 
         User::create([
             'personaid' => 2,
         	'name' => 'Heisenberg',
         	'email' => 'hw@wikisoft.co',
         	'password' => bcrypt('hw12345')
-        ])->assignRole('administrador');
+        ])->assignRole('_administrador');
 
         User::create([
             'personaid' => 3,
         	'name' => 'Eliana Solipa',
         	'email' => 'eliana@wikisoft.co',
         	'password' => bcrypt('eliana12345')
-        ])->assignRole('seguridad');
+        ])->assignRole('Seguridad');
 
         User::create([
             'personaid' => 4,
         	'name' => 'Eimy Lopez',
         	'email' => 'eimy@wikisoft.co',
         	'password' => bcrypt('eimy12345')
-        ])->assignRole('residente');
+        ])->assignRole('Residente');
 
     }
 }

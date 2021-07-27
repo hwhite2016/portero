@@ -113,8 +113,8 @@ class ResidenteController extends Controller
             'conjuntoid'=>'required',
             'unidadid'=>'required',
             'tipodocumentoid'=>'required',
-            'personadocumento'=>'required',
-            'personanombre'=>'required',
+            'personadocumento'=>'required|min:3|alpha_num',
+            'personanombre'=>'required|min:3',
             'unidadid' => 'unique:residentes,unidadid,NULL,id,personaid,' . $request->get('personaid')
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
@@ -254,7 +254,7 @@ class ResidenteController extends Controller
 
         if ($remover_rol){
             $user = User::where('users.personaid', $residente->personaid)->first();
-            $user->removeRole('residente');
+            $user->removeRole('Residente');
         }
 
         if ($remover_conjunto){

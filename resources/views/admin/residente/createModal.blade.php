@@ -1,6 +1,5 @@
 @extends('layouts/plantilla')
 
-
 @section('content')
 
 <div class="card card-primary">
@@ -74,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            {{-- <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Fecha de Nacimiento -->
                     {{ Form::label('personafechanacimiento', 'Fecha de Nacimiento') }}
 
@@ -83,6 +82,23 @@
                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
                     {!! Form::text('personafechanacimiento', null, array('data-inputmask-alias' => 'datetime', 'data-inputmask-inputformat' => 'yyyy/mm/dd', 'data-mask', 'class' => 'form-control')) !!}
+                    </div>
+                    @error('personafechanacimiento')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div> --}}
+
+            <div class="col-12 col-md-4">
+                <div class="form-group"> <!-- Fecha de Nacimiento -->
+                    {{ Form::label('personafechanacimiento', 'Fecha de Nacimiento') }}
+                    <div class="input-group date" id="fechanacimiento" data-target-input="nearest">
+                        {!! Form::text('personafechanacimiento', null, array('data-toggle' => 'datetimepicker','data-target' => '#fechanacimiento', 'class' => 'form-control datetimepicker-input')) !!}
+                        <div class="input-group-append" data-target="#fechanacimiento" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        </div>
                     </div>
                     @error('personafechanacimiento')
                         <small class="text-danger">
@@ -180,6 +196,11 @@
 
       $(":input").inputmask();
 
+      $('#fechanacimiento').datetimepicker({
+           format: 'L',
+           format: 'YYYY/MM/DD'
+      });
+
       $(".fa-search").on('click', function() {
           $('#personanombre').focus();
       });
@@ -201,7 +222,7 @@
                     // $('#personacelular').prop('disabled', true);
                     // $('#tipodocumentoid').prop('disabled', true);
                     $('#personanombre').val(data.persona.personanombre);
-                    $('#personafechanacimiento').val(data.persona.personafechanacimiento);
+                    $('#personafechanacimiento').val(moment(data.persona.personafechanacimiento).format('YYYY/MM/DD'));
                     $('#personacelular').val(data.persona.personacelular);
                     $('#personacorreo').val(data.persona.personacorreo);
                     $('#tipodocumentoid').val(data.persona.tipodocumentoid).change();

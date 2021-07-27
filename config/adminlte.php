@@ -245,10 +245,10 @@ return [
             'can'          => 'admin.index',
         ],
         [
-            'text'        => 'PQRS',
-            'route'       => 'admin.index',
+            'text'        => 'Pqrs',
+            'route'       => 'admin.pqrs.index',
             'icon'        => 'far fa-envelope',
-            'can'         => 'admin.dashboard.index',
+            'can'         => 'admin.pqrs.index',
             'label'       => 'desarrollo',
             'label_color' => 'warning',
         ],
@@ -368,6 +368,12 @@ return [
             'route'  => 'admin.personas.index',
             'icon'   => 'fas fa-users fa-fw',
             'can'    => 'admin.personas.index',
+        ],
+        [
+            'text'   => 'Empleados',
+            'route'  => 'admin.empleados.index',
+            'icon'   => 'fas fa-user-tie fa-fw',
+            'can'    => 'admin.empleados.index',
         ],
         [
             'text' => 'Condominios',

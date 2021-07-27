@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
         $this->call(MascotaSeeder::class);
         $this->call(EntregaSeeder::class);
         $this->call(ZonaSeeder::class);
+        $this->call(PqrSeeder::class);
 
     }
 }
