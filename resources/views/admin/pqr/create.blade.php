@@ -62,7 +62,7 @@
 
             <div class="col-12">
                 <div class="form-group"> <!-- Detalle del caso -->
-                    {{ Form::label('mensaje', 'A continuación detalle su caso') }}
+                    {{ Form::label('mensaje', 'A continuación detalle su caso') }} <small class="font-italic"> (Max. 3.000 caractéres)</small>
                     {!! Form::textarea('mensaje', null, ['class' => 'form-control' , 'rows' => 4, 'cols' => 20, 'style' => 'resize:none']) !!}
                     @error('mensaje')
                         <small class="text-danger">
@@ -77,23 +77,17 @@
             <div class="col-12">
                 <div class="form-group"> <!-- Logo del conjunto -->
 
-                        <div class="btn btn-default btn-file">
-                          <i class="fas fa-paperclip"></i> Adjuntar Imagen o PDF
-                          {{ Form::file('archivo', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg', 'class' => 'form-control')) }}
-                        </div>
-                        <p class="text-sm">Max. 32MB</p>
-
+                    {{ Form::file('archivo', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
                     @error('archivo')
                         <small class="text-danger">
                             {{$message}}
                         </small>
                     @enderror
+                    <br>
+                    <small class="p-1">Max. 2MB</small> <small class="font-italic"> (Solo imagenes y archivos pdf)</small>
+
                 </div>
             </div>
-
-
-
-
 
         </div>
         <!-- /.row -->

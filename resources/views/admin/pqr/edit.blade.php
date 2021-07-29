@@ -4,6 +4,7 @@
 
 @section('plugins.Select2', 'true')
 @section('plugins.Inputmask', 'true')
+@section('plugins.Toastr', 'true')
 
 @section('content_header')
     <h1 class="ml-3">Ticket # {{ str_pad($pqr->radicado,5,"0", STR_PAD_LEFT) }}</h1>
@@ -13,6 +14,8 @@
 
 <div class="container-fluid">
     <div class="card card-outline card-primary">
+        {!! Form::model($pqr, ['route'=>['admin.pqrs.update', $pqr], 'method'=>'put', 'enctype'=>'multipart/form-data']) !!}
+        {!! Form::hidden('conjuntoid', $pqr->conjuntoid) !!}
         <div class="card-header">
 
         </div>
@@ -33,18 +36,36 @@
                                             <a class="nav-link" id="custom-tabs-four-flujo-tab" data-toggle="pill" href="#custom-tabs-four-flujo" role="tab" aria-controls="custom-tabs-four-flujo" aria-selected="false"> Flujo</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="custom-tabs-four-comentarios-tab" data-toggle="pill" href="#custom-tabs-four-comentarios" role="tab" aria-controls="custom-tabs-four-comentarios" aria-selected="false"> Comentarios</a>
+                                            <a class="nav-link" id="custom-tabs-four-comentarios-tab" data-toggle="pill" href="#custom-tabs-four-comentarios" role="tab" aria-controls="custom-tabs-four-comentarios" aria-selected="false"> Comentarios ({{$comentarios->count()}})</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="custom-tabs-four-adjuntos-tab" data-toggle="pill" href="#custom-tabs-four-adjuntos" role="tab" aria-controls="custom-tabs-four-adjuntos" aria-selected="false"> Adjuntos</a>
+                                            <a class="nav-link" id="custom-tabs-four-adjuntos-tab" data-toggle="pill" href="#custom-tabs-four-adjuntos" role="tab" aria-controls="custom-tabs-four-adjuntos" aria-selected="false"> Adjuntos ({{$adjuntos->count()}})</a>
                                         </li>
                                     </ul>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div class="tab-content" id="custom-tabs-four-tabContent">
+                                        <!-- RESUMEN TICKET -->
                                         <div class="tab-pane fade show active" id="custom-tabs-four-resumen" role="tabpanel" aria-labelledby="custom-tabs-four-resumen-tab">
                                             {{-- @include('admin.residente.indexModal') --}}
+                                            <div class="row">
+                                                <div class="col-3 p-2 border">
+                                                    <span class="font-weight-bold">Creado por:</span>
+                                                </div>
+                                                <div class="col-9 p-2 border">
+                                                    {{$pqr->bloquenombre}} / {{$pqr->unidadnombre}}<br>
+                                                    <i class="fas fa-caret-right"></i> {{$pqr->name}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-3 p-2 border">
+                                                    <span class="font-weight-bold">Asignado a:</span>
+                                                </div>
+                                                <div class="col-9 p-2 border">
+                                                    Administración
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-3 p-2 border">
                                                     <span class="font-weight-bold">Tipo:</span>
@@ -74,7 +95,15 @@
                                                     <span class="font-weight-bold">Estado:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
-                                                    {{$pqr->estadonombre}}
+                                                    @if (Auth::check() && Auth::user()->hasRole('_administrador'))
+                                                        @if($pqr->estadoid != 4)
+                                                            {!! Form::select('estadoid', $estados, null, ['class' => 'form-control select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el estado']) !!}
+                                                        @else
+                                                            {{$pqr->estadonombre}}
+                                                        @endif
+                                                    @else
+                                                        {{$pqr->estadonombre}}
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -87,17 +116,91 @@
                                             </div>
 
                                         </div>
+                                        <!-- FLUJO -->
                                         <div class="tab-pane fade" id="custom-tabs-four-flujo" role="tabpanel" aria-labelledby="custom-tabs-four-flujo-tab">
                                             @foreach ($flujos as $flujo)
-                                                <p><i class="fas fa-caret-right"></i> <b>{{$flujo->name}}</b> colocó el ticket en estado <span class="badge badge-secondary">{{$flujo->estadonombre}}</span> el {{$flujo->created_at}}</p>
+                                                <p><i class="fas fa-caret-right"></i> <b>{{$flujo->name}}</b> colocó el ticket en estado <span class="badge badge-secondary">{{$flujo->estadonombre}}</span> el {{$flujo->created_at}}
+                                                    @if($flujo->motivoid)
+                                                        <span class="text-danger font-italic"> --> ({{$flujo->motivo}})</span>
+                                                    @endif
+                                                </p>
                                             @endforeach
                                         </div>
+                                        <!-- COMENTARIOS -->
                                         <div class="tab-pane fade" id="custom-tabs-four-comentarios" role="tabpanel" aria-labelledby="custom-tabs-four-comentarios-tab">
+                                            @if($pqr->estadoid != 4)
+                                                {{ Form::label('comentario', 'Comentarios') }} <small class="font-italic"> (Max. 400 caractéres)</small>
+                                                {!! Form::textarea('comentario', null, ['class' => 'form-control' , 'rows' => 3, 'cols' => 20, 'style' => 'resize:none']) !!}
+                                                @error('comentario')
+                                                    <small class="text-danger">
+                                                        {{$message}}
+                                                    </small>
+                                                @enderror
+                                            @endif
+                                            <div class="mt-4" style="overflow-x: hidden; overflow-y: auto; height: 20em">
+                                            @foreach ($comentarios as $comentario)
 
+                                                <p>
+                                                    @if (Auth::check() && $comentario->userid == Auth::user()->id)
+                                                        <div class="callout callout-secondary">
+                                                            <i class="far fa-user"></i>&nbsp; <b>{{$comentario->name}}</b> ({{$comentario->created_at}}):
+                                                            <p>{{$comentario->comentario}}</p>
+                                                        </div>
+                                                        {{-- <span class="text-secondary"><i class="far fa-user"></i>&nbsp; <b>{{$comentario->name}}</b> ({{$comentario->created_at}}):</span> --}}
+                                                    @else
+                                                        <div class="callout callout-primary">
+                                                            <span class="text-primary"><i class="fas fa-user-tie"></i>&nbsp; <b>{{$comentario->name}}</b> ({{$comentario->created_at}}):</span>
+                                                            <p>{{$comentario->comentario}}</p>
+                                                        </div>
+                                                        {{-- <span class="text-primary"><i class="fas fa-user-tie"></i>&nbsp; <b>{{$comentario->name}}</b> ({{$comentario->created_at}}):</span> --}}
+                                                    @endif
+                                                    {{-- <br>{{$comentario->comentario}} --}}
+                                                </p>
+
+                                            @endforeach
+                                            </div>
 
                                         </div>
+                                        <!-- ADJUNTOS -->
                                         <div class="tab-pane fade" id="custom-tabs-four-adjuntos" role="tabpanel" aria-labelledby="custom-tabs-four-adjuntos-tab">
+                                            <div class="card">
+                                                <div class="card-footer">
+                                                    Archivos Recibidos
+                                                </div>
+                                                <div class="card-body">
+                                                    @foreach ($adjuntos as $adjunto)
+                                                        @if (Auth::check() && $adjunto->userid != Auth::user()->id)
+                                                        <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->archivo}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->archivo}}</a></p>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
 
+                                            <div class="card">
+                                                <div class="card-footer">
+                                                    Archivos Enviados por Mi
+                                                </div>
+                                                <div class="card-body">
+                                                    @foreach ($adjuntos as $adjunto)
+                                                        @if (Auth::check() && $adjunto->userid == Auth::user()->id)
+                                                            <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->archivo}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->archivo}}</a></p>
+                                                        @endif
+                                                    @endforeach
+
+                                                    @if($pqr->estadoid != 4)
+                                                        <hr class="mt-4">
+
+                                                        {{ Form::file('archivo', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
+                                                        @error('archivo')
+                                                            <small class="text-danger">
+                                                                {{$message}}
+                                                            </small>
+                                                        @enderror
+                                                        <br>
+                                                        <small class="p-1">Max. 2MB</small> <small class="font-italic"> (Solo imagenes y archivos pdf)</small>
+                                                    @endif
+                                                </div>
+                                            </div>
 
                                         </div>
                                     </div>
@@ -114,10 +217,13 @@
         <!-- /.card-body -->
         <div class="card-footer">
             <a class="btn btn-warning" href="{{route('admin.pqrs.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
-            {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
-            {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarUnidad']) !!}
+            @if($pqr->estadoid != 4)
+                {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
+                {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarUnidad']) !!}
+            @endif
         </div>
         <!-- /.card-footer -->
+        {!! Form::close() !!}
     </div>
     <!-- /.card -->
 
@@ -135,7 +241,13 @@
  @stop
 
 @section('js')
-<script>
+  @if(session('info'))
+    <script type="text/javascript">
+        toastr.success("{{session('info')}}")
+    </script>
+   @endif
+
+ <script>
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2();
@@ -143,5 +255,5 @@
       $(":input").inputmask();
 
     })
-</script>
+ </script>
 @stop

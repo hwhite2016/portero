@@ -164,23 +164,30 @@
 
 @section('css')
 
-<style>
-    .timeline>div>.timeline-item {
-    box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
-    border-radius: .25rem;
-    background-color: #fff;
-    color: #495057;
-    margin-left: 40px;
-    margin-right: -30px;
-    margin-top: 0;
-    padding: 0;
-    position: relative;
-}
-</style>
+    <style>
+        .timeline>div>.timeline-item {
+        box-shadow: 0 0 1px rgb(0 0 0 / 13%), 0 1px 3px rgb(0 0 0 / 20%);
+        border-radius: .25rem;
+        background-color: #fff;
+        color: #495057;
+        margin-left: 40px;
+        margin-right: -30px;
+        margin-top: 0;
+        padding: 0;
+        position: relative;
+    }
+    </style>
+
+    <link rel="stylesheet" type="text/css" href="/css/addtohomescreen.css">
 
 @stop
 
 @section('js')
+
+    <script src="/js/addtohomescreen.min.js"></script>
+    <script>
+        addToHomescreen();
+    </script>
 
    @if(session('info'))
     <script type="text/javascript">

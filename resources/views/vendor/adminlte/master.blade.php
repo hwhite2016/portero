@@ -82,6 +82,7 @@
     <script>
         window.Laravel = {!! json_encode([
             'user' => Auth::user(),
+            //'user'=> Auth::check() ? Auth::user()->id : 'null' ,
             'vapidPublicKey' => config('webpush.vapid.public_key'),
             'pusher' => [
                 'key' => config('broadcasting.connections.pusher.key'),

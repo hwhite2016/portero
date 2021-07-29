@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::post('/markNotificacion', [NotificationsController::class, 'markNotificacion'])->name('markNotificacion');
     Route::resource('/pqrs', PqrController::class)->names('admin.pqrs');
     Route::get('/motivo', [PqrController::class, 'getMotivo'])->name('admin.pqrs.motivo');
+    Route::post('/estado/{id?}', [PqrController::class, 'changeEstado'])->name('admin.pqrs.estado');
 
     Route::get('/markAsRead', function(){
         Auth::user()->unreadNotifications->markAsRead();

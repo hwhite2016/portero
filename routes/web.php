@@ -57,3 +57,7 @@ Route::get('manifest.json', function () {
         'gcm_sender_id' => config('webpush.gcm.sender_id'),
     ];
 });
+
+Route::get('/profile', function(){
+    return view('profile.show');
+});

@@ -27,7 +27,7 @@
                         <span class="info-box-icon bg-secondary"><i class="far fa-envelope-open"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Abiertas</span>
+                            <span class="info-box-text">Abiertos</span>
                             <span class="info-box-number">{{$pqr_abierta}}</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -55,7 +55,7 @@
                         <span class="info-box-icon bg-info"><i class="far fa-calendar-check"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Resueltas</span>
+                            <span class="info-box-text">Resueltos</span>
                             <span class="info-box-number">{{$pqr_resuelta}}</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -69,7 +69,7 @@
                         <span class="info-box-icon bg-success"><i class="far fa-envelope"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Cerradas</span>
+                            <span class="info-box-text">Cerrados</span>
                             <span class="info-box-number">{{$pqr_cerrada}}</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -92,9 +92,7 @@
                   <thead class="bg-primary">
                     <tr>
                       <th>Radicado</th>
-                      <th>Tipo</th>
                       <th>Asunto</th>
-
                       <th width="5%">...</th>
 
 
@@ -103,34 +101,34 @@
                   <tbody>
                     @foreach ($pqrs as $pqr)
                       <tr>
-                        <td> TK-{{ str_pad($pqr->radicado,5,"0", STR_PAD_LEFT) }} </td>
-                        <td> {{ $pqr->tipopqrnombre }} </td>
+                        <td> <a class="fw-bold" href="{{route('admin.pqrs.edit', $pqr->id)}}">TK-{{ str_pad($pqr->radicado,5,"0", STR_PAD_LEFT) }}</a>
+                            <br><small class="font-italic">{{ $pqr->tipopqrnombre }}</small>
+                        </td>
                         <td>
-                            <a href="{{route('admin.pqrs.edit', $pqr->id)}}"> {{ $pqr->asunto}} </a>
+                            <a href="{{route('admin.pqrs.edit', $pqr->id)}}">{{ $pqr->asunto}} </a>
                             <br><small>Fecha: {{ $pqr->created_at }}</small>
                         </td>
 
-                        <td>
+                        <td class="text-center">
+                            @can('admin.pqrs.edit')
+                                @if (Auth::check() && Auth::user()->hasRole('_administrador'))
+                                    <a class="btn btn-sm btn-info" href="{{route('admin.pqrs.edit', $pqr->id)}}">Ver Ticket </a>
+                                @else
+                                    @if($pqr->estadoid != 4)
 
-                            @can('admin.pqrs.destroy')
-                              {!! Form::model($pqr, ['route'=>['admin.pqrs.destroy', $pqr], 'method'=>'delete', 'class'=>'frm_delete']) !!}
-                              {!! Form::hidden('estadoid', $pqr->estadoid, array('class' => 'estadoid')) !!}
-                              {!! Form::hidden('motivo', null, array('class' => 'motivo')) !!}
+                                        {!! Form::model($pqr, ['route'=>['admin.pqrs.estado', $pqr], 'method'=>'post', 'class'=>'estado']) !!}
+                                            {!! Form::hidden('estadoid', $pqr->estadoid, array('class' => 'estadoid')) !!}
+                                            {!! Form::hidden('motivo', null, array('class' => 'motivo')) !!}
+                                            @csrf
+                                            <button class="btn btn-sm btn-danger">
+                                                Cerrar Ticket
+                                            </button>
+                                        {!! Form::close() !!}
+                                    @else
+                                        <span class="text-success"><i class="fas fa-check-square"></i></span>
+                                    @endif
+                                @endif
                             @endcan
-
-                            {{-- @can('admin.pqrs.edit')
-                              <a href="{{route('admin.pqrs.edit', $pqr->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Pqr">
-                                <i class="fas fa-eye"></i>
-                              </a>
-                            @endcan --}}
-
-                            @can('admin.pqrs.destroy')
-                              @csrf
-                              @method('delete')
-                              <button class="btn btn-sm btn-{{ in_array($pqr->estadoid, [1,2,3])?'success':'danger' }}">{{ in_array($pqr->estadoid, [1,2,3])?'Cerrar':'Abrir' }} Ticket</button>
-                              {!! Form::close() !!}
-                            @endcan
-
                         </td>
 
                       </tr>
@@ -157,66 +155,23 @@
 
 @section('css')
     <!-- /<link rel="stylesheet" href="/css/admin_custom.css">-->
-    <style type="text/css">
-        tr.group,
-        tr.group:hover {
-            background-color: #ddd !important;
-        }
-    </style>
-
-<link rel="stylesheet" type="text/css" href="/css/addtohomescreen.css">
 
 @stop
 
 @section('js')
 
-
-<script src="/js/addtohomescreen.js"></script>
-<script>
-addToHomescreen();
-</script>
-
 <script type="text/javascript">
 
         $(document).ready(function() {
-            var groupColumn = 1;
-            var table = $('#pqrs').DataTable({
-                responsive: true,
-                "columnDefs": [
-                    { "visible": false, "targets": groupColumn }
-                ],
-                "order": [[ groupColumn, 'asc' ]],
-                "displayLength": 25,
-                "drawCallback": function ( settings ) {
-                    var api = this.api();
-                    var rows = api.rows( {page:'current'} ).nodes();
-                    var last=null;
-
-                    api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                        if ( last !== group ) {
-                            $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="5">'+group+'</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    } );
-                }
-            } );
-
-            // Order by the grouping
-            $('#pqrs tbody').on( 'click', 'tr.group', function () {
-                var currentOrder = table.order()[0];
-                if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
-                    table.order( [ groupColumn, 'desc' ] ).draw();
-                }
-                else {
-                    table.order( [ groupColumn, 'asc' ] ).draw();
-                }
+            var table = $('#pqrs').DataTable( {
+              responsive: true,
+              "order": [[0, 'desc']]
             } );
 
             new $.fn.dataTable.FixedHeader( table );
+
             $('[data-toggle="tooltip"]').tooltip();
+
         } );
 
  </script>
@@ -227,72 +182,58 @@ addToHomescreen();
         toastr.success("{{session('info')}}")
     </script>
    @endif
-   <script>
 
-
-      $('.frm_delete').submit(function(e){
+    <script>
+      $('.estado').submit(function(e){
           e.preventDefault();
-          if($('.estadoid').val() == 1){
 
+            var myArr = ['Seleccione un item'];
             url = "{{ route('admin.pqrs.motivo') }}";
             $.ajax({
                 type: "GET",
+                async: false,
                 dataType: "json",
+                _token: "{{csrf_token()}}",
                 url: url,
                 success: function(data) {
                     console.log(data.motivo);
-                    var myArr = data.motivo.motivo;
+                    $.each(data.motivo, function(i, res){
+                        myArr.push(res.motivo);
+                    })
                 },
                 error: function(error){
                     console.log(error);
                 }
             });
 
-            var myArr = [ '1', '2', '3'];
+            //var myArr = [ '1', '2', '3'];
             const { value: motivo } = Swal.fire({
                 title: 'Motivo del cierre del Ticket?',
                 input: 'select',
-                //inputOptions: myArr,
-                inputOptions: {
-                    '1': 'Cree el ticket por error',
-                    '2': 'Encontre una solución por mi mismo',
-                    '3': 'Solicitud no valida'
-                },
-                inputPlaceholder: 'Motivo de cierre',
+                inputOptions: myArr,
+                // inputOptions: {
+                //     '1': 'Se creo el ticket por error',
+                //     '2': 'Solucionado !!',
+                //     '3': 'Ticket no valido',
+                //     '4': 'Remitido a otro ente'
+                // },
+                //inputPlaceholder: 'Motivo de cierre',
                 showCancelButton: true,
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
-                        if (myArr.includes( value )) {
+                        console.log(value);
+                        if (value != 0) {
+                        //if (myArr.includes( value )) {
                             //resolve()
                             $('.motivo').val(value)
                             this.submit()
                         } else {
-                            resolve('Seleccione una opcion valida')
+                           resolve('Seleccione una opcion valida')
                         }
                     })
                 }
             })
 
-          }else{
-
-                Swal.fire({
-                    title: 'Esta a punto de re-abrir el ticket.',
-                    text: 'Tenga en cuenta que los estados seran reiniciados.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Abrir Ticket!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                    this.submit();
-                    }
-                })
-
-          }
-
       });
-
-   </script>
+    </script>
 @stop
