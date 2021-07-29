@@ -265,7 +265,7 @@ class PqrController extends Controller
             ->select('pqrs.*', 'estadoid', 'estadonombre', 'asunto', 'tipopqrnombre', 'users.name', 'unidadnombre', 'bloquenombre')
             ->where('pqrs.id', $id)
             ->first();
-dd($pqr);
+
         $flujos = DetallePqr::join('estado_pqrs', 'estado_pqrs.id', 'detalle_pqrs.estadoid')
             ->join('users', 'users.id', 'detalle_pqrs.userid')
             ->leftjoin('motivos', 'motivos.id', 'detalle_pqrs.motivoid')
