@@ -95,9 +95,21 @@
                                                     <span class="font-weight-bold">Estado:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
+                                                    @php
+                                                        if($pqr->estadoid == 1){
+                                                            $color = "secondary";
+                                                        }elseif ($pqr->estadoid == 2){
+                                                            $color = "warning";
+                                                        }elseif ($pqr->estadoid == 3){
+                                                            $color = "info";
+                                                        }else{
+                                                            $color = "success";
+                                                        }
+                                                    @endphp
+                                                    <span class="text-{{$color}}"><i class="fas fa-square"></i></span>&nbsp;
                                                     @if (Auth::check() && Auth::user()->hasRole('_administrador'))
                                                         @if($pqr->estadoid != 4)
-                                                            {!! Form::select('estadoid', $estados, null, ['class' => 'form-control select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el estado']) !!}
+                                                            {!! Form::select('estadoid', $estados, null, ['class' => 'form-control select2', 'style'=>'width: 90%', 'data-placeholder'=>'Seleccione el estado']) !!}
                                                         @else
                                                             {{$pqr->estadonombre}}
                                                         @endif
@@ -119,7 +131,8 @@
                                         <!-- FLUJO -->
                                         <div class="tab-pane fade" id="custom-tabs-four-flujo" role="tabpanel" aria-labelledby="custom-tabs-four-flujo-tab">
                                             @foreach ($flujos as $flujo)
-                                                <p><i class="fas fa-caret-right"></i> <b>{{$flujo->name}}</b> colocó el ticket en estado <span class="badge badge-secondary">{{$flujo->estadonombre}}</span> el {{$flujo->created_at}}
+
+                                                <p><i class="fas fa-caret-right"></i> <b>{{$flujo->name}}</b> colocó el ticket en estado <span class="badge badge-{{in_array($flujo->estadoid, [1,2,3])?'secondary':'success'}}">{{$flujo->estadonombre}}</span> el {{$flujo->created_at}}
                                                     @if($flujo->motivoid)
                                                         <span class="text-danger font-italic"> --> ({{$flujo->motivo}})</span>
                                                     @endif
@@ -190,8 +203,9 @@
                                                     @if($pqr->estadoid != 4)
                                                         <hr class="mt-4">
 
-                                                        {{ Form::file('archivo', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
-                                                        @error('archivo')
+                                                        {{ Form::file('adjunto', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
+                                                        <br>
+                                                        @error('adjunto')
                                                             <small class="text-danger">
                                                                 {{$message}}
                                                             </small>
@@ -241,11 +255,33 @@
  @stop
 
 @section('js')
-  @if(session('info'))
-    <script type="text/javascript">
-        toastr.success("{{session('info')}}")
-    </script>
-   @endif
+    @if(session('info'))
+        <script type="text/javascript">
+            toastr.success("{{session('info')}}")
+
+            var cadena = "{{session('info')}}";
+            var resumen = cadena.toLowerCase().indexOf('estado')
+            var comentarios = cadena.toLowerCase().indexOf("mensaje")
+            var archivos = cadena.toLowerCase().indexOf('archivo')
+            if (resumen >= 0){
+                $("#custom-tabs-four-resumen").addClass("show active")
+                $("#custom-tabs-four-comentarios").removeClass("show active")
+                $("#custom-tabs-four-resumen-tab").addClass("active")
+                $("#custom-tabs-four-comentarios-tab").removeClass("active")
+            }else if (comentarios >= 0){
+                $("#custom-tabs-four-resumen").removeClass("show active")
+                $("#custom-tabs-four-comentarios").addClass("show active")
+                $("#custom-tabs-four-resumen-tab").removeClass("active")
+                $("#custom-tabs-four-comentarios-tab").addClass("active")
+            }else if (archivos >= 0){
+                $("#custom-tabs-four-resumen").removeClass("show active")
+                $("#custom-tabs-four-adjuntos").addClass("show active")
+                $("#custom-tabs-four-resumen-tab").removeClass("active")
+                $("#custom-tabs-four-adjuntos-tab").addClass("active")
+            }
+
+        </script>
+    @endif
 
  <script>
     $(function () {

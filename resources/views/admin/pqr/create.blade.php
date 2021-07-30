@@ -77,8 +77,9 @@
             <div class="col-12">
                 <div class="form-group"> <!-- Logo del conjunto -->
 
-                    {{ Form::file('archivo', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
-                    @error('archivo')
+                    {{ Form::file('adjunto', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
+                    <br>
+                    @error('adjunto')
                         <small class="text-danger">
                             {{$message}}
                         </small>

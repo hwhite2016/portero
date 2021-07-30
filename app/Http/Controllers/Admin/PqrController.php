@@ -132,13 +132,13 @@ class PqrController extends Controller
             'estadoid' => 1,
         ]);
 
-        if ($request->hasfile('archivo')){
+        if ($request->hasfile('adjunto')){
             $this->validate($request, [
-                'archivo' => 'required|mimes:pdf,jpeg,png,jpg,svg|max:2048',
+                'adjunto' => 'required|mimes:pdf,jpeg,png,jpg,svg|max:2048',
             ]);
 
             $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'pqrs');
-            $file = $request->file('archivo');
+            $file = $request->file('adjunto');
 
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777,true);
@@ -156,7 +156,7 @@ class PqrController extends Controller
 
             Adjunto::create([
                 'pqrid' => $pqrs->id,
-                'archivo' => $filename,
+                'adjunto' => $filename,
                 'userid' => Auth::user()->id,
             ]);
         }
@@ -308,6 +308,8 @@ class PqrController extends Controller
             'comentario'=>'max:400'
         ]);
 
+        $txt = "El Ticket se actualizo exitosamente";
+
         if($request->get('estadoid')){
             $pqrs->update([
                 'estadoid'=>$request->get('estadoid'),
@@ -319,15 +321,17 @@ class PqrController extends Controller
                 'userid' => Auth::user()->id,
                 //'motivoid' => $request->get('motivo'),
             ]);
+
+            $txt = "El estado se actualizo exitosamente";
         }
 
-        if ($request->hasfile('archivo')){
+        if ($request->hasfile('adjunto')){
             $this->validate($request, [
-                'archivo' => 'required|mimes:pdf,jpeg,png,jpg,svg|max:2048',
+                'adjunto' => 'required|mimes:pdf,jpeg,png,jpg,svg|max:2048',
             ]);
 
             $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'pqrs');
-            $file = $request->file('archivo');
+            $file = $request->file('adjunto');
 
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777,true);
@@ -348,6 +352,8 @@ class PqrController extends Controller
                 'archivo' => $filename,
                 'userid' => Auth::user()->id,
             ]);
+
+            $txt = "El archivo se subio exitosamente";
         }
         if($request->get('comentario')){
             Comentario::create([
@@ -355,8 +361,9 @@ class PqrController extends Controller
                 'comentario' => $request->get('comentario'),
                 'userid' => Auth::user()->id,
             ]);
+            $txt = "El mensaje se envio exitosamente";
         }
-        return redirect()->route('admin.pqrs.edit', $pqrs->id)->with('info','El Ticket fue actualizado exitosamente');
+        return redirect()->route('admin.pqrs.edit', $pqrs->id)->with('info', $txt);
     }
 
     public function changeEstado(Request $request, $id)
