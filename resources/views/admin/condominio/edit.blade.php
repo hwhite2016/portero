@@ -21,7 +21,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Barrio -->
                     {{ Form::label('barrioid', 'Barrio') }}
                     {!! Form::select('barrioid', $barrios, $conjunto->barrioid, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un barrio']) !!}
@@ -32,7 +32,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Nombre del conjunto -->
                     {{ Form::label('conjuntonombre', '* Nombre del conjunto') }}
                     {{ Form::text('conjuntonombre', $conjunto->conjuntonombre, array('placeholder' => 'Ingresa un conjunto', 'class' => 'form-control')) }}
@@ -41,6 +41,22 @@
                             {{$message}}
                         </small>
                     @enderror
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Nit -->
+                    {{ Form::label('conjuntonit', '* Nit') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-credit-card"></i></span>
+                        </div>
+                        {{ Form::number('conjuntonit', $conjunto->conjuntonit, array('placeholder' => 'Ingrese el NIT', 'class' => 'form-control')) }}
+                        @error('conjuntonit')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
                 </div>
             </div>
             <div class="col-md-7">

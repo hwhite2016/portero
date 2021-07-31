@@ -13,6 +13,8 @@ use App\Models\ClaseUnidad;
 use App\Models\Residente;
 use App\Models\Vehiculo;
 use App\Models\Mascota;
+use App\Models\Persona;
+use App\Models\TipoDocumento;
 
 class UnidadController extends Controller
 {
@@ -70,6 +72,28 @@ class UnidadController extends Controller
 
     }
 
+    public function getModal($id)
+    {
+
+        $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
+        $conjuntos = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+            ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+            ->select('conjuntonombre','conjuntos.id')
+            ->where('unidads.id', '=', $id)
+            ->pluck('conjuntonombre', 'id');
+
+        $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+            ->select(
+            Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
+            ->where('unidads.id', '=', $id)
+            ->pluck('unidad', 'unidads.id');
+
+        //$unidads->prepend('Seleccione la unidad', '');
+
+        return view('admin.unidad.createModal', compact('tipo_documentos', 'conjuntos', 'unidads'));
+
+    }
+
     public function show($id)
     {
         $unidads = Unidad::leftjoin("residentes","residentes.unidadid", "=", "unidads.id")
@@ -97,6 +121,9 @@ class UnidadController extends Controller
             DB::raw("CONCAT(claseunidadnombre,' (',claseunidaddescripcion,')') AS clasenombre"),'id')
             ->whereIn('conjuntoid', session('dependencias'))
             ->pluck('clasenombre', 'id');
+        $propietario = Persona::join('unidads', 'propietarioid', 'personas.id')
+            ->where('unidads.id', $id)->pluck('personanombre', 'personas.id');
+
         $residentes = Residente::join('tipo_residentes', 'tipo_residentes.id', '=', 'tiporesidenteid')
         ->join('personas', 'personas.id', '=', 'personaid')
         ->join('unidads', 'unidads.id', '=', 'unidadid')
@@ -114,13 +141,19 @@ class UnidadController extends Controller
         ->select(mascota::raw('mascotas.id, tipomascotanombre, mascotaraza, mascotaedad' ))
         ->where('unidads.id', $id)
         ->get();
+
         $act_residentes = 'active'; $act_vehiculos = ''; $act_mascotas = '';
-        return view('admin.unidad.edit', compact('unidad', 'bloques','tipo_unidads','clase_unidads','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
+        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques','tipo_unidads','clase_unidads','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
 
     }
 
     public function update(Request $request, Unidad $unidad)
     {
+
+        $unidad->update([
+            'propietarioid'=>null,
+        ]);
+
         $validar_update = $unidad->id > 0 ? $unidad->id : "NULL";
         $request->validate([
             'bloqueid'=>'required',

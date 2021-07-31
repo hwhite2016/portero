@@ -108,7 +108,6 @@ class ResidenteController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'conjuntoid'=>'required',
             'unidadid'=>'required',
@@ -144,13 +143,22 @@ class ResidenteController extends Controller
             ]);
         }
 
-        if (!Residente::where('personaid', '=', $persona->id)->whereUnidadid($request->get('unidadid'))->exists()) {
-            Residente::create([
-                'personaid'=>$persona->id,
-                'unidadid'=>$request->get('unidadid'),
-                'tiporesidenteid'=>$request->get('tiporesidenteid'),
-                'relationid'=>$request->get('relationid'),
+        if (Unidad::where('id', '=', $request->get('unidadid'))->exists()) {
+            $unidad= Unidad::where('id','=',$request->get('unidadid'))->first();
+            $unidad->update([
+                'propietarioid'=>$persona->id,
             ]);
+        }
+
+        if($request->get('tiporesidenteid')){
+            if (!Residente::where('personaid', '=', $persona->id)->whereUnidadid($request->get('unidadid'))->exists()) {
+                Residente::create([
+                    'personaid'=>$persona->id,
+                    'unidadid'=>$request->get('unidadid'),
+                    'tiporesidenteid'=>$request->get('tiporesidenteid'),
+                    'relationid'=>$request->get('relationid'),
+                ]);
+            }
         }
 
         //$persona->conjuntos()->sync($request->conjuntoid);

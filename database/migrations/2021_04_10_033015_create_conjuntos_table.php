@@ -16,6 +16,7 @@ class CreateConjuntosTable extends Migration
         Schema::create('conjuntos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barrioid')->nullable();
+            $table->integer('conjuntonit');
             $table->string('conjuntonombre', 100);
             $table->string('conjuntodireccion', 100);
             $table->string('conjuntologo', 30)->nullable()->default('images/yourlogo.png');
@@ -23,10 +24,9 @@ class CreateConjuntosTable extends Migration
             $table->string('conjuntocelular', 15)->nullable();
             $table->string('conjuntotelefono', 15)->nullable();
             $table->boolean('conjuntoestado')->default(0);
-            //$table->enum('conjuntoestado', ['activo','inactivo']);
             $table->foreign('barrioid')->references('id')->on('barrios')->onDelete('set null');
-            //$table->softDeletes();
             $table->timestamps();
+            $table->unique('conjuntonit');
         });
     }
 

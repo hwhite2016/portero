@@ -61,6 +61,7 @@ class CondominioController extends Controller
 
         $conjuntos = Conjunto::create([
             'barrioid' => $request->get('barrioid'),
+            '$conjuntonit' => $request->get('conjuntonit'),
             'conjuntonombre' => $request->get('conjuntonombre'),
             'conjuntodireccion' => $request->get('conjuntodireccion'),
             'conjuntocorreo' => $request->get('conjuntocorreo'),
@@ -120,6 +121,7 @@ class CondominioController extends Controller
          }
 
          $conjunto->barrioid = $request->get('barrioid');
+         $conjunto->conjuntonit = $request->get('conjuntonit');
          $conjunto->conjuntonombre = $request->get('conjuntonombre');
          $conjunto->conjuntodireccion = $request->get('conjuntodireccion');
          $conjunto->conjuntocorreo = $request->get('conjuntocorreo');

@@ -27,13 +27,27 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <div class="form-group"> <!-- Tipo de Unidad -->
+            <div class="col-4">
+                <div class="form-group"> <!-- Tipo Unidad -->
+                    {{ Form::label('tipounidadid', 'Tipo de inmueble') }}
+                    {!! Form::select('tipounidadid', $tipo_unidads, old('tipounidadid'), ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group"> <!-- Numero Unidad -->
+                    {{ Form::label('unidadnombre', '* Numero') }}
+                    {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Categoria de Unidad -->
                     {{ Form::label('claseunidadid', '* Tipo de Unidad') }}
                     <div class="input-group">
                         {!! Form::select('claseunidadid', $clase_unidads, null, ['class' => 'form-control  select2','style'=>'width: 90%']) !!}
                         <div class="input-group-prepend">
-                            <a href="#" id="addTipo" class="input-group-text" data-toggle="modal" data-target="#exampleModal" data-whatever="hola">
+                            <a href="#" id="addTipo" class="input-group-text" data-toggle="modal" data-target="#exampleModal" data-whatever="tpr">
                                 <i class="fas fa-plus"></i>
                             </a>
                         </div>
@@ -46,22 +60,8 @@
                 </div>
             </div>
 
-            <div class="col-4">
-                <div class="form-group"> <!-- Unidad -->
-                    {{ Form::label('tipounidadid', 'Tipo de inmueble') }}
-                    {!! Form::select('tipounidadid', $tipo_unidads, old('tipounidadid'), ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
-                </div>
-            </div>
-
-            <div class="col-8">
-                <div class="form-group"> <!-- Unidad -->
-                    {{ Form::label('unidadnombre', '* Numero') }}
-                    {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
+            <div class="col-md-8">
+                <div class="form-group"> <!-- Parqueaderos asignados -->
                     {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
                     {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'100%']) !!}
                 </div>
@@ -120,7 +120,7 @@
       //Initialize Select2 Elements
       $('.select2').select2()
 
-      $('#exampleModal').on('show.bs.modal', function (event) {
+        $('#exampleModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var recipient = button.data('whatever')
             var modal = $(this)
@@ -139,7 +139,9 @@
                 }
             })
 
-      })
+        })
+
+
     })
 </script>
 @stop

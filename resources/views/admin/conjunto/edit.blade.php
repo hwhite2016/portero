@@ -34,6 +34,22 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <div class="form-group"> <!-- Nit -->
+                    {{ Form::label('conjuntonit', '* Nit') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-credit-card"></i></span>
+                        </div>
+                        {{ Form::number('conjuntonit', $conjunto->conjuntonit, array('placeholder' => 'Ingrese el NIT', 'class' => 'form-control')) }}
+                        @error('conjuntonit')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Correo -->
                     {{ Form::label('conjuntocorreo', '* Correo electrónico') }}
                     <div class="input-group">

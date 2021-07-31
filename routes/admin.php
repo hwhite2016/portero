@@ -46,6 +46,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('/clase_unidads', ClaseUnidadController::class)->names('admin.clase_unidads');
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
     Route::resource('/unidads', UnidadController::class)->names('admin.unidads');
+    Route::get('/propietarioModal/{id}', [UnidadController::class, 'getModal'])->name('admin.unidads.getModal');
     Route::resource('/personas', PersonaController::class)->names('admin.personas');
     Route::resource('/empleados', EmpleadoController::class)->names('admin.empleados');
     Route::resource('/residentes', ResidenteController::class)->names('admin.residentes');
@@ -82,7 +83,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/orders', function(){
         return view('admin.orders.payment');
     });
-    Route::get('/invoice-print', function(){
+    Route::get('/orders2', function(){
         return view('admin.orders.invoice-print');
     });
 

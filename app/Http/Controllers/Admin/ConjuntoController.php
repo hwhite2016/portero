@@ -106,6 +106,7 @@ class ConjuntoController extends Controller
 
         $conjunto = Conjunto::find($id);
         $request->validate([
+            'conjuntonit'=>'required',
             'conjuntocorreo'=>'required|email',
             'conjuntocelular'=>'required|min:10'
          ]);
@@ -127,6 +128,7 @@ class ConjuntoController extends Controller
             $conjunto->conjuntologo = $filename;
         }
 
+        $conjunto->conjuntonit = $request->get('conjuntonit');
         $conjunto->conjuntocorreo = $request->get('conjuntocorreo');
         $conjunto->conjuntocelular = $request->get('conjuntocelular');
         $conjunto->conjuntotelefono = $request->get('conjuntotelefono');

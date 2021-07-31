@@ -17,6 +17,7 @@ class ConjuntoSeeder extends Seeder
         $conjunto = new Conjunto();
 
         $conjunto->barrioid = 1;
+        $conjunto->conjuntonit = 123456789;
         $conjunto->conjuntonombre = 'Conjunto Residencial Siena';
         $conjunto->conjuntodireccion = 'Transversal 44 # 102 - 167';
         $conjunto->conjuntologo = 'logos/20210614115730.jpg';
@@ -30,6 +31,7 @@ class ConjuntoSeeder extends Seeder
         $conjunto2 = new Conjunto();
 
         $conjunto2->barrioid = 1;
+        $conjunto2->conjuntonit = 987654321;
         $conjunto2->conjuntonombre = 'Conjunto Residencial Olivenza';
         $conjunto2->conjuntodireccion = 'Transversal 44 # 102 - 167';
         $conjunto2->conjuntologo = 'logos/20210614115737.jpg';

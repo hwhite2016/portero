@@ -31,11 +31,18 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Tipo inmueble -->
+                    {{ Form::label('unidadnombre', '* Tipo de Inmueble / Numero') }}
+                    {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
+                </div>
+            </div>
+
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Tipo de Unidad -->
                     {{ Form::label('claseunidadid', '* Tipo de Unidad') }}
                     <div class="input-group">
-                        {!! Form::select('claseunidadid', $clase_unidads, null, ['class' => 'form-control  select2','style'=>'width: 90%']) !!}
+                        {!! Form::select('claseunidadid', $clase_unidads, null, ['class' => 'form-control  select2','style'=>'width: 80%']) !!}
                         <div class="input-group-prepend">
                             <a href="#" id="addTipo" class="input-group-text" data-toggle="modal" data-target="#tipoModal" data-whatever="hola">
                                 <i class="fas fa-plus"></i>
@@ -50,14 +57,31 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Unidad -->
-                    {{ Form::label('unidadnombre', '* Tipo de Inmueble / Numero') }}
-                    {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
+            <div class="col-md-6">
+                <div class="form-group"> <!-- Prpietario -->
+                    {{ Form::label('propietarioid', '* Propietario') }}
+                    <div class="input-group">
+                        {!! Form::select('propietarioid', $propietario, null, ['class' => 'form-control select2','style'=>'width: 80%','data-placeholder'=>'Agregue un propietario']) !!}
+                        <div class="input-group-prepend">
+                            <a href="#" id="delPropietario" class="input-group-text">
+                                <i class="fas fa-minus"></i>
+                            </a>
+                        </div>
+                        <div class="input-group-prepend">
+                            <a href="#" id="addPropietario" class="input-group-text" data-toggle="modal" data-target="#propietarioModal" data-whatever="{{$unidad->id}}">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    @error('propietarioid')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group">
                     {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
                     {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'100%']) !!}
@@ -134,6 +158,30 @@
 </div>
 
 <!-- Modal -->
+{!! Form::open(['route'=>'admin.residentes.store', 'method'=>'post']) !!}
+    @csrf
+<div class="modal fade" id="propietarioModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </div>
+</div>
+{!! Form::close() !!}
+
+<!-- Modal -->
 {!! Form::open(['route'=>'admin.clase_unidads.store', 'method'=>'post']) !!}
     @csrf
 <div class="modal fade" id="tipoModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -177,6 +225,14 @@
         $('.select2').select2()
         $(":input").inputmask();
 
+        $('#delPropietario').on('click', function () {
+            console.log($('#propietarioid').val());
+
+            $('#propietarioid option').each(function() {
+                    $(this).remove();
+            });
+        })
+
         $('#tipoModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget)
             var recipient = button.data('whatever')
@@ -196,7 +252,30 @@
                 }
             })
 
-      })
+        })
+
+        $('#propietarioModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var unidadid = button.data('whatever')
+            var modal = $(this)
+            var url = "{{route('admin.unidads.getModal', ":unidadid") }}";
+            url = url.replace(':unidadid', unidadid);
+
+            $.ajax({
+                async: true,
+                url: url,
+                type: 'GET',
+                dataType: "html",
+                success: function (data) {
+                    modal.find('.modal-title').text('Propietario')
+                    modal.find('.modal-body').html(data)
+                },
+                error: function (error) {
+                    funError(error);
+                }
+            })
+
+        })
 
         $('#residentesModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget)

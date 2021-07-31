@@ -28,6 +28,7 @@ class ValidarFormularioRequest extends FormRequest
             //Ciudad
             //Barrio
             //Conjuntos
+            'conjuntonit' => 'required',
             'conjuntonombre' => 'required|min:3|max:30',
             'conjuntodireccion' => 'required|min:3|max:30',
             'conjuntocorreo' => 'required|email',
@@ -43,6 +44,7 @@ class ValidarFormularioRequest extends FormRequest
             //Barrio
             //Conjuntos
             //Conjuntos
+            'conjuntonit.required'   => ':attribute es obligatorio.',
             'conjuntonombre.required'   => ':attribute es obligatorio.',
             'conjuntonombre.min'        => ':attribute debe contener mas de una letra.',
             'conjuntonombre.max'        => ':attribute debe contener max 30 letras.',
@@ -62,6 +64,7 @@ class ValidarFormularioRequest extends FormRequest
             //Ciudad
             //Barrio
             //Conjuntos
+            'conjuntonit'        => 'El NIT del conjunto',
             'conjuntonombre'        => 'El nombre del conjunto',
             'conjuntodireccion'    => 'La direccion del conjunto',
             'conjuntocorreo'    => 'El email',

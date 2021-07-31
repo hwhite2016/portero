@@ -249,7 +249,7 @@ return [
             'route'       => 'admin.pqrs.index',
             'icon'        => 'far fa-envelope',
             'can'         => 'admin.pqrs.index',
-            'label'       => 'desarrollo',
+            'label'       =>  4,
             'label_color' => 'warning',
         ],
         [
