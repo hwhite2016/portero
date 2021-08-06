@@ -13,6 +13,7 @@ use App\Models\TipoBloque;
 class BloqueController extends Controller
 {
     public function __construct(){
+
         $this->middleware('auth');
         $this->middleware('can:admin.bloques.index')->only('index');
         $this->middleware('can:admin.bloques.create')->only('create', 'store');
@@ -36,6 +37,7 @@ class BloqueController extends Controller
 
     public function create()
     {
+
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
         $tipo_bloques = TipoBloque::all()->pluck('tipobloquenombre', 'tipobloquenombre');
         return view('admin.bloque.create')->with('conjuntos',$conjuntos)->with('tipo_bloques',$tipo_bloques);
@@ -43,6 +45,7 @@ class BloqueController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'conjuntoid'=>'required',
             'bloquenombre'=>'required',
@@ -58,7 +61,8 @@ class BloqueController extends Controller
 
     public function show($id)
     {
-             $bloques = Bloque::leftjoin("unidads","unidads.bloqueid", "=", "bloques.id")
+
+        $bloques = Bloque::leftjoin("unidads","unidads.bloqueid", "=", "bloques.id")
              ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
              ->join('barrios','barrios.id','=','conjuntos.barrioid')
              ->select(bloque::raw('count(unidads.id) as unidad_count, bloques.id, bloques.conjuntoid, barrionombre, conjuntonombre, bloquenombre'))
@@ -73,6 +77,7 @@ class BloqueController extends Controller
 
     public function edit($id)
     {
+
         $bloque = Bloque::find($id);
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
         return view('admin.bloque.edit')->with('bloque',$bloque)->with('conjuntos',$conjuntos);
@@ -93,6 +98,7 @@ class BloqueController extends Controller
 
     public function destroy($id)
     {
+
         $bloque = Bloque::find($id);
         if(count($bloque->unidads)){
             return redirect()->route('admin.bloques.show', $bloque->conjuntoid)->with('warning','El bloque no se puede eliminar ya que contiene unidades');

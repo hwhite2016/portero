@@ -195,6 +195,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
+    'password_rol_url' => 'password/rol',
     'profile_url' => false,
 
     /*
@@ -240,9 +241,9 @@ return [
         // Sidebar items:
         [
             'text'        => 'Home',
-            'route'         => 'admin.index',
+            'route'         => 'admin.conjuntos.index',
             'icon'        => 'fas fa-house-user',
-            'can'          => 'admin.index',
+            'can'          => 'admin.conjuntos.index',
         ],
         [
             'text'        => 'Pqrs',
@@ -255,7 +256,7 @@ return [
         [
             'text'        => 'Notificaciones',
             'icon'        => 'fas fa-bell',
-            'can'         => 'admin.index',
+            'can'         => 'admin.notificaciones.show',
             'submenu' => [
                 [
                     // 'shift'    => 'ml-3' ,
@@ -284,7 +285,7 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'route'         => 'admin.index',
+            'route'         => 'admin.show',
             'icon'        => 'fas fa-tachometer-alt',
             'can'          => 'admin.dashboard.index',
         ],
@@ -293,15 +294,15 @@ return [
             'can'    => 'admin.visitantes.index',
         ],
         [
-            'text'        => 'Recepcion',
-            'route'         => 'admin.entregas.index',
-            'icon'        => 'fas fa-concierge-bell',
-            'can'          => 'admin.visitantes.index',
-        ],
-        [
             'text'        => 'Residentes',
             'route'         => 'admin.residentes.list',
             'icon'        => 'fas fa-user-check',
+            'can'          => 'admin.visitantes.index',
+        ],
+        [
+            'text'        => 'Recepcion',
+            'route'         => 'admin.entregas.index',
+            'icon'        => 'fas fa-concierge-bell',
             'can'          => 'admin.visitantes.index',
         ],
         [
@@ -344,7 +345,10 @@ return [
             'can'    => 'admin.roles.index',
         ],
 
-        ['header' => 'CONFIGURACION'],
+        [
+            'header' => 'CONFIGURACION',
+            'can'    => 'admin.unidads.index',
+        ],
         [
             'text' => 'Paises',
             'route'  => 'admin.pais.index',

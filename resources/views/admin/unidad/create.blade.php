@@ -71,7 +71,11 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        <a class="btn btn-warning" href="{{route('admin.unidads.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
+        @if($bloqueid)
+            <a class="btn btn-warning" href="{{route('admin.unidads.show', $bloqueid)}}"><i class="fas fa-angle-double-left"></i> Volver</a>
+        @else
+            <a class="btn btn-warning" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-left"></i> Volver</a>
+        @endif
         {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
         {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
     </div>

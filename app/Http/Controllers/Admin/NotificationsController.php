@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('can:admin.notificaciones.show')->only('show');
+    }
+
     public function show($id=0)
     {
         if ($id == 1){

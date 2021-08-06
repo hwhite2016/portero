@@ -34,10 +34,10 @@ class ConjuntoController extends Controller
                 foreach ($dependencias as $dependencia){
                     $dep[] = $dependencia->id;
                 }
-                session(['dependencias'=>$dep]);
+                //session(['dependencias'=>$dep]);
             }else{
                 $dep[] = 0;
-                session(['dependencias'=>$dep]);
+                //session(['dependencias'=>$dep]);
             }
 
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
@@ -75,10 +75,10 @@ class ConjuntoController extends Controller
                 foreach ($dependencias as $dependencia){
                     $dep[] = $dependencia->id;
                 }
-                session(['dependencias'=>$dep]);
+                //session(['dependencias'=>$dep]);
             }else{
                 $dep[] = 0;
-                session(['dependencias'=>$dep]);
+                //session(['dependencias'=>$dep]);
             }
 
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
@@ -94,17 +94,20 @@ class ConjuntoController extends Controller
         return view('admin.conjunto.index')->with('conjuntos', $conjuntos);
     }
 
-    public function edit($id)
+    public function edit(Conjunto $conjunto)
     {
-        $conjunto = Conjunto::find($id);
+        $this->authorize('administrador', $conjunto);
+
+        //$conjunto = Conjunto::find($id);
         $barrios = Barrio::all()->pluck('barrionombre', 'id');
         return view('admin.conjunto.edit')->with('conjunto',$conjunto)->with('barrios',$barrios);
     }
 
-   public function update(Request $request, $id)
+   public function update(Request $request, Conjunto $conjunto)
     {
+        $this->authorize('administrador', $conjunto);
 
-        $conjunto = Conjunto::find($id);
+        //$conjunto = Conjunto::find($id);
         $request->validate([
             'conjuntonit'=>'required',
             'conjuntocorreo'=>'required|email',

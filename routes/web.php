@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
@@ -25,13 +24,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/inicio', function () {
-//     return view('inicio');
-// });
-
 Auth::routes();
 
-Route::get('/home', [AdminHomeController::class, 'index']);
+Route::get('/rol', [HomeController::class, 'index'])->name('home.index');
+Route::post('/verify', [HomeController::class, 'show'])->name('home.show');
 
 // Notifications
 Route::post('notifications', [NotificationController::class, 'store']);
@@ -58,6 +54,3 @@ Route::get('manifest.json', function () {
     ];
 });
 
-Route::get('/profile', function(){
-    return view('profile.show');
-});

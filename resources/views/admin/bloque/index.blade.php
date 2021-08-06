@@ -14,16 +14,15 @@
     <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
+            <div class="card mt-4">
               <div class="card-header">
 
-                <h3 class="card-title">
-                  <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a>
-                </h3>
                 @can('admin.bloques.create')
                 <a href="{{route('admin.bloques.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Bloque</a>
                 @endcan
-                <a class="btn btn-warning float-right mr-2" href="{{route('admin.conjuntos.index')}}"><i class="fas fa-arrow-left"></i> Conjuntos</a>
+                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-right"></i></a>
+                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ir al inicio" href="{{route('admin.conjuntos.index')}}"><i class="fas fa-angle-double-left"></i></a>
+
 
               </div>
               <!-- /.card-header -->
@@ -31,7 +30,7 @@
                 <table id="bloques" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
                   <thead class="bg-primary">
                     <tr>
-                      <th>Bloque/Torre/Manzana/Etapa</th>
+                      <th>Bloque</th>
                       <th>Conjunto</th>
                       <th width="5%">...</th>
 
@@ -40,7 +39,7 @@
                   <tbody>
                     @foreach ($bloques as $bloque)
                       <tr>
-                        <td> {{ $bloque->bloquenombre }} </td>
+                        <td><a href="{{route('admin.bloques.edit', $bloque->id)}}">{{ $bloque->bloquenombre }} </a> </td>
                         <td>
                           <label class="text-uppercase fw-bold"> {{ $bloque->conjuntonombre }} </label>
                           <small> ({{ $bloque->barrionombre }}) </small>
@@ -50,7 +49,9 @@
                               {!! Form::model($bloque, ['route'=>['admin.bloques.destroy', $bloque], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @endcan
 
+                              @can('admin.bloques.edit')
                               <a href="{{ route ('admin.unidads.show', $bloque->id) }}" class="btn btn-warning btn-sm"  id="btn-unidad" data-toggle="tooltip" title="Ver Unidades"><i class="fas fa-home"></i> ({{ $bloque->unidad_count }})</a>
+                              @endcan
 
                               @can('admin.bloques.edit')
                               <a href="{{route('admin.bloques.edit', $bloque->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Bloque">

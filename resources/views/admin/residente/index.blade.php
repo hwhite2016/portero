@@ -16,13 +16,10 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">
-                    <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a>
-                </h3>
                 @can('admin.residentes.create')
                 <a href="{{route('admin.residentes.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Residente</a>
                 @endcan
-                <a class="btn btn-warning float-right mr-2" href="{{route('admin.unidads.index')}}"><i class="fas fa-arrow-left"></i> Unidades</a>
+                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-left"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

@@ -18,6 +18,8 @@
 @section('body_data', $layoutHelper->makeBodyData())
 
 @section('body')
+
+
     <div class="wrapper">
 
         {{-- Top Navbar --}}
@@ -46,6 +48,7 @@
 
             {{-- Main Content --}}
             <div class="content">
+
                 <div class="{{ config('adminlte.classes_content') ?: $def_container_class }}">
                     @yield('content')
                 </div>

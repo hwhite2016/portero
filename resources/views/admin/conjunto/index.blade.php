@@ -43,13 +43,13 @@
                         @endcan
                         @can('admin.conjuntos.edit')
                             <a href="{{ route ('admin.bloques.show', $conjunto->id) }}" class="btn btn-warning btn-sm  float-right"  id="btn-bloque" data-toggle="tooltip" title="Ver Bloques"><i class="fas fa-building"></i> ({{ $conjunto->bloque_count }})</a>
-                            <a href="{{route('admin.conjuntos.edit', $conjunto->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar Conjunto">
+                            <a href="{{route('admin.conjuntos.edit', $conjunto)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar Conjunto">
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                         @endcan
                         @can('admin.zonas.zonacomun')
-                            <a href="{{route('admin.zonas.show', $conjunto->id)}}" class="btn btn-sm btn-info  float-right" data-toggle="tooltip" title="Zonas Comunes">
-                                <i class="fas fa-swimmer"></i> Zonas comunes
+                            <a href="{{route('admin.zonas.show', $conjunto->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
+                                <i class="fas fa-swimmer"></i>
                             </a>
                         @endcan
                         @can('admin.conjuntos.destroy')

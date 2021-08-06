@@ -67,7 +67,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.condominios.edit', 'description' => 'Editar un condominio'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.condominios.destroy', 'description' => 'Eliminar un condominio'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'admin.conjuntos.index', 'description' => 'Ver lista de conjuntos'])->syncRoles([$role2]);
+        Permission::create(['name' => 'admin.conjuntos.index', 'description' => 'Ver lista de conjuntos'])->syncRoles([$role1,$role2,$role3]);
         //Permission::create(['name' => 'admin.conjuntos.create', 'description' => 'Crear un conjunto'])->syncRoles([$role2]);
         Permission::create(['name' => 'admin.conjuntos.edit', 'description' => 'Editar un conjunto'])->syncRoles([$role1, $role2]);
         //Permission::create(['name' => 'admin.conjuntos.destroy', 'description' => 'Eliminar un conjunto'])->syncRoles([$role2]);
@@ -130,6 +130,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.pqrs.create', 'description' => 'Crear un pqrs'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.pqrs.edit', 'description' => 'Editar un pqrs'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.pqrs.destroy', 'description' => 'Eliminar un pqrs'])->syncRoles([$role1, $role2]);
+
+        Permission::create(['name' => 'admin.notificaciones.show', 'description' => 'Ver Notificaciones'])->syncRoles([$role1, $role2, $role3, $role5]);
 
     }
 }

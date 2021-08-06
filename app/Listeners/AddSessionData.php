@@ -38,7 +38,7 @@ class AddSessionData
                 foreach ($dependencias as $dependencia){
                     $dep[] = $dependencia->id;
                 }
-                session(['dependencias'=>$dep]);
+                //session(['dependencias'=>$dep]);
             }
     }
 }

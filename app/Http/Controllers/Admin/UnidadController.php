@@ -40,9 +40,18 @@ class UnidadController extends Controller
         return view('admin.unidad.index')->with('unidads', $unidads);
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
+        if($request->get('bloqueid') > 0){
+            $bloqueid = $request->get('bloqueid');
+            $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))
+            ->whereId($bloqueid)
+            ->pluck('bloquenombre', 'id');
+        }else{
+            $bloqueid = null;
+            $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
+        }
+
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
         $tipo_unidads = TipoUnidad::all()->pluck('tipounidadnombre', 'tipounidadnombre');
         $clase_unidads = ClaseUnidad::select(
@@ -51,7 +60,7 @@ class UnidadController extends Controller
             ->orderBy('id', 'DESC')
             ->pluck('clasenombre', 'id');
 
-            return view('admin.unidad.create', compact('bloques','tipo_unidads','clase_unidads','parqueaderos'));    }
+            return view('admin.unidad.create', compact('bloques','tipo_unidads','clase_unidads','parqueaderos', 'bloqueid'));    }
 
     public function store(Request $request)
     {
@@ -107,13 +116,15 @@ class UnidadController extends Controller
         ->orderBy('unidadnombre', 'DESC')
         ->get();
 
-        return view('admin.unidad.index')->with('unidads', $unidads);
+        return view('admin.unidad.index', compact('unidads','id'));
 
     }
 
     public function edit($id)
     {
         $unidad = Unidad::find($id);
+        $bloqueid = $unidad->bloqueid;
+
         $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
         $tipo_unidads = TipoUnidad::all()->pluck('tipounidadnombre', 'tipounidadnombre');
@@ -143,7 +154,7 @@ class UnidadController extends Controller
         ->get();
 
         $act_residentes = 'active'; $act_vehiculos = ''; $act_mascotas = '';
-        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques','tipo_unidads','clase_unidads','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
+        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques', 'bloqueid', 'tipo_unidads','clase_unidads','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
 
     }
 

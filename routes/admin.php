@@ -25,8 +25,9 @@ use App\Http\Controllers\Admin\PqrController;
 use App\Http\Controllers\Admin\ZonaController;
 use Illuminate\Support\Facades\Auth;
 
-Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-	Route::get('/', [HomeController::class, 'index'])->name('admin.index');
+Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
+
+    Route::get('/', [HomeController::class, 'index'])->name('admin.index');
     Route::get('/notifications/get', [NotificationsController::class, 'getNotificationsData']);
 	Route::resource('/users', UserController::class)->names('admin.users');
 	Route::resource('/roles', RoleController::class)->names('admin.roles');

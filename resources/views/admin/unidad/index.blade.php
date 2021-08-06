@@ -17,13 +17,17 @@
             <div class="card">
               <div class="card-header">
 
-                <h3 class="card-title">
-                    <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a>
-                </h3>
                 @can('admin.unidads.create')
-                <a href="{{route('admin.unidads.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Unidad</a>
+                {!! Form::open(['route'=>'admin.unidads.create', 'method'=>'get']) !!}
+                @if (isset($id))
+                    {!! Form::hidden('bloqueid', $id) !!}
+                @endif
+                <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Unidad</button>
+                {!! Form::close() !!}
                 @endcan
-                <a class="btn btn-warning float-right mr-2" href="{{route('admin.bloques.index')}}"><i class="fas fa-arrow-left"></i> Bloques</a>
+                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver residentes" href="{{route('admin.residentes.index')}}"><i class="fas fa-angle-double-right"></i></a>
+                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver bloques" href="{{route('admin.bloques.index')}}"><i class="fas fa-angle-double-left"></i></a>
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -32,7 +36,7 @@
                     <tr>
                       <th>Unidad</th>
                       <th>Bloque</th>
-                      <th>clase</th>
+                      <th>Tipo</th>
                       <th width="5%">...</th>
 
                     </tr>
