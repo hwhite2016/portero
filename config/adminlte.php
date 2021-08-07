@@ -241,7 +241,7 @@ return [
         // Sidebar items:
         [
             'text'        => 'Home',
-            'route'         => 'admin.conjuntos.index',
+            'route'         => 'admin.index',
             'icon'        => 'fas fa-house-user',
             'can'          => 'admin.conjuntos.index',
         ],
@@ -296,7 +296,7 @@ return [
         [
             'text'        => 'Residentes',
             'route'         => 'admin.residentes.list',
-            'icon'        => 'fas fa-user-check',
+            'icon'        => 'fas fa-user-friends',
             'can'          => 'admin.visitantes.index',
         ],
         [

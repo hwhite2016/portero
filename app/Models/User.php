@@ -58,7 +58,8 @@ class User extends Authenticatable
 
     public function adminlte_desc()
     {
-        return 'Super Administrador';
+        $conjunto = Conjunto::whereIn('conjuntos.id', session('dependencias'))->first();
+        return $conjunto->conjuntonombre;
     }
 
     public function adminlte_profile_url()

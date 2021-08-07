@@ -91,9 +91,22 @@
           <div class="header-btns  header-btn-l-17 ms-auto  d-xs-inline-flex align-items-center">
                 @if (Route::has('login'))
                     @if (Auth::user())
-                        <a class="btn sign-in-btn focus-reset" href="{{ url('admin/notificacion/0') }}">
-                            <i class="fas fa-user" style="color: #50E3C2"></i>&nbsp; {{Auth::user()->name}}
+                        <a class="btn sign-in-btn focus-reset"
+                            href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-power-off" style="color: #50E3C2"></i>&nbsp; {{Auth::user()->name}}
                         </a>
+
+                        <form id="logout-form" action="{{ config('adminlte.logout_url', 'logout') }}" method="POST" style="display: none;">
+                            @if(config('adminlte.logout_method'))
+                                {{ method_field(config('adminlte.logout_method')) }}
+                            @endif
+                            {{ csrf_field() }}
+                        </form>
+
+                        {{-- <a class="btn sign-in-btn focus-reset" href="{{ url('logout') }}">
+                            <i class="fas fa-power-off" style="color: #50E3C2"></i>&nbsp; {{Auth::user()->name}}
+                        </a> --}}
+
                     @else
                         <a class="btn sign-in-btn focus-reset" href="{{ route('admin.index') }}">
                             <i class="fas fa-sign-in-alt" style="color: #50E3C2"></i>&nbsp; Iniciar Sesión

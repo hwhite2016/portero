@@ -51,7 +51,17 @@ class HomeController extends Controller
             ->orderBy('bloque_count', 'DESC')
             ->pluck('conjuntonombre', 'conjuntos.id');
 
-            return view('vendor.adminlte.auth.passwords.rol')->with('conjuntos', $conjuntos);
+            if($conjuntos->count()){
+                if($conjuntos->count()>1){
+                    return view('vendor.adminlte.auth.passwords.rol')->with('conjuntos', $conjuntos);
+                }else{
+                    session(['dependencias'=>$dep]);
+                    return redirect()->route('admin.index');
+                }
+            }
+
+            return redirect()->route('login');
+
     }
 
     public function show(Request $request){
