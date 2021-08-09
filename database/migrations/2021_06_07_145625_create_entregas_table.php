@@ -25,6 +25,7 @@ class CreateEntregasTable extends Migration
             $table->foreign('entregadestinatario')->references('id')->on('residentes');
             $table->string('entregaobservacion', 180)->nullable();
             $table->dateTime('entregafechaentrega')->nullable();
+            $table->boolean('entregaestado')->default(0);
             $table->timestamps();
         });
     }

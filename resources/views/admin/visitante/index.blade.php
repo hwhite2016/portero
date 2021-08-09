@@ -17,11 +17,12 @@
             <div class="card">
               <div class="card-header">
 
-                <h3 class="card-title">
+                {{-- <h3 class="card-title">
                   <a href="{{route('admin.visitantes.getVisitantes')}}"> Ver Historial</a>
-                </h3>
+                </h3> --}}
                 @can('admin.visitantes.create')
                 <a href="{{route('admin.visitantes.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Visitante</a>
+                <a class="btn btn-warning float-right mr-2" href="{{route('admin.visitantes.getVisitantes')}}"><i class="fas fa-clock"></i> Historial</a>
                 @endcan
               </div>
               <!-- /.card-header -->

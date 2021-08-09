@@ -16,14 +16,9 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">
-                    {{-- <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a> --}}
-                </h3>
-                @can('admin.entregas.create')
-                <a href="{{route('admin.entregas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Recepción</a>
-                @endcan
-                <a class="btn btn-warning float-right mr-2" href="{{route('admin.entregas.show', '=')}}"><i class="fas fa-clock"></i> Pendientes</a>
-                <a class="btn btn-success float-right mr-2" href="{{route('admin.entregas.show', '!=')}}"><i class="fas fa-check"></i> Entregados</a>
+
+                <a class="btn btn-warning float-right mr-2" href="{{route('admin.seguimiento.index')}}"><i class="fas fa-clock"></i> Pendientes</a>
+                <a class="btn btn-success float-right mr-2" href="{{route('admin.seguimiento.show', '!=')}}"><i class="fas fa-check"></i> Recibidos</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -38,7 +33,7 @@
                       <th>Destinatario</th>
                       <th>Fecha entrega</th>
                       <th>Observación</th>
-                      <th width="5%">...</th>
+                      <th width="5%">Estado</th>
 
                     </tr>
                   </thead>
@@ -59,33 +54,28 @@
 
                         <td>
 
-                            @if($entrega->entregafechaentrega)
-                                @if($entrega->entregaestado == 0)
-                                    <button class="btn btn-sm btn-warning" disabled>
-                                        <i class="fas fa-cog"></i> En espera
+
+                            @if($entrega->entregaestado == 0)
+                                @can('admin.seguimiento.edit')
+                                @if($entrega->entregafechaentrega <> null) {{-- Entregado al residente --}}
+                                     {!! Form::model($entrega, ['route'=>['admin.entregas.update', $entrega], 'method'=>'put', 'class'=>'frm_update']) !!}
+                                        <button class="btn btn-sm btn-warning" data-toggle="tooltip" title="Confirmar recepción">
+                                            <i class="fas fa-cog"></i> Confirmar
+                                        </button>
+                                    {!! Form::close() !!}
+
+                                @else {{-- Aun en recepcion --}}
+                                    <button class="btn btn-sm btn-danger" disabled>
+                                        <i class="fas fa-concierge-bell"></i> En recepción
                                     </button>
-                                @else
-                                    <button class="btn btn-sm btn-success" disabled>
-                                        <i class="fas fa-check-circle"></i> Recibido
-                                    </button>
+                                    {{-- <small class="text-danger"><i class="fas fa-concierge-bell"></i> En recepción</small> --}}
                                 @endif
-                            @else
-                                @can('admin.entregas.edit')
-                                {!! Form::model($entrega, ['route'=>['admin.entregas.update', $entrega], 'method'=>'put', 'class'=>'frm_update']) !!}
-                                <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Entregar"><i class="fas fa-sign-out-alt"></i></button>
-                                {!! Form::close() !!}
                                 @endcan
+                            @else
+                                <button class="btn btn-sm btn-success" disabled>
+                                    <i class="fas fa-check-circle"></i> Recibido
+                                </button>
                             @endif
-
-                            @can('admin.entregas.destroy')
-                              {!! Form::model($entrega, ['route'=>['admin.entregas.destroy', $entrega], 'method'=>'delete', 'class'=>'frm_delete']) !!}
-                              @csrf
-                              {{-- @method('DELETE') --}}
-                              <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Eliminar Entrega"><i class="far fa-trash-alt"></i></button>
-
-                              {!! Form::close() !!}
-                            @endcan
-
 
                         </td>
                       </tr>
@@ -189,17 +179,17 @@
     </script>
    @endif
    <script>
-      $('.frm_delete').submit(function(e){
+      $('.frm_update').submit(function(e){
           e.preventDefault();
 
           Swal.fire({
-            title: 'Esta usted seguro de eliminar este registro?',
+            title: 'El concerge le hizo la entrega satisfactoriamente?',
             text: "Esta accion no se podra deshacer!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, eliminar!',
+            confirmButtonText: 'Si, seguro!',
             cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {

@@ -73,9 +73,14 @@
 
             <div class="col-md-6">
                 <div class="form-group"> <!-- Destinatario -->
-                    {{ Form::label('entregadestinatario', 'Destinatario') }}
+                    {{ Form::label('entregadestinatario', '* Destinatario') }}
                     {{-- {!! Form::text('entregadestinatario', null, array('placeholder' => 'Para quien es la entrega', 'class' => 'form-control')) !!} --}}
                     {!! Form::select('entregadestinatario', [], null, ['class' => 'form-control  select2', 'data-placeholder'=>'Seleccione el destinatario', 'data-width'=>'100%']) !!}
+                    @error('entregadestinatario')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 

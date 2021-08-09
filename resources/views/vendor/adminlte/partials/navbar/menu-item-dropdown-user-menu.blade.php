@@ -1,14 +1,21 @@
 @php( $logout_url = View::getSection('logout_url') ?? config('adminlte.logout_url', 'logout') )
 @php( $profile_url = View::getSection('profile_url') ?? config('adminlte.profile_url', 'logout') )
+@php( $rol_url = View::getSection('rol_url') ?? config('adminlte.rol_url', 'logout') )
 
 @if (config('adminlte.usermenu_profile_url', false))
     @php( $profile_url = Auth::user()->adminlte_profile_url() )
 @endif
 
+@if (config('adminlte.usermenu_rol_url', false))
+    @php( $rol_url = Auth::user()->adminlte_rol_url() )
+@endif
+
 @if (config('adminlte.use_route_url', false))
+    @php( $rol_url = $profile_url ? route($rol_url) : '' )
     @php( $profile_url = $profile_url ? route($profile_url) : '' )
     @php( $logout_url = $logout_url ? route($logout_url) : '' )
 @else
+    @php( $rol_url = $rol_url ? url($rol_url) : '' )
     @php( $profile_url = $profile_url ? url($profile_url) : '' )
     @php( $logout_url = $logout_url ? url($logout_url) : '' )
 @endif
@@ -66,6 +73,12 @@
                 <a href="{{ $profile_url }}" class="btn btn-default btn-flat">
                     <i class="fa fa-fw fa-user"></i>
                     {{ __('adminlte::menu.profile') }}
+                </a>
+            @endif
+            @if($rol_url)
+                <a href="{{ $rol_url }}" class="btn btn-default btn-flat ml-2">
+                    <i class="fas fa-fw fa-exchange-alt"></i>
+                    Rol
                 </a>
             @endif
             <a class="btn btn-default btn-flat float-right @if(!$profile_url) btn-block @endif"

@@ -16,9 +16,10 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">
+                {{-- <h3 class="card-title">
                     <a href="{{route('admin.visitantes.index')}}"> Visitantes activos</a>
-                </h3>
+                </h3> --}}
+                <a class="btn btn-success float-right mr-2" href="{{route('admin.visitantes.index')}}"><i class="fas fa-check"></i> Visitantes Activos</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

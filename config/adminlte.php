@@ -71,6 +71,7 @@ return [
     'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => true,
+    'usermenu_rol_url' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -250,8 +251,6 @@ return [
             'route'       => 'admin.pqrs.index',
             'icon'        => 'far fa-envelope',
             'can'         => 'admin.pqrs.index',
-            'label'       =>  4,
-            'label_color' => 'warning',
         ],
         [
             'text'        => 'Notificaciones',
@@ -276,13 +275,19 @@ return [
 
         ],
         [
-            'text' => 'Zonas Comunes',
-            'route'  => 'admin.zonas.zonacomun',
-            'icon' => 'fas fa-swimmer',
-            'can'  => 'admin.zonas.zonacomun',
-            'label'       => 'desarrollo',
-            'label_color' => 'warning',
+            'text' => 'Correspondencia',
+            'route'  => 'admin.seguimiento.index',
+            'icon' => 'fas fa-inbox',
+            'can'  => 'admin.seguimiento.index',
         ],
+        // [
+        //     'text' => 'Zonas Comunes',
+        //     'route'  => 'admin.zonas.zonacomun',
+        //     'icon' => 'fas fa-swimmer',
+        //     'can'  => 'admin.zonas.zonacomun',
+        //     'label'       => 'desarrollo',
+        //     'label_color' => 'warning',
+        // ],
         [
             'text'        => 'Dashboard',
             'route'         => 'admin.show',
@@ -332,12 +337,17 @@ return [
             'can'    => 'admin.users.index',
         ],
         [
+            'text'   => 'Personas',
+            'route'  => 'admin.personas.index',
+            'icon'   => 'fas fa-users fa-fw',
+            'can'    => 'admin.personas.index',
+        ],
+        [
             'text'   => 'Usuarios',
             'route'  => 'admin.users.index',
             'icon'   => 'fas fa-users fa-fw',
             'can'    => 'admin.users.index',
         ],
-
         [
             'text'   => 'Roles',
             'route'  => 'admin.roles.index',
@@ -366,12 +376,6 @@ return [
             'route'  => 'admin.barrios.index',
             'icon' => 'fas fa-image',
             'can'  => 'admin.barrios.index',
-        ],
-        [
-            'text'   => 'Personas',
-            'route'  => 'admin.personas.index',
-            'icon'   => 'fas fa-users fa-fw',
-            'can'    => 'admin.personas.index',
         ],
         [
             'text'   => 'Empleados',

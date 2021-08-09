@@ -137,7 +137,14 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Tipo -->
+                    {{ Form::label('rol', 'Rol') }}
+                    {!! Form::select('rol', ['5'=>'Residente'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un rol']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Tipo -->
                     {{ Form::label('tiporesidenteid', 'Tipo de residente') }}
                     {!! Form::select('tiporesidenteid', $tipo_residentes, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo']) !!}
@@ -149,7 +156,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Relacion -->
                     {{ Form::label('relationid', 'Relacion con el residente principal') }}
                     {!! Form::select('relationid', $relations, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}

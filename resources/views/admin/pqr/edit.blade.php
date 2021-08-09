@@ -183,7 +183,7 @@
                                                 <div class="card-body">
                                                     @foreach ($adjuntos as $adjunto)
                                                         @if (Auth::check() && $adjunto->userid != Auth::user()->id)
-                                                        <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->archivo}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->archivo}}</a></p>
+                                                        <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->adjunto}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->adjunto}}</a></p>
                                                         @endif
                                                     @endforeach
                                                 </div>
@@ -196,7 +196,7 @@
                                                 <div class="card-body">
                                                     @foreach ($adjuntos as $adjunto)
                                                         @if (Auth::check() && $adjunto->userid == Auth::user()->id)
-                                                            <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->archivo}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->archivo}}</a></p>
+                                                            <p><a target="_blank" href="/storage/{{$pqr->conjuntoid}}/pqrs/{{$adjunto->adjunto}}"><i class="fas fa-caret-right"></i>&nbsp; {{$adjunto->adjunto}}</a></p>
                                                         @endif
                                                     @endforeach
 

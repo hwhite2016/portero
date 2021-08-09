@@ -17,6 +17,8 @@ class PersonaConjuntoSeeder extends Seeder
         PersonaConjunto::create(['persona_id' => '1', 'conjunto_id'=>'1']);
         PersonaConjunto::create(['persona_id' => '1', 'conjunto_id'=>'2']);
         PersonaConjunto::create(['persona_id' => '2', 'conjunto_id'=>'1']);
+        PersonaConjunto::create(['persona_id' => '3', 'conjunto_id'=>'1']);
+        PersonaConjunto::create(['persona_id' => '4', 'conjunto_id'=>'1']);
 
     }
 }

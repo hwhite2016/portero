@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\VisitanteController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PqrController;
+use App\Http\Controllers\Admin\SeguimientoController;
 use App\Http\Controllers\Admin\ZonaController;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +43,7 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/terminosModal/{id}', [ZonaController::class, 'terminosModal'])->name('admin.zonas.terminosModal');
     Route::get('/horario/{id}', [ZonaController::class, 'horario'])->name('admin.zonas.horario');
     Route::get('/calendario/{id}', [ZonaController::class, 'calendario'])->name('admin.zonas.calendario');
-    Route::get('/zonacomun', [ZonaController::class, 'calendario'])->name('admin.zonas.zonacomun');
+    //Route::get('/zonacomun', [ZonaController::class, 'calendario'])->name('admin.zonas.zonacomun');
     Route::get('/eventos', [ZonaController::class, 'eventos'])->name('admin.zonas.eventos');
     Route::resource('/clase_unidads', ClaseUnidadController::class)->names('admin.clase_unidads');
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
@@ -64,6 +65,8 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/documento/{id}', [VisitanteController::class, 'getInfoDocumento'])->name('admin.visitantes.documento');
     Route::get('/persona/{id}', [EntregaController::class, 'getInfoPersona'])->name('admin.entregas.persona');
     Route::resource('/entregas', EntregaController::class)->names('admin.entregas');
+    Route::resource('/seguimiento', SeguimientoController::class)->names('admin.seguimiento');
+    //Route::get('/seguimiento', [EntregaController::class, 'getEntregas'])->name('admin.entregas.getEntregas');
     Route::get('/notificacion/{id?}', [NotificationsController::class, 'show'])->name('admin.notificaciones.show');
     Route::get('/countNotification', [NotificationsController::class, 'countNotification'])->name('admin.notificaciones.countNotification');
     Route::post('/markNotificacion', [NotificationsController::class, 'markNotificacion'])->name('markNotificacion');

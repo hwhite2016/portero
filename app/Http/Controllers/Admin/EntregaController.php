@@ -36,12 +36,30 @@ class EntregaController extends Controller
              ->join('tipo_entregas','tipo_entregas.id','=','entregas.tipoentregaid')
              ->join('residentes','residentes.id','=','entregas.entregadestinatario')
              ->join('personas','personas.id','=','residentes.personaid')
-             ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega, entregas.created_at'))
+             ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega, entregaestado, entregas.created_at'))
              ->where('entregafechaentrega', NULL)
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('entregas.created_at', 'DESC')
              ->get();
              return view('admin.entrega.index')->with('entregas', $entregas);
+    }
+
+    public function getEntregas()
+    {
+
+        $entregas = Entrega::join("unidads","unidads.id", "=", "entregas.unidadid")
+             ->join('bloques','bloques.id','=','unidads.bloqueid')
+             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+             ->join('tipo_entregas','tipo_entregas.id','=','entregas.tipoentregaid')
+             ->join('residentes','residentes.id','=','entregas.entregadestinatario')
+             ->join('personas','personas.id','=','residentes.personaid')
+             ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega, entregaestado,entregas.created_at'))
+             ->where('entregafechaentrega', NULL)
+             ->where('residentes.personaid', Auth::user()->personaid)
+             ->whereIn('conjuntos.id', session('dependencias'))
+             ->orderBy('entregas.created_at', 'DESC')
+             ->get();
+             return view('admin.entrega.seguimiento')->with('entregas', $entregas);
     }
 
     public function getInfoPersona($id){
@@ -80,7 +98,8 @@ class EntregaController extends Controller
         $request->validate([
             'conjuntoid'=>'required',
             'unidadid'=>'required',
-            'tipoentregaid' => 'required'
+            'tipoentregaid' => 'required',
+            'entregadestinatario' => 'required'
         ]);
 
         $recepcion = entrega::create([
@@ -115,19 +134,35 @@ class EntregaController extends Controller
 
     public function show($id)
     {
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Seguridad')){
+            $entregas = Entrega::join("unidads","unidads.id", "=", "entregas.unidadid")
+            ->join('bloques','bloques.id','=','unidads.bloqueid')
+            ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+            ->join('tipo_entregas','tipo_entregas.id','=','entregas.tipoentregaid')
+            ->join('residentes','residentes.id','=','entregas.entregadestinatario')
+            ->join('personas','personas.id','=','residentes.personaid')
+            ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega, entregaestado, entregas.created_at'))
+            ->where('entregas.entregafechaentrega', $id, NULL)
+            ->whereIn('conjuntos.id', session('dependencias'))
+            ->orderBy('entregas.created_at', 'DESC')
+            ->get();
+            return view('admin.entrega.index')->with('entregas', $entregas);
+        }else{
+            $entregas = Entrega::join("unidads","unidads.id", "=", "entregas.unidadid")
+            ->join('bloques','bloques.id','=','unidads.bloqueid')
+            ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+            ->join('tipo_entregas','tipo_entregas.id','=','entregas.tipoentregaid')
+            ->join('residentes','residentes.id','=','entregas.entregadestinatario')
+            ->join('personas','personas.id','=','residentes.personaid')
+            ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega,entregaestado,entregas.created_at'))
+            ->where('entregas.entregaestado', $id, 0)
+            ->whereIn('conjuntos.id', session('dependencias'))
+            ->orderBy('entregas.created_at', 'DESC')
+            ->get();
+            return view('admin.entrega.seguimiento')->with('entregas', $entregas);
 
-        $entregas = Entrega::join("unidads","unidads.id", "=", "entregas.unidadid")
-        ->join('bloques','bloques.id','=','unidads.bloqueid')
-        ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
-        ->join('tipo_entregas','tipo_entregas.id','=','entregas.tipoentregaid')
-        ->join('residentes','residentes.id','=','entregas.entregadestinatario')
-        ->join('personas','personas.id','=','residentes.personaid')
-        ->select(Entrega::raw('entregas.id, conjuntonombre, bloquenombre, unidadnombre, tipoentregaid, tipoentreganombre, entregaempresa, entregareceptor, personanombre, entregaobservacion, entregafechaentrega,entregas.created_at'))
-        ->where('entregas.entregafechaentrega', $id, NULL)
-        ->whereIn('conjuntos.id', session('dependencias'))
-        ->orderBy('entregas.created_at', 'DESC')
-        ->get();
-        return view('admin.entrega.index')->with('entregas', $entregas);
+        }
     }
 
     public function edit($id)
@@ -150,10 +185,14 @@ class EntregaController extends Controller
 
     public function update(Entrega $entrega)
     {
-        //$entrega = Entrega::find($id);
-        $entrega->update(['entregafechaentrega'=> now()]);
-        return redirect()->route('admin.entregas.index')->with('info','La entrega se hizo de forma exitosa');
-
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Seguridad')){
+            $entrega->update(['entregafechaentrega'=> now()]);
+            return redirect()->route('admin.entregas.index')->with('info','La entrega se hizo de forma exitosa');
+        }else{
+            $entrega->update(['entregaestado'=> 1]);
+            return redirect()->route('admin.seguimiento.index')->with('info','La confirmación de la entrega fue exitosa');
+        }
     }
 
     public function destroy($id)

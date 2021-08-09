@@ -10,7 +10,6 @@
                             <a href="#" id="getResidente" class="input-group-text"><i class="fas fa-search"></i></a>
                         </div>
                     </div> --}}
-
     			</div>
     		</div>
     	</div>

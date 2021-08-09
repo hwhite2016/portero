@@ -16,7 +16,7 @@ class CreateConjuntosTable extends Migration
         Schema::create('conjuntos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barrioid')->nullable();
-            $table->integer('conjuntonit');
+            $table->string('conjuntonit', 20)->unique();
             $table->string('conjuntonombre', 100);
             $table->string('conjuntodireccion', 100);
             $table->string('conjuntologo', 30)->nullable()->default('images/yourlogo.png');
@@ -26,7 +26,6 @@ class CreateConjuntosTable extends Migration
             $table->boolean('conjuntoestado')->default(0);
             $table->foreign('barrioid')->references('id')->on('barrios')->onDelete('set null');
             $table->timestamps();
-            $table->unique('conjuntonit');
         });
     }
 

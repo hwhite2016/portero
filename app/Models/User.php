@@ -67,6 +67,11 @@ class User extends Authenticatable
         return 'user/profile';
     }
 
+    public function adminlte_rol_url()
+    {
+        return 'rol';
+    }
+
     protected $fillable = [
         'personaid',
         'name',

@@ -9,6 +9,7 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
+        {!! Form::hidden('unidad_propietario', 1) !!}
         {!! Form::hidden('residentes', 1) !!}
         {!! Form::hidden('rol', 5) !!}
         {!! Form::hidden('tiporesidenteid', 1, array('class' => 'tiporesidenteid')) !!}

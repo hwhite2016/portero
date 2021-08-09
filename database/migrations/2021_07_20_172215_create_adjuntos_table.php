@@ -17,7 +17,7 @@ class CreateAdjuntosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pqrid');
             $table->foreign('pqrid')->references('id')->on('pqrs')->onDelete('cascade');
-            $table->string('archivo', 40);
+            $table->string('adjunto', 40);
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -48,9 +48,11 @@ class ResidenteController extends Controller
              ->join('residentes','unidads.id','=','residentes.unidadid')
              ->leftJoin('vehiculos','unidads.id','=','vehiculos.unidadid')
              ->leftJoin('tipo_vehiculos','tipo_vehiculos.id','=','vehiculos.tipovehiculoid')
+             ->leftJoin('unidads_parqueaderos', 'unidad_id', 'unidads.id')
+             ->leftJoin('parqueaderos', 'parqueaderos.id', 'parqueadero_id')
              ->join('personas','personas.id','=','residentes.personaid')
              ->join('tipo_residentes','tipo_residentes.id','=','residentes.tiporesidenteid')
-             ->select('conjuntonombre','bloquenombre','unidadnombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' - ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(tipovehiculonombre,0), coalesce(vehiculoplaca,0)) AS vehiculos"))
+             ->select('conjuntonombre','bloquenombre','unidadnombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' - ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
              ->whereIn('conjuntos.id', session('dependencias'))
              ->GroupByRaw('conjuntonombre, bloquenombre, unidadnombre')
              ->orderBy('bloquenombre', 'ASC')
@@ -145,10 +147,12 @@ class ResidenteController extends Controller
         }
 
         if (Unidad::where('id', '=', $request->get('unidadid'))->exists()) {
-            $unidad= Unidad::where('id','=',$request->get('unidadid'))->first();
-            $unidad->update([
-                'propietarioid'=>$persona->id,
-            ]);
+            if($request->get('unidad_propietario') == 1){
+                $unidad= Unidad::where('id','=',$request->get('unidadid'))->first();
+                $unidad->update([
+                    'propietarioid'=>$persona->id,
+                ]);
+            }
         }
 
         if($request->get('tiporesidenteid')){
