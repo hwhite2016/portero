@@ -2,6 +2,7 @@
 
 @section('adminlte_css_pre')
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
 @stop
 
 @php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
@@ -22,7 +23,7 @@
 
 @section('auth_body')
 
-    <form action="{{ $login_url }}" method="post">
+    <form action="{{ $login_url }}" method="post" class="mb-4">
         {{ csrf_field() }}
 
         {{-- Email field --}}
@@ -74,6 +75,10 @@
         </div>
 
     </form>
+<hr>
+    <small>
+    Al iniciar sesión aceptas los <a class="text-info" href="/terminos" target="_blank">términos y condiciones</a> y las <a class="text-info" href="/privacidad" target="_blank">politicas de privacidad.</a>
+    </small>
 
     {{-- <p class="mt-3 mb-2 text-center lead">-o-</p>
 

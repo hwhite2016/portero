@@ -296,19 +296,19 @@ return [
         ],
         [
             'header' => 'CONTROL DE ACCESO',
-            'can'    => 'admin.visitantes.index',
+            'can'    => 'admin.entregas.index',
         ],
         [
             'text'        => 'Residentes',
             'route'         => 'admin.residentes.list',
             'icon'        => 'fas fa-user-friends',
-            'can'          => 'admin.visitantes.index',
+            'can'          => 'admin.entregas.index',
         ],
         [
             'text'        => 'Recepcion',
             'route'         => 'admin.entregas.index',
             'icon'        => 'fas fa-concierge-bell',
-            'can'          => 'admin.visitantes.index',
+            'can'          => 'admin.entregas.index',
         ],
         [
             'text' => 'Visitantes',
@@ -321,13 +321,16 @@ return [
                     'text' => 'Ingresar Visitantes',
                     'route'  => 'admin.visitantes.index',
                     // 'icon' => 'fas fa-user-clock',
-                    'can'  => 'admin.visitantes.index',
+                    'can'  => 'admin.entregas.index',
                 ],
                 [
-                    // 'shift'    => 'ml-3' ,
+                    'text' => 'Mis Visitantes',
+                    'route'  => 'admin.visitantes.index',
+                    'can'  => 'admin.seguimiento.index',
+                ],
+                [
                     'text' => 'Historial Visitantes',
                     'route'  => 'admin.visitantes.getVisitantes',
-                    // 'icon' => 'fas fa-user-clock',
                     'can'  => 'admin.visitantes.index',
                 ],
             ],
@@ -390,12 +393,6 @@ return [
             'can'  => 'admin.condominios.index',
         ],
         [
-            'text' => 'Bloques',
-            'route'  => 'admin.bloques.index',
-            'icon' => 'fas fa-th-large',
-            'can'  => 'admin.bloques.index',
-        ],
-        [
             'text' => 'Parqueaderos',
             'route'  => 'admin.parqueaderos.index',
             'icon' => 'fas fa-car',
@@ -408,6 +405,12 @@ return [
             'can'  => 'admin.zonas.index',
             'label'       => 'desarrollo',
             'label_color' => 'warning',
+        ],
+        [
+            'text' => 'Bloques',
+            'route'  => 'admin.bloques.index',
+            'icon' => 'fas fa-th-large',
+            'can'  => 'admin.bloques.index',
         ],
         [
             'text' => 'Tipo de Unidades',

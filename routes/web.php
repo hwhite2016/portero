@@ -24,6 +24,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/terminos', function () {
+    return view('terminos');
+});
+
+Route::get('/privacidad', function () {
+    return view('privacidad');
+});
+
 Auth::routes();
 
 Route::get('/rol', [HomeController::class, 'index'])->name('home.index');

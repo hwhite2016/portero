@@ -43,7 +43,7 @@
                       <tr>
                         <td> {{ $visitante->unidadnombre }} </td>
                         <td> {{ $visitante->conjuntonombre }} </td>
-                        <td> {{ $visitante->parqueadero .' / '. $visitante->visitanteplaca}} </td>
+                        <td> {{ $visitante->parqueadero }} {{$visitante->parqueadero?' / ':''}} {{ $visitante->visitanteplaca}} </td>
                         <td> {{ $visitante->documento }} </td>
                         <td> {{ $visitante->personanombre }} </td>
                         <td> {{ $visitante->personacelular }} </td>

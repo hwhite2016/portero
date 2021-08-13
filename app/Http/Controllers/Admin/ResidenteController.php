@@ -65,21 +65,34 @@ class ResidenteController extends Controller
 
     public function create(Request $request)
     {
+
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $tipo_residentes = TipoResidente::all()->pluck('tiporesidentenombre', 'id');
         $relations = Relation:: all()->pluck('relationname', 'id');
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
-        $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+        if($request->get('unidadid') > 0){
+            $unidadid = $request->get('unidadid');
+            $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+            ->select(
+            Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
+            ->whereIn('conjuntoid', session('dependencias'))
+            ->where('unidads.id', $unidadid)
+            ->orderBy('unidad','ASC')
+            ->pluck('unidad', 'unidads.id');
+        }else{
+            $unidadid = null;
+            $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
             ->select(
             Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
             ->whereIn('conjuntoid', session('dependencias'))
             ->orderBy('unidad','ASC')
             ->pluck('unidad', 'unidads.id');
+        }
 
         //$unidads->prepend('Seleccione la unidad', '');
 
-        return view('admin.residente.create', compact('tipo_documentos', 'tipo_residentes', 'relations', 'conjuntos', 'unidads'));
+        return view('admin.residente.create', compact('tipo_documentos', 'tipo_residentes', 'relations', 'conjuntos', 'unidads','unidadid'));
     }
 
     public function createModal(Request $request, $id)
@@ -173,8 +186,11 @@ class ResidenteController extends Controller
         //$user->roles()->sync($request->rol);
 
         if(!$request->get('residentes')){
-
-            return redirect()->route('admin.residentes.index')->with('info','El residente fue agregado de forma exitosa');
+            if($request->get('hilo_unidadid')){
+                return redirect()->route('admin.residentes.show', $request->get('hilo_unidadid'))->with('info','El residente fue agregado de forma exitosa');
+            }else{
+                return redirect()->route('admin.residentes.index')->with('info','El residente fue agregado de forma exitosa');
+            }
         }else{
             return redirect()->route('admin.unidads.edit', $request->get('unidadid'))->with('info','El residente fue agregado de forma exitosa');
         }
@@ -193,7 +209,7 @@ class ResidenteController extends Controller
         ->whereIn('conjuntos.id', session('dependencias'))
         ->orderBy('personanombre', 'ASC')
         ->get();
-        return view('admin.residente.index', compact('residentes'));
+        return view('admin.residente.index', compact('residentes', 'id'));
     }
 
     public function edit($id)

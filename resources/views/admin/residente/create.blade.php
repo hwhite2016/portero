@@ -174,7 +174,12 @@
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-        <a class="btn btn-warning" href="{{route('admin.residentes.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
+        @if($unidadid)
+            {!! Form::hidden('hilo_unidadid', $unidadid) !!}
+            <a class="btn btn-warning" href="{{route('admin.residentes.show', $unidadid)}}"><i class="fas fa-angle-double-left"></i> Volver</a>
+        @else
+            <a class="btn btn-warning" href="{{route('admin.residentes.index')}}"><i class="fas fa-angle-double-left"></i> Volver</a>
+        @endif
         {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
         {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
     </div>
@@ -205,6 +210,8 @@
            format: 'L',
            format: 'YYYY/MM/DD'
       });
+
+      $('#personadocumento').focus();
 
       $(".fa-search").on('click', function() {
           $('#personanombre').focus();

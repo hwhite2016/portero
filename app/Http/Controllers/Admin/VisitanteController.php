@@ -11,6 +11,9 @@ use App\Models\TipoDocumento;
 use App\Models\Conjunto;
 use App\Models\Parqueadero;
 use App\Models\Persona;
+use App\Models\Residente;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class VisitanteController extends Controller
 {
@@ -24,18 +27,36 @@ class VisitanteController extends Controller
 
     public function getVisitantes()
     {
-        $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
-            ->join('bloques','bloques.id','=','unidads.bloqueid')
-             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
-             ->join('personas','personas.id','=','visitantes.personaid')
-             ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
-             ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
-             ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida'))
-             ->whereIn('conjuntos.id', session('dependencias'))
-             ->onlyTrashed()
-             ->orderBy('visitantesalida', 'DESC')
-             ->get();
-             return view('admin.hvisitante.index')->with('visitantes', $visitantes);
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Seguridad')){
+            $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
+                ->join('bloques','bloques.id','=','unidads.bloqueid')
+                ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+                ->join('personas','personas.id','=','visitantes.personaid')
+                ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
+                ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
+                ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida, visitantenumero'))
+                ->whereIn('conjuntos.id', session('dependencias'))
+                ->onlyTrashed()
+                ->orderBy('visitantesalida', 'DESC')
+                ->get();
+        }elseif ($user->hasRole('Residente')){
+            $residente = Residente::where('personaid', Auth::user()->personaid)->first();
+            $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
+                ->join('bloques','bloques.id','=','unidads.bloqueid')
+                ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+                ->join('personas','personas.id','=','visitantes.personaid')
+                ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
+                ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
+                ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida, visitantenumero'))
+                ->whereIn('conjuntos.id', session('dependencias'))
+                ->where('unidads.id', $residente->unidadid)
+                ->onlyTrashed()
+                ->orderBy('visitantesalida', 'DESC')
+                ->get();
+
+        }
+        return view('admin.hvisitante.index')->with('visitantes', $visitantes);
     }
 
     public function getInfoDocumento($id){
@@ -50,18 +71,35 @@ class VisitanteController extends Controller
 
     public function index()
     {
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Seguridad')){
+            $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
+                ->join('bloques','bloques.id','=','unidads.bloqueid')
+                ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+                ->join('personas','personas.id','=','visitantes.personaid')
+                ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
+                ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
+                ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida, visitantenumero'))
+                ->whereIn('conjuntos.id', session('dependencias'))
+                ->where('visitanteingreso','<=', now()->add(6, 'day'))
+                ->orderBy('visitanteingreso', 'DESC')
+                ->get();
+        }elseif ($user->hasRole('Residente')){
+            $residente = Residente::where('personaid', Auth::user()->personaid)->first();
+            $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
+                ->join('bloques','bloques.id','=','unidads.bloqueid')
+                ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+                ->join('personas','personas.id','=','visitantes.personaid')
+                ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
+                ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
+                ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida, visitantenumero'))
+                ->whereIn('conjuntos.id', session('dependencias'))
+                ->where('unidads.id', $residente->unidadid)
+                ->orderBy('visitanteingreso', 'DESC')
+                ->get();
 
-        $visitantes = Visitante::join("unidads","unidads.id", "=", "visitantes.unidadid")
-            ->join('bloques','bloques.id','=','unidads.bloqueid')
-             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
-             ->join('personas','personas.id','=','visitantes.personaid')
-             ->join('tipo_documentos','tipo_documentos.id','=','personas.tipodocumentoid')
-             ->leftjoin('parqueaderos','parqueaderos.id','=','visitantes.parqueaderoid')
-             ->select(Visitante::raw('CONCAT(tipodocumentoabreviatura," " ,personadocumento) AS documento, visitantes.id, conjuntonombre, unidadnombre, CONCAT(parqueaderonumero," - Piso " ,parqueaderopiso) AS parqueadero, visitanteplaca, personanombre, personacelular, visitanteingreso, visitantesalida'))
-             ->whereIn('conjuntos.id', session('dependencias'))
-             ->orderBy('visitanteingreso', 'DESC')
-             ->get();
-             return view('admin.visitante.index')->with('visitantes', $visitantes);
+        }
+        return view('admin.visitante.index')->with('visitantes', $visitantes);
     }
 
     public function create(Request $request)
@@ -87,13 +125,27 @@ class VisitanteController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'conjuntoid'=>'required',
-            'unidadid'=>'required',
-            'tipodocumentoid'=>'required',
-            'personadocumento'=>'required|min:3|alpha_num',
-            'personanombre'=>'required|min:3',
-        ]);
+        $fecha = now();
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Seguridad')){
+            $request->validate([
+                'conjuntoid'=>'required',
+                'unidadid'=>'required',
+                'tipodocumentoid'=>'required',
+                'personadocumento'=>'required|min:3|alpha_num',
+                'personanombre'=>'required|min:3',
+            ]);
+        }elseif ($user->hasRole('Residente')){
+            if($request->get('visitanteingreso')) $fecha = $request->get('visitanteingreso');
+            $request->validate([
+                'conjuntoid'=>'required',
+                'unidadid'=>'required',
+                'tipodocumentoid'=>'required',
+                'personadocumento'=>'required|min:3|alpha_num',
+                'personanombre'=>'required|min:3',
+                'visitanteingreso'=>'required',
+            ]);
+        }
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
         }else{
@@ -107,15 +159,17 @@ class VisitanteController extends Controller
         }
 
         if (Visitante::withTrashed()->where('personaid','=',$persona->id)->where('visitantesalida', '=', NULL)->first()){
-            return redirect()->route('admin.visitantes.index')->with('info','El visitante NO puede ingresar, ya que aun se encuentra dentro de la copropiedad');
+            return redirect()->route('admin.visitantes.index')->with('error','El visitante aún se encuentra dentro de la copropiedad, debe darle salida para que pueda volver a ingresar');
         }else{
+
             Visitante::create([
                 'personaid'=>$persona->id,
                 'unidadid'=>$request->get('unidadid'),
                 'parqueaderoid'=>$request->get('parqueaderoid'),
                 'visitanteplaca'=>$request->get('visitanteplaca'),
-                'visitanteingreso'=> now(),
+                'visitanteingreso'=> $fecha,
                 'visitanteobservacion'=>$request->get('visitanteobservacion'),
+                'visitantenumero'=>$request->get('visitantenumero'),
             ]);
             if($request->get('parqueaderoid')){
                 $parqueadero = Parqueadero::find($request->get('parqueaderoid'));
@@ -162,6 +216,7 @@ class VisitanteController extends Controller
 
     public function update(Request $request, Visitante $visitante)
     {
+
         if ($request->get('parqueaderoestado')){
             Visitante::find($request->get('id'))->update(['parqueaderoestado' => $request->get('parqueaderoestado')]);
         }else{

@@ -181,8 +181,10 @@
 
       $('#fechanacimiento').datetimepicker({
            format: 'L',
-           format: 'YYYY/MM/DD'
+           format: 'YYYY-MM-DD'
       });
+
+      $('#personadocumento').focus();
 
       $(".fa-search").on('click', function() {
           $('#personanombre').focus();

@@ -17,9 +17,9 @@
             <div class="card">
               <div class="card-header">
 
-                <h3 class="card-title">
+                {{-- <h3 class="card-title">
                   <a href="{{route('admin.parqueaderos.index')}}"> Listar todos los parqueaderos</a>
-                </h3>
+                </h3> --}}
 
                 <a href="{{route('admin.parqueaderos.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Parqueadero</a>
 

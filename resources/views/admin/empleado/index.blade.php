@@ -17,7 +17,7 @@
             <div class="card mt-3">
               <div class="card-header">
                 <h3 class="card-title">
-                    <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a>
+                    {{-- <a href="{{route('admin.index')}}"><i class="fas fa-house-user"></i> Ir al Home</a> --}}
                 </h3>
                 @can('admin.empleados.create')
                 <a href="{{route('admin.empleados.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Empleado</a>

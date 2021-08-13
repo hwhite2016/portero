@@ -113,8 +113,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.zonas.destroy', 'description' => 'Eliminar una zona comun'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.zonas.zonacomun', 'description' => 'Reservar Zonas comunes'])->syncRoles([$role5]);
 
-        Permission::create(['name' => 'admin.visitantes.index', 'description' => 'Ver listado de visitantes'])->syncRoles([$role1, $role2, $role3]);
-        Permission::create(['name' => 'admin.visitantes.create', 'description' => 'Crear un visitante'])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'admin.visitantes.index', 'description' => 'Ver listado de visitantes'])->syncRoles([$role1, $role2, $role3, $role5]);
+        Permission::create(['name' => 'admin.visitantes.create', 'description' => 'Crear un visitante'])->syncRoles([$role1, $role2, $role3, $role5]);
         Permission::create(['name' => 'admin.visitantes.edit', 'description' => 'Editar un visitante'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.visitantes.destroy', 'description' => 'Dar salida un visitante'])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'admin.visitantes.restaurar', 'description' => 'Restaurar un visitante'])->syncRoles([$role1]);
@@ -123,7 +123,7 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'admin.entregas.index', 'description' => 'Ver listado de entregas'])->syncRoles([$role1, $role2, $role3]);
         Permission::create(['name' => 'admin.entregas.create', 'description' => 'Recibir un paquete'])->syncRoles([$role1, $role3]);
-        Permission::create(['name' => 'admin.entregas.edit', 'description' => 'Entregar paquetes'])->syncRoles([$role1, $role3]);
+        Permission::create(['name' => 'admin.entregas.edit', 'description' => 'Entregar paquetes'])->syncRoles([$role1, $role3, $role5]);
         Permission::create(['name' => 'admin.entregas.destroy', 'description' => 'Eliminar un entrega'])->syncRoles([$role1]);
 
         Permission::create(['name' => 'admin.seguimiento.index', 'description' => 'Ver correspondencia'])->syncRoles([$role1, $role5]);

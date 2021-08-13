@@ -19,12 +19,13 @@ class CreateVisitantesTable extends Migration
             $table->foreign('unidadid')->references('id')->on('unidads');
             $table->unsignedBigInteger('personaid');
             $table->foreign('personaid')->references('id')->on('personas');
+            $table->tinyInteger('visitantenumero')->default(1);
             $table->unsignedBigInteger('parqueaderoid')->nullable();
             $table->foreign('parqueaderoid')->references('id')->on('parqueaderos');
             $table->string('visitanteplaca', 12)->nullable();
             $table->dateTime('visitanteingreso');
             $table->dateTime('visitantesalida')->nullable();
-            $table->string('visitanteobservacion', 120)->nullable();
+            $table->string('visitanteobservacion', 300)->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

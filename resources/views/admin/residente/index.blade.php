@@ -16,9 +16,21 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                @can('admin.residentes.create')
+                {{-- @can('admin.residentes.create')
                 <a href="{{route('admin.residentes.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Residente</a>
+                @endcan --}}
+
+                @can('admin.residentes.create')
+                {!! Form::open(['route'=>'admin.residentes.create', 'method'=>'get']) !!}
+                @if (isset($id))
+                    {!! Form::hidden('unidadid', $id) !!}
+                @endif
+                <button type="submit" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Residente</button>
+                {!! Form::close() !!}
                 @endcan
+
+
+
                 <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-left"></i></a>
               </div>
               <!-- /.card-header -->

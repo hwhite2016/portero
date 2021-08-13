@@ -555,8 +555,8 @@
             <div class="col-lg-5 col-md-6">
               <div class="footer-menu">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
-                  <li><a href="#">Politica de privacidad</a></li>
-                  <li> <a href="#features">Terminos & Condiciones</a> </li>
+                  <li><a href="/privacidad">Politica de privacidad</a></li>
+                  <li> <a href="/terminos">Terminos & Condiciones</a> </li>
                   {{-- <li><a href="#features"> Mapa del sitio</a></li> --}}
                 </ul>
               </div>

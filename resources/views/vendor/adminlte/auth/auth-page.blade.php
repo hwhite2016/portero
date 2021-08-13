@@ -11,6 +11,15 @@
 @section('adminlte_css')
     @stack('css')
     @yield('css')
+    <style>
+        .login-logo,
+        .register-logo {
+            font-size: 2.1rem;
+            font-weight: 300;
+            margin-bottom: -0.1rem;
+            text-align: center;
+        }
+        </style>
 @stop
 
 @section('classes_body'){{ ($auth_type ?? 'login') . '-page' }}@stop

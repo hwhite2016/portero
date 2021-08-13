@@ -2051,7 +2051,7 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
   @media (min-width: 992px) {
     .hero-area-l-17 .content {
       padding-top: 0;
-      padding-bottom: 90px;
+      padding-bottom: 60px; /* 90 */
     }
   }
 

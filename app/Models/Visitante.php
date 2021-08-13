@@ -27,6 +27,6 @@ class Visitante extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at']; //Registramos la nueva columna
 
-    protected $fillable = ['unidadid', 'personaid', 'parqueaderoid', 'visitanteplaca', 'visitanteingreso', 'visitantesalida', 'visitanteobservacion'];
+    protected $guarded = [];
 
 }

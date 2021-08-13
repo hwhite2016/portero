@@ -23,6 +23,8 @@
                 @can('admin.visitantes.create')
                 <a href="{{route('admin.visitantes.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Visitante</a>
                 <a class="btn btn-warning float-right mr-2" href="{{route('admin.visitantes.getVisitantes')}}"><i class="fas fa-clock"></i> Historial</a>
+                <a class="btn btn-warning float-right mr-2" href="{{route('admin.visitantes.index')}}"><i class="fas fa-sync-alt"></i></a>
+
                 @endcan
               </div>
               <!-- /.card-header -->
@@ -47,11 +49,18 @@
                       <tr>
                         <td> {{ $visitante->unidadnombre }} </td>
                         <td> {{ $visitante->conjuntonombre }} </td>
-                        <td> {{ $visitante->parqueadero .' / '. $visitante->visitanteplaca}} </td>
+                        <td> {{ $visitante->parqueadero}} {{$visitante->parqueadero?' / ':''}} {{$visitante->visitanteplaca}} </td>
                         <td> {{ $visitante->documento }} </td>
-                        <td> {{ $visitante->personanombre }} </td>
+                        <td> {{ $visitante->personanombre }} ({{ $visitante->visitantenumero }}) </td>
                         <td> {{ $visitante->personacelular }} </td>
-                        <td> {{ $visitante->visitanteingreso }} </td>
+                        <td>
+                            @if(date('Y-m-d H:i:s', time()) < $visitante->visitanteingreso)
+                            <span class="text-danger" data-toggle="tooltip" title="Visitante programado"><i class='far fa-clock'></i> {{ $visitante->visitanteingreso }} </span>
+                            @else
+                                {{ $visitante->visitanteingreso }}
+                            @endif
+
+                        </td>
                         <td> {{ $visitante->visitantesalida }} </td>
 
                         <td>
@@ -66,12 +75,14 @@
                               </a>
                             @endcan
 
-                            @can('admin.visitantes.destroy')
-                              @csrf
-                              @method('delete')
-                              <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Salida"><i class="fas fa-sign-out-alt"></i></button>
-                              {!! Form::close() !!}
-                            @endcan
+                            @if(date('Y-m-d H:i:s', time()) > $visitante->visitanteingreso)
+                                @can('admin.visitantes.destroy')
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Salida"><i class="fas fa-sign-out-alt"></i></button>
+                                {!! Form::close() !!}
+                                @endcan
+                            @endif
 
                         </td>
                       </tr>
@@ -158,6 +169,11 @@
    @if(session('info'))
     <script type="text/javascript">
         toastr.success("{{session('info')}}")
+    </script>
+   @endif
+   @if(session('error'))
+    <script type="text/javascript">
+        toastr.error("{{session('error')}}")
     </script>
    @endif
    <script>

@@ -4,6 +4,7 @@
 
 @section('plugins.Select2', 'true')
 @section('plugins.Inputmask', 'true')
+@section('plugins.Timepicker', 'true')
 
 @section('content_header')
     {{-- <h1 class="ml-3">Crear Visitante</h1> --}}
@@ -21,7 +22,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-4">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', 'Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control']) !!}
@@ -47,6 +48,25 @@
                 </div>
             </div>
 
+            @can('admin.seguimiento.index')
+            <div class="col-12 col-md-4">
+                <div class="form-group"> <!-- Fecha de ingreso programado -->
+                    {{ Form::label('visitanteingreso', 'Fecha y Hora de ingreso') }}
+                    <div class="input-group date" id="ingreso" data-target-input="nearest">
+                        {!! Form::text('visitanteingreso', null, array('data-toggle' => 'datetimepicker','data-target' => '#ingreso', 'class' => 'form-control datetimepicker-input')) !!}
+                        <div class="input-group-append" data-target="#ingreso" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                    @error('visitanteingreso')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+            @endcan
+
             <div class="col-12 col-md-8">
                 <div class="form-group"> <!-- Documento ID -->
                     {{ Form::label('personadocumento', '* Documento ID') }}
@@ -71,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Nombres -->
                     {{ Form::label('personanombre', '* Nombres y Apellidos') }}
                     {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
@@ -83,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Numero celular -->
                     {{ Form::label('personacelular', 'Numero Celular') }}
                     <div class="input-group">
@@ -97,6 +117,13 @@
                             </small>
                         @enderror
                     </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="form-group"> <!-- Acompañantes -->
+                    {!! Form::label('visitantenumero', 'Nro. de personas que ingresan') !!}
+                    {!! Form::number('visitantenumero', 1, ['class' => 'form-control','data-placeholder'=>'Nro. de personas que ingresan']) !!}
                 </div>
             </div>
 
@@ -165,6 +192,13 @@
       $('.select2').select2();
 
       $(":input").inputmask();
+
+      $('#ingreso').datetimepicker({
+        icons: {time: "fa fa-clock"},
+        format: 'YYYY-MM-DD H:mm:ss'
+      });
+
+      $('#personadocumento').focus();
 
       $(".fa-search").on('click', function() {
           $('#personanombre').focus();
