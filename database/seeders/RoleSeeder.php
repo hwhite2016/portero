@@ -114,9 +114,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.zonas.zonacomun', 'description' => 'Reservar Zonas comunes'])->syncRoles([$role5]);
 
         Permission::create(['name' => 'admin.visitantes.index', 'description' => 'Ver listado de visitantes'])->syncRoles([$role1, $role2, $role3, $role5]);
-        Permission::create(['name' => 'admin.visitantes.create', 'description' => 'Crear un visitante'])->syncRoles([$role1, $role2, $role3, $role5]);
+        Permission::create(['name' => 'admin.visitantes.create', 'description' => 'Crear un visitante'])->syncRoles([$role1, $role3, $role5]);
         Permission::create(['name' => 'admin.visitantes.edit', 'description' => 'Editar un visitante'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.visitantes.destroy', 'description' => 'Dar salida un visitante'])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(['name' => 'admin.visitantes.destroy', 'description' => 'Dar salida un visitante'])->syncRoles([$role1, $role3]);
         Permission::create(['name' => 'admin.visitantes.restaurar', 'description' => 'Restaurar un visitante'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.visitantes.hdestroy', 'description' => 'Eliminar un visitante'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.visitantes.getVisitantes', 'description' => 'Ver listado de hist. de visitantes'])->syncRoles([$role1, $role2, $role3]);
