@@ -20,7 +20,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Conjunto -->
                     {!! Form::label('conjuntoid', 'Conjunto') !!}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un conjunto']) !!}
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Nombre de la Zona -->
                     {!! Form::label('zonanombre', 'Nombre de la zona') !!}
                     {!! Form::text('zonanombre', null, array('placeholder' => 'Ej: Piscina de niños, Gimnasio, ...', 'class' => 'form-control')) !!}
@@ -56,6 +56,18 @@
                 </div>
             </div>
 
+            <div class="col-md-3">
+                <div class="form-group"> <!-- Morosos -->
+                    {!! Form::label('zonamorosos', 'Los morosos pueden reservar') !!}
+                    {!! Form::select('zonamorosos', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonamorosos')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
             <div class="col-md-6">
                 <div class="form-group"> <!-- Imagen de la zona -->
                     <img width="70px" src="/storage/{{ $zona->zonaimagen }}" alt="image">
@@ -70,22 +82,33 @@
             </div>
 
             <div class="col-md-3">
-                <div class="form-group"> <!-- Hora de apertura-->
-                    {!! Form::label('zonahoraapertura', 'Hora de apertura') !!}
-                    {!! Form::time('zonahoraapertura', null, array('class' => 'form-control')) !!}
+                <div class="form-group"> <!-- Hora-->
+                    {!! Form::label('zonahoraapertura', 'Hora apertura') !!}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                        </div>
+                        {{-- <input type="text" class="form-control float-right" id="reservationtime"> --}}
+                        {!! Form::time('zonahoraapertura', null, array('class' => 'form-control')) !!}
+                    </div>
                     @error('zonahoraapertura')
                         <small class="text-danger">
                             {{$message}}
                         </small>
                     @enderror
                 </div>
-
             </div>
 
             <div class="col-md-3">
-                <div class="form-group"> <!-- Hora de cierre-->
-                    {!! Form::label('zonahoracierre', 'Hora de cierre') !!}
-                    {!! Form::time('zonahoracierre', null, array('class' => 'form-control')) !!}
+                <div class="form-group"> <!-- Hora-->
+                    {!! Form::label('zonahoracierre', 'Hora cierre') !!}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                        </div>
+                        {{-- <input type="text" class="form-control float-right" id="reservationtime"> --}}
+                        {!! Form::time('zonahoracierre', null, array('class' => 'form-control')) !!}
+                    </div>
                     @error('zonahoracierre')
                         <small class="text-danger">
                             {{$message}}
@@ -94,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Aforo maximo -->
                     {!! Form::label('zonaaforomax', 'Aforo máximo') !!}
                     {!! Form::number('zonaaforomax', null, array('placeholder' => '', 'class' => 'form-control')) !!}
@@ -118,23 +141,11 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Franja -->
                     {!! Form::label('zonafranjatiempo', 'Franjas de reserva') !!}
                     {!! Form::select('zonafranjatiempo', ['00:30:00'=>'30 Minutos', '01:00:00'=>'1 Hora','01:30:00'=>'1 Hora y media', '02:00:00'=>'2 Horas','02:30:00'=>'2 Horas y media', '03:00:00'=>'3 Horas','03:30:00'=>'3 Horas y media', '04:00:00'=>'4 Horas'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
                     @error('zonafranjatiempo')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group"> <!-- Morosos -->
-                    {!! Form::label('zonamorosos', 'Los morosos pueden reservar') !!}
-                    {!! Form::select('zonamorosos', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
-                    @error('zonamorosos')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -216,6 +227,7 @@
 </div>
 <!-- /.card -->
 
+
 @stop
 
 @section('footer')
@@ -223,29 +235,16 @@
 @stop
 
 @section('css')
-    <!-- /<link rel="stylesheet" href="/css/admin_custom.css">-->
+
 @stop
 
 @section('js')
+
 <script>
     $(function () {
         //Initialize Select2 Elements
         $('.select2').select2()
 
-        // jQuery('#init-date, #end-date').datetimepicker({
-        //             format: 'H:mm'
-        // });
-
-        // jQuery('#init-date, #end-date').on('focusout.datetimepicker', () => {
-        //     const initDateValue = moment(jQuery('#init-date').data('date'), 'H:mm');
-        //     const endDateValue = moment(jQuery('#end-date').data('date'), 'H:mm');
-
-        //     if(!initDateValue.isValid() || !endDateValue.isValid()) return;
-
-        //     if(endDateValue.isBefore(initDateValue)) {
-        //         jQuery('#i').val(jQuery('#e').val());
-        //     }
-        // });
     })
 </script>
 @stop

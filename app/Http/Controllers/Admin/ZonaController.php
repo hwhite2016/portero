@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Conjunto;
 use App\Models\EventCalendar;
+use App\Models\User;
 use App\Models\Zona;
 use App\Models\ZonaHorario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 
@@ -72,12 +74,24 @@ class ZonaController extends Controller
             $this->validate($request, [
                 'zonaimagen' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
             ]);
-            $destinationPath = public_path('/storage');
+
+            $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'zonas');
             $file = $request->file('zonaimagen');
-            $filename = 'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
-            //\Storage::disk('public')->put($filename,  \File::get($file));
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777,true);
+            }
+            $filename_db = $request->get('conjuntoid').'/'.'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
+            $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
             Image::make($file->getRealPath())->resize(350, 120, function ($constraint) {
             $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
+
+            //$destinationPath = public_path('/storage');
+            //$file = $request->file('zonaimagen');
+            //$filename = 'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
+
+            //Image::make($file->getRealPath())->resize(350, 120, function ($constraint) {
+            //$constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
          }else{
             $filename = 'images/zonacomun.png';
         }
@@ -97,16 +111,19 @@ class ZonaController extends Controller
             'zonareservadiariamax' => $request->get('zonareservadiariamax'),
             'zonaprecio' => $request->get('zonaprecio'),
             'zonamorosos' => $request->get('zonamorosos'),
-            'zonaimagen' => $filename
+            'zonaimagen' => $filename_db
         ]);
 
-        return redirect()->route('admin.zonas.show', $zonas->conjuntoid)->with('info','La zona comun fue agregada de forma exitosa');
+        $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
+        return view('admin.zona.edit')->with('zona',$zonas)->with('conjuntos',$conjuntos)->with('info','La zona comun fue agregada de forma exitosa');
+
+        //return redirect()->route('admin.zonas.show', $zonas->conjuntoid)->with('info','La zona comun fue agregada de forma exitosa');
 
     }
 
     public function show($id)
     {
-             $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
+        $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
              ->join('barrios','barrios.id','=','conjuntos.barrioid')
              ->select(Zona::raw('zonas.id, barrionombre, conjuntonombre, zonas.*'))
               ->where('zonas.conjuntoid', '=', $id)
@@ -114,38 +131,52 @@ class ZonaController extends Controller
              ->orderBy('zonanombre', 'ASC')
              ->get();
 
-        //return view('admin.zona.index')->with('zonas', $zonas);
         return view('admin.zona.zonacomun')->with('zonas', $zonas);
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Residente')){
+            return view('admin.zona.zonacomun')->with('zonas', $zonas);
+        }else{
+            return view('admin.zona.index')->with('zonas', $zonas);
+        }
+
     }
 
     public function horario($id)
     {
         $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
-        $horarios = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-        ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
-        ->whereZonaid($id)->get();
-        //->whereIn('zonas.conjuntoid', session('dependencias'))->get();
-        //return $horarios;
-        return view('admin.zona.horario', compact('zona'));
+        $lunes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(1)->get();
+        $martes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(2)->get();
+        $miercoles = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(3)->get();
+        $jueves = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(4)->get();
+        $viernes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(5)->get();
+        $sabado = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(6)->get();
+        $domingo = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
+            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(7)->get();
+
+        return view('admin.zona.horario', compact('zona', 'lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
     }
 
     public function calendario($id)
     {
         $zona = Zona::find($id);
-        return view('admin.zona.calendario', compact('zona'));
+        $zonaHorario = ZonaHorario::whereZonaid($id)->get();
+        return view('admin.zona.calendario', compact('zona', 'zonaHorario'));
     }
 
-    public function eventos()
-    {
-        $eventos = EventCalendar::select(EventCalendar::raw('id, title, start, end'))->get();
-        return response()->json(['eventos' => $eventos], 200);
-    }
+
 
     public function edit($id)
     {
         $zona = Zona::find($id);
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
-        return view('admin.zona.edit')->with('zona',$zona)->with('conjuntos',$conjuntos);
+
+        return view('admin.zona.edit', compact('zona','conjuntos'));
     }
 
     public function update(Request $request, $id)
@@ -166,17 +197,31 @@ class ZonaController extends Controller
                 $this->validate($request, [
                     'zonaimagen' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
                 ]);
-                $destinationPath = public_path('/storage');
+
+                $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'zonas');
                 $file = $request->file('zonaimagen');
-                $filename = 'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
+
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777,true);
+                }
+
+                $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
+                $filename_db = $request->get('conjuntoid').'/'.'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
                 $fullpath_old = $destinationPath.'/'.$zona->zonaimagen;
-                //\Storage::disk('public')->put($filename,  \File::get($file));
                 Image::make($file->getRealPath())->resize(350, 120, function ($constraint) {
                 $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
+
+                //$destinationPath = public_path('/storage');
+                //$file = $request->file('zonaimagen');
+                //$filename = 'zonas/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
+                //$fullpath_old = $destinationPath.'/'.$zona->zonaimagen;
+                //Image::make($file->getRealPath())->resize(350, 120, function ($constraint) {
+                //$constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
+
                 if((File::exists($fullpath_old)) && ($zona->zonaimagen <> 'images/zonacomun.png')) {
                     File::delete($fullpath_old);
                 }
-                $zona->zonaimagen = $filename;
+                $zona->zonaimagen = $filename_db;
             }
 
             $zona->conjuntoid = $request->get('conjuntoid');
@@ -200,10 +245,11 @@ class ZonaController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $zona = Zona::find($id);
         $zona->delete();
+        $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'zonas');
         $destinationPath = public_path('/storage');
         $fullpath_old = $destinationPath.'/'.$zona->zonaimagen;
         if((File::exists($fullpath_old)) && ($zona->zonaimagen <> 'images/zonacomun.png')) {

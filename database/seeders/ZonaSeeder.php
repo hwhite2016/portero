@@ -16,7 +16,7 @@ class ZonaSeeder extends Seeder
     public function run()
     {
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Piscina para niños',
-            'zonaimagen'=>'zonas/20210614115730.jpg',
+            'zonaimagen'=>'1/zonas/20210614115730.jpg',
             'zonadescripcion' => 'Zona de diversion para todos los niños',
             'zonaterminos'=>'El COPROPIETARIO deberá hacer uso obligatorio de: vestido de baño en material apropiado, utilizar el vestier, cumplir con las buenas prácticas sanitarias.
              Se prohíbe: el ingreso a menores de doce (12) años sin el acompañamiento de un adulto responsable, el uso de la piscina a personas con heridas visibles, laceraciones o infecciones en la piel, el ingreso a la piscina en estado de embriaguez o bajo el efecto de sustancias psicoactivas, el consumo de alimentos, bebidas o fumar en la zona de piscina así como el ingreso de botellas de vidrio, el ingreso a los usuarios que porten cadenas, collares, camisetas o elementos similares que permitan el atrapamiento mecánico, así como el uso de cremas, cosméticos o aceites de cualquier tipo, la práctica de actividades de contacto dentro y fuera de la piscina, tales como clavados, carreras y juegos violentos.',
@@ -32,7 +32,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Piscina para adultos',
-            'zonaimagen'=>'zonas/20210614115731.jpg',
+            'zonaimagen'=>'1/zonas/20210614115731.jpg',
             'zonadescripcion' => 'Zona de diversion para todos los adultos',
             'zonaterminos'=>'El COPROPIETARIO deberá hacer uso obligatorio de: vestido de baño en material apropiado, utilizar el vestier, cumplir con las buenas prácticas sanitarias.
              Se prohíbe: el ingreso a menores de doce (12) años sin el acompañamiento de un adulto responsable, el uso de la piscina a personas con heridas visibles, laceraciones o infecciones en la piel, el ingreso a la piscina en estado de embriaguez o bajo el efecto de sustancias psicoactivas, el consumo de alimentos, bebidas o fumar en la zona de piscina así como el ingreso de botellas de vidrio, el ingreso a los usuarios que porten cadenas, collares, camisetas o elementos similares que permitan el atrapamiento mecánico, así como el uso de cremas, cosméticos o aceites de cualquier tipo, la práctica de actividades de contacto dentro y fuera de la piscina, tales como clavados, carreras y juegos violentos.',
@@ -48,7 +48,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Parque infantil',
-            'zonaimagen'=>'zonas/20210614115732.jpg',
+            'zonaimagen'=>'1/zonas/20210614115732.jpg',
             'zonadescripcion' => 'Zona de diversion para todos los niños',
             'zonaterminos'=>'Terminos y condiciones de uso para el parque infantil',
             'zonareservable'=>0,
@@ -63,7 +63,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Gimnasio',
-            'zonaimagen'=>'zonas/20210614115733.jpg',
+            'zonaimagen'=>'1/zonas/20210614115733.jpg',
             'zonadescripcion' => 'Zona de diversion para todos los niños',
             'zonaterminos'=>'Las pesas y demás piezas sueltas de equipos, solo podrán ser utilizadas en las áreas destinadas para tal efecto y de acuerdo a las condiciones establecidas para su uso. Si algún AFILIADO considera que uno de los equipos está funcionando de forma deficiente, deberá informar esta situación al Administrador(a)',
             'zonareservable'=>0,
@@ -78,7 +78,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Sauna',
-            'zonaimagen'=>'zonas/20210614115734.jpg',
+            'zonaimagen'=>'1/zonas/20210614115734.jpg',
             'zonadescripcion' => 'Baño de vapor, el complemento perfecto a nuestro entrenamiento diario.',
             'zonaterminos'=>'Terminos y condiciones de uso para el sauna',
             'zonareservable'=>1,
@@ -93,7 +93,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 1',
-            'zonaimagen'=>'zonas/20210614115736.jpg',
+            'zonaimagen'=>'1/zonas/20210614115736.jpg',
             'zonadescripcion' => 'Apto para cumpleaños, matrimonios, quinceañeros y fiestas en general.',
             'zonaterminos'=>'Terminos y condiciones de uso para salones de eventos',
             'zonareservable'=>1,
@@ -108,7 +108,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 2',
-            'zonaimagen'=>'zonas/20210614115736.jpg',
+            'zonaimagen'=>'1/zonas/20210614115736.jpg',
             'zonadescripcion' => 'Apto para cumpleaños, matrimonios, quinceañeros y fiestas en general.',
             'zonaterminos'=>'Terminos y condiciones de uso para salones de eventos',
             'zonareservable'=>1,
@@ -123,7 +123,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 3',
-            'zonaimagen'=>'zonas/20210614115736.jpg',
+            'zonaimagen'=>'1/zonas/20210614115736.jpg',
             'zonadescripcion' => 'Apto para cumpleaños, matrimonios, quinceañeros y fiestas en general.',
             'zonaterminos'=>'Terminos y condiciones de uso para salones de eventos',
             'zonareservable'=>1,
@@ -138,7 +138,7 @@ class ZonaSeeder extends Seeder
             'zonamorosos'=> 0
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Teatrino',
-            'zonaimagen'=>'zonas/20210614115735.jpg',
+            'zonaimagen'=>'1/zonas/20210614115735.jpg',
             'zonadescripcion' => 'Disfruta de este este espacio para ver peliculas como en el cine.',
             'zonaterminos'=>'Terminos y condiciones de uso para cines o teatros',
             'zonareservable'=>1,

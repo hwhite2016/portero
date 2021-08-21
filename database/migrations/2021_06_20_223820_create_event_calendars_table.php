@@ -18,10 +18,11 @@ class CreateEventCalendarsTable extends Migration
             $table->unsignedBigInteger('zonaid');
             $table->foreign('zonaid')->references('id')->on('zonas')->onDelete('cascade');
             $table->string('title');
+            $table->date('fecha');
+            $table->time('hora');
             $table->dateTime('start');
             $table->dateTime('end');
-            $table->string('backgroundColor', 8)->default('#217524');
-            $table->tinyInteger('reservas')->default(0);
+            $table->string('backgroundColor', 8)->default('#3788D8');
             $table->timestamps();
         });
     }

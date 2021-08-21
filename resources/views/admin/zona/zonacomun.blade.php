@@ -12,16 +12,17 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h1 class="card-title text-primary">
+        {{-- <h1 class="card-title text-primary">
             Zonas Comunes
-        </h1>
+        </h1> --}}
         @can('admin.zonas.create')
             <a href="{{route('admin.zonas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Zona</a>
         @endcan
-        @can('admin.zonas.index')
-            <a href="#" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
+        @can('admin.reservas.index')
+            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
         @endcan
-        <a class="btn btn-warning float-right mr-2" href="{{route('admin.index')}}"><i class="fas fa-home"></i> Home</a>
+             <a class="btn btn-warning float-right mr-2" href="{{route('admin.index')}}"><i class="fas fa-angle-double-left"></i></a>
+        {{-- <a class="btn btn-warning float-right mr-2" href="{{route('admin.index')}}"><i class="fas fa-home"></i> Home</a> --}}
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -42,7 +43,7 @@
                                     <small class="text-muted">
                                         {!! Form::checkbox('terminos[]', $zona->id, true, ['class'=>'mr-1 terminos']) !!}
                                         <a href="#" data-toggle="modal" data-target="#idModal" data-whatever="{{$zona->id}}" title="{{$zona->id}}">
-                                            Terminos y condiciones de uso {{intval(date('Hm'))}}
+                                            Terminos y condiciones de uso
                                         </a>
                                     </small>
                                 </div>
@@ -61,7 +62,7 @@
                             <div class="card-footer">
                                 @if ($zona->zonareservable == 1)
                                     @can('admin.zonas.zonacomun')
-                                    {!! Form::open(['route'=>['admin.zonas.horario', $zona->id], 'method'=>'get']) !!}
+                                    {!! Form::open(['route'=>['admin.reservas.edit', $zona->id], 'method'=>'get']) !!}
                                     <button class="btn btn-success btn-sm  float-right"  id="reservar_{{$zona->id}}" data-toggle="tooltip" title="Reservar">
                                         <i class="fas fa-sign-in-alt"></i> Reservar
                                     </button>
@@ -74,7 +75,7 @@
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <a href="{{route('admin.zonas.horario', $zona->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar Horario" >
+                                    <a href="{{route('admin.zonaHorario.edit', $zona->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar Horario" >
                                         <i class="far fa-calendar-alt"></i>
                                     </a>
 

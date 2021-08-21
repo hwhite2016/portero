@@ -403,7 +403,7 @@ return [
             'route'  => 'admin.zonas.index',
             'icon' => 'fas fa-swimmer',
             'can'  => 'admin.zonas.index',
-            'label'       => 'desarrollo',
+            'label'       => 'PRO',
             'label_color' => 'warning',
         ],
         [

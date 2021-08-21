@@ -17,9 +17,10 @@ class CreateZonaHorariosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('zonaid');
             $table->foreign('zonaid')->references('id')->on('zonas')->onDelete('cascade');
-            $table->tinyInteger('dia');
+            $table->string('fecha', 10);
             $table->string('horaapertura', 5);
             $table->string('horacierre', 5);
+            //$table->tinyInteger('cupo');
             $table->timestamps();
         });
     }

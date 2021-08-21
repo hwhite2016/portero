@@ -20,10 +20,13 @@ use App\Http\Controllers\Admin\VehiculoController;
 use App\Http\Controllers\Admin\MascotaController;
 use App\Http\Controllers\Admin\VisitanteController;
 use App\Http\Controllers\Admin\EntregaController;
+use App\Http\Controllers\Admin\EventCalendarController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PqrController;
+use App\Http\Controllers\Admin\ReservaController;
 use App\Http\Controllers\Admin\SeguimientoController;
 use App\Http\Controllers\Admin\ZonaController;
+use App\Http\Controllers\Admin\ZonaHorarioController;
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
@@ -40,11 +43,15 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
 	Route::resource('/bloques', BloqueController::class)->names('admin.bloques');
     Route::resource('/parqueaderos', ParqueaderoController::class)->names('admin.parqueaderos');
     Route::resource('/zonas', ZonaController::class)->names('admin.zonas');
+    Route::resource('/zonaHorario', ZonaHorarioController::class)->names('admin.zonaHorario');
     Route::get('/terminosModal/{id}', [ZonaController::class, 'terminosModal'])->name('admin.zonas.terminosModal');
-    Route::get('/horario/{id}', [ZonaController::class, 'horario'])->name('admin.zonas.horario');
+    //Route::get('/horario/{id}', [ZonaController::class, 'horario'])->name('admin.zonas.horario');
     Route::get('/calendario/{id}', [ZonaController::class, 'calendario'])->name('admin.zonas.calendario');
-    //Route::get('/zonacomun', [ZonaController::class, 'calendario'])->name('admin.zonas.zonacomun');
+    Route::resource('/event', EventCalendarController::class)->names('admin.eventCalendar');
     Route::get('/eventos', [ZonaController::class, 'eventos'])->name('admin.zonas.eventos');
+    Route::resource('/reservas', ReservaController::class)->names('admin.reservas');
+    Route::get('/cupo/{id}', [ReservaController::class, 'getCupoMaximo'])->name('admin.reservas.cupo');
+    Route::post('/horas', [ReservaController::class, 'getHoras'])->name('admin.reservas.horas');
     Route::resource('/clase_unidads', ClaseUnidadController::class)->names('admin.clase_unidads');
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
     Route::resource('/unidads', UnidadController::class)->names('admin.unidads');

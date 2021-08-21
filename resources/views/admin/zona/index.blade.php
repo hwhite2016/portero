@@ -46,18 +46,21 @@
                         </td>
                         <td> {{ $zona->zonanombre }} </td>
                         <td>
-                            @can('admin.zonas.destroy')
+                              @can('admin.zonas.destroy')
                               {!! Form::model($zona, ['route'=>['admin.zonas.destroy', $zona], 'method'=>'delete', 'class'=>'frm_delete']) !!}
+                              {!! Form::hidden('conjuntoid', $zona->conjuntoid) !!}
                               @endcan
 
                               @can('admin.zonas.edit')
-                              {{-- <a href="{{route('admin.zonas.horario', $zona->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar Horario" >
+                              {{-- <a href="{{route('admin.zonaHorario.edit', $zona->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar Horario" >
                                 <i class="far fa-clock"></i>
                               </a> --}}
 
+                              @if($zona->zonareservable == 1)
                               <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar Calendario" >
                                 <i class="fas fa-calendar-alt"></i>
                               </a>
+                              @endif
 
                               <a href="{{route('admin.zonas.edit', $zona->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar zona">
                                 <i class="fas fa-pencil-alt"></i>

@@ -31,7 +31,7 @@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    <strong><i class="fas fa-user mr-1"></i> Residentes</strong>
+                                    <strong><i class="fas fa-user mr-1"></i> Residentes</strong> <small class="font-italic"> (# Documento / Nombres)</small>
 
                                     <p class="text-muted">
                                         @php
@@ -39,13 +39,13 @@
                                         @endphp
 
                                         @foreach($residentes as $residente => $valor)
-                                            <span><i class="fas fa-caret-right"></i> ****{{substr($residente, 4, 50)}}</span><span class="badge badge-{{($valor=='Propietario'?'primary':'secondary')}} float-right">{{$valor}}</span><br>
+                                            <span><i class="fas fa-caret-right"></i> . . . {{substr($residente, strpos($residente, '|') - 3, 50)}}</span><span class="badge badge-{{($valor=='Propietario'?'primary':'secondary')}} float-right">{{$valor}}</span><br>
                                         @endforeach
                                     </p>
 
                                     <hr>
 
-                                    <strong><i class="fas fa-car mr-1"></i> Vehiculos</strong>
+                                    <strong><i class="fas fa-car mr-1"></i> Vehiculos</strong> <small class="font-italic"> (Marca / Placas)</small>
 
                                     <p class="text-muted">
                                         @php
