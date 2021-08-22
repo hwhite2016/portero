@@ -107,7 +107,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.parqueaderos.edit', 'description' => 'Editar un residente'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.parqueaderos.destroy', 'description' => 'Eliminar un residente'])->syncRoles([$role1, $role2]);
 
-        Permission::create(['name' => 'admin.zonas.index', 'description' => 'Ver listado de zonas'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.zonas.index', 'description' => 'Ver listado de zonas'])->syncRoles([$role1, $role2, $role5]);
         Permission::create(['name' => 'admin.zonas.create', 'description' => 'Crear un zona comun'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.zonas.edit', 'description' => 'Editar un zona comun'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.zonas.destroy', 'description' => 'Eliminar una zona comun'])->syncRoles([$role1, $role2]);

@@ -100,7 +100,7 @@ class ReservaController extends Controller
             $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
 
         }else{
-            $unidad = Unidad::all();
+            $unidad = Unidad::all()->pluck('unidadnombre', 'unidads.id');
             $zona = Zona::find($id)->pluck('zonanombre', 'id');
 
         }
