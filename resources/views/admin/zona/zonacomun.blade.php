@@ -30,7 +30,7 @@
         <div class="row">
             @foreach ($zonas as $zona)
                 <div class="col-12 col-md-3">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <div style="background-image: url('/storage/{{ $zona->zonaimagen }}'); background-repeat: no-repeat;background-size: cover; min-height: 120px; width: 100%; background-position-y: 50%;"></div>
                         {{-- <img src="/storage/{{ $zona->zonaimagen }}" width="250px" class="card-img" alt="..."> --}}
                         <div class="card-body">
@@ -61,7 +61,7 @@
 
                             <div class="card-footer">
                                 @if ($zona->zonareservable == 1)
-                                    @can('admin.zonas.zonacomun')
+                                    @can('admin.reservas.create')
                                     {!! Form::open(['route'=>['admin.reservas.edit', $zona->id], 'method'=>'get']) !!}
                                     <button class="btn btn-success btn-sm  float-right"  id="reservar_{{$zona->id}}" data-toggle="tooltip" title="Reservar">
                                         <i class="fas fa-sign-in-alt"></i> Reservar
@@ -75,9 +75,11 @@
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
 
-                                    <a href="{{route('admin.zonaHorario.edit', $zona->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar Horario" >
-                                        <i class="far fa-calendar-alt"></i>
+                                    @if($zona->zonareservable == 1)
+                                    <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar Calendario" >
+                                        <i class="fas fa-calendar-alt"></i>
                                     </a>
+                                    @endif
 
                                 @endcan
 

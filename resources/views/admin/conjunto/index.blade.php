@@ -48,7 +48,7 @@
                             </a>
                         @endcan
                         @can('admin.zonas.zonacomun')
-                            <a href="{{route('admin.zonas.show', $conjunto->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
+                            <a href="{{route('admin.zonas.index')}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
                                 <i class="fas fa-swimmer"></i>
                             </a>
                         @endcan

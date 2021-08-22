@@ -14,10 +14,13 @@
 <div class="card card-primary card-outline">
 
     <div class="card-header">
-        <h1 class="card-title text-primary">
-            Nueva Reserva
-        </h1>
-        <a class="btn btn-warning float-right mr-2" href="{{route('admin.zonas.show', 1)}}"><i class="fas fa-angle-double-left"></i></a>
+        {{-- <h1 class="card-title text-primary">
+            <label>Nueva Reserva</label>
+        </h1> --}}
+        @can('admin.reservas.index')
+            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
+        @endcan
+        <a class="btn btn-warning float-right mr-2" href="{{route('admin.zonas.index')}}"><i class="fas fa-angle-double-left"></i></a>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -47,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-2">
+            <div class="col-4 col-md-2">
                 <div class="form-group"> <!-- Cupos -->
                     {!! Form::label('reservacupos', 'Cupos') !!}
                     {!! Form::select('reservacupos', [], null, ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
@@ -59,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="col-6 col-md-3">
+            <div class="col-8 col-md-3">
                 <div class="form-group"> <!-- Fecha -->
                     {{ Form::label('fecha', 'Fecha') }}
                     <div class="input-group date" id="fecha2" data-target-input="nearest">
@@ -123,6 +126,15 @@
     $(function () {
         //Initialize Select2 Elements
         $('.select2').select2();
+
+        for (var i = 1; i <= {{$zonareserva->zonacuporeservamax}}; i++) {
+            $('#reservacupos').append('<option value="'+ i +'">'+ i +'</option>');
+        }
+        $('#fecha2').datetimepicker({
+            format: 'YYYY-MM-DD',
+            minDate: moment(),
+            maxDate: moment().add({{$zonareserva->zonatiemporeservamax}}, 'days')
+        })
 
         $("#zonaid").on('change', function(e) {
             $('#disponibilidad').html('');

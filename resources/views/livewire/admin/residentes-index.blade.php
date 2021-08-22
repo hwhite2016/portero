@@ -20,7 +20,7 @@
                 <div class="row">
                     @foreach($unidades as $unidad)
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4	col-xxl-3">
-                            <div class="card card card-primary shadow-lg {{($unidades->count()<=2?'':'collapsed-card')}}">
+                            <div class="card card-primary shadow-lg {{($unidades->count()<=2?'':'collapsed-card')}}">
                                 <div class="card-header">
                                     <h3 class="card-title">{{$unidad->bloquenombre}} / {{$unidad->unidadnombre}}</h3>
                                     <div class="card-tools">

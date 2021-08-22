@@ -48,8 +48,9 @@ class ReservaController extends Controller
                 ->on('reservas.reservafecha', '=', 'event_calendars.fecha')
                 ->on('reservas.reservahora', '=', 'event_calendars.hora');
         })
-        ->where('event_calendars.fecha', $request->get('fecha'))
         ->select(EventCalendar::raw('zonaaforomax, event_calendars.hora, SUM(coalesce(reservacupos,0)) as reservas'))
+        ->where('event_calendars.fecha', $request->get('fecha'))
+        ->where(Zona::raw('zonaaforomax-coalesce(reservacupos,0)'), '>=', $request->get('reservacupos'))
         ->groupBy('zonaaforomax', 'event_calendars.hora')
         ->get();
 
@@ -91,21 +92,22 @@ class ReservaController extends Controller
     public function edit($id)
     {
 
-
-
         $user = User::find(Auth::user()->id);
         if ($user->hasRole('Residente')){
             $unidad = Unidad::join('residentes','residentes.unidadid', 'unidads.id')
             ->where('residentes.personaid', $user->personaid)
             ->pluck('unidadnombre', 'unidads.id');
             $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
+
         }else{
             $unidad = Unidad::all();
             $zona = Zona::find($id)->pluck('zonanombre', 'id');
-        }
-        $zona->prepend('Seleccione la zona', '');
 
-        return view('admin.reserva.edit', compact('zona', 'unidad'));
+        }
+        $zonareserva = Zona::whereId($id)->select('zonacuporeservamax', 'zonatiemporeservamax')->first();
+        //$zona->prepend('Seleccione la zona', '');
+
+        return view('admin.reserva.edit', compact('zona', 'unidad', 'zonareserva'));
     }
 
     public function update(Request $request, $id)
