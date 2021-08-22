@@ -22,7 +22,7 @@
                 @can('admin.pqrs.create')
 
                 <div class="row">
-                    <div class="col-md-2" onclick="location.href='{{route('admin.pqrs.show', 1)}}'" style="cursor:pointer">
+                    <div class="col-6 col-md-2" onclick="location.href='{{route('admin.pqrs.show', 1)}}'" style="cursor:pointer">
                         <div class="info-box shadow-lg">
                         <span class="info-box-icon bg-secondary"><i class="far fa-envelope-open"></i></span>
 
@@ -36,7 +36,7 @@
                     </div>
                     <!-- /.col -->
 
-                    <div class="col-md-2" onclick="location.href='{{route('admin.pqrs.show', 2)}}'" style="cursor:pointer">
+                    <div class="col-6 col-md-2" onclick="location.href='{{route('admin.pqrs.show', 2)}}'" style="cursor:pointer">
                         <div class="info-box info-box shadow-lg">
                         <span class="info-box-icon bg-warning"><i class="fas fa-sync-alt"></i></span>
 
@@ -50,7 +50,7 @@
                     </div>
                     <!-- /.col -->
 
-                    <div class="col-md-2" onclick="location.href='{{route('admin.pqrs.show', 3)}}'" style="cursor:pointer">
+                    <div class="col-6 col-md-2" onclick="location.href='{{route('admin.pqrs.show', 3)}}'" style="cursor:pointer">
                         <div class="info-box info-box shadow-lg">
                         <span class="info-box-icon bg-info"><i class="far fa-calendar-check"></i></span>
 
@@ -64,7 +64,7 @@
                     </div>
                     <!-- /.col -->
 
-                    <div class="col-md-2" onclick="location.href='{{route('admin.pqrs.show', 4)}}'" style="cursor:pointer">
+                    <div class="col-6 col-md-2" onclick="location.href='{{route('admin.pqrs.show', 4)}}'" style="cursor:pointer">
                         <div class="info-box info-box shadow-lg">
                         <span class="info-box-icon bg-success"><i class="far fa-envelope"></i></span>
 
