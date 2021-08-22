@@ -4,34 +4,35 @@ All rights reserved.
 <b>Version</b> 1.0.0
 </div> --}}
 
-<a href="{{route('admin.zonas.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
+<a href="#" class="btn btn-warning  float-right mr-2" data-toggle="tooltip" title="Market Place">
     <span style="font-size: 1.5em; color: tomato;">
         <i class="fas fa-shopping-basket"></i>
     </span>
+    <small><b>Market</b></small>
 </a>
 
 @can('admin.zonas.index')
 <a href="{{route('admin.zonas.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
-    <span style="font-size: 1.5em; color: #AEB6BF;">
+    <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-swimmer"></i>
     </span>
 </a>
 @endcan
 
 <a href="{{route('admin.seguimiento.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Correspondencia">
-    <span style="font-size: 1.5em; color: #AEB6BF;">
+    <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-inbox"></i>
     </span>
 </a>
 
 <a href="{{route('admin.pqrs.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Pqr">
-    <span style="font-size: 1.5em; color: #AEB6BF;">
+    <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-envelope"></i>
     </span>
 </a>
 
 <a href="{{route('admin.index')}}" class="btn btn-default   float-right mr-2" data-toggle="tooltip" title="Home">
-    <span style="font-size: 1.5em; color: #AEB6BF;">
+    <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-home"></i>
     </span>
 </a>
