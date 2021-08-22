@@ -47,11 +47,11 @@
                                 <i class="fas fa-pencil-alt"></i>
                             </a>
                         @endcan
-                        @can('admin.zonas.zonacomun')
+                        {{-- @can('admin.zonas.zonacomun')
                             <a href="{{route('admin.zonas.index')}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
                                 <i class="fas fa-swimmer"></i>
                             </a>
-                        @endcan
+                        @endcan --}}
                         @can('admin.conjuntos.destroy')
                         @csrf
                         {{-- @method('DELETE') --}}
