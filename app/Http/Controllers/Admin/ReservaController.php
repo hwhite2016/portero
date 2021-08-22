@@ -50,6 +50,7 @@ class ReservaController extends Controller
         })
         ->select(EventCalendar::raw('zonaaforomax, event_calendars.hora, SUM(coalesce(reservacupos,0)) as reservas'))
         ->where('event_calendars.fecha', $request->get('fecha'))
+        ->where('event_calendars.start', '>', date('Y-m-d H:i:s'))
         ->where(Zona::raw('zonaaforomax-coalesce(reservacupos,0)'), '>=', $request->get('reservacupos'))
         ->groupBy('zonaaforomax', 'event_calendars.hora')
         ->get();

@@ -132,8 +132,11 @@
         }
         $('#fecha2').datetimepicker({
             format: 'YYYY-MM-DD',
-            minDate: moment(),
-            maxDate: moment().add({{$zonareserva->zonatiemporeservamax}}, 'days')
+            minDate: moment().subtract(1, 'days'),
+            disabledDates: [
+                moment().subtract(1, 'days')
+            ],
+            maxDate: moment().add({{$zonareserva->zonatiemporeservamax + 1}}, 'days')
         })
 
         $("#zonaid").on('change', function(e) {
@@ -157,12 +160,12 @@
                         $('#reservacupos').append('<option value="'+ i +'">'+ i +'</option>');
                     }
 
-                    $('#fecha2').datetimepicker('destroy');
-                    $('#fecha2').datetimepicker({
-                        format: 'YYYY-MM-DD',
-                        minDate: moment(),
-                        maxDate: moment().add(data.cupo.zonatiemporeservamax, 'days')
-                    })
+                    // $('#fecha2').datetimepicker('destroy');
+                    // $('#fecha2').datetimepicker({
+                    //     format: 'YYYY-MM-DD',
+                    //     minDate: moment(),
+                    //     maxDate: moment().add(data.cupo.zonatiemporeservamax, 'days')
+                    // })
 
                 },
                 error: function(error){

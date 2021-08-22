@@ -10,26 +10,28 @@ All rights reserved.
     </span>
 </a>
 
+@can('admin.zonas.index')
 <a href="{{route('admin.zonas.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
-    <span style="font-size: 1.5em; color: #2C3E50;">
+    <span style="font-size: 1.5em; color: #AEB6BF;">
         <i class="fas fa-swimmer"></i>
     </span>
 </a>
+@endcan
 
 <a href="{{route('admin.seguimiento.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Correspondencia">
-    <span style="font-size: 1.5em; color: #2C3E50;">
+    <span style="font-size: 1.5em; color: #AEB6BF;">
         <i class="fas fa-inbox"></i>
     </span>
 </a>
 
 <a href="{{route('admin.pqrs.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Pqr">
-    <span style="font-size: 1.5em; color: #2C3E50;">
+    <span style="font-size: 1.5em; color: #AEB6BF;">
         <i class="fas fa-envelope"></i>
     </span>
 </a>
 
 <a href="{{route('admin.index')}}" class="btn btn-default   float-right mr-2" data-toggle="tooltip" title="Home">
-    <span style="font-size: 1.5em; color: #2C3E50;">
+    <span style="font-size: 1.5em; color: #AEB6BF;">
         <i class="fas fa-home"></i>
     </span>
 </a>
