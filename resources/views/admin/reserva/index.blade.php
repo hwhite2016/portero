@@ -13,7 +13,7 @@
 <div class="card">
     <div class="card-header">
         <h1 class="card-title text-primary">
-            Mis reservas
+            <label>Mis reservas</label>
         </h1>
         @can('admin.zonas.create')
             <a href="{{route('admin.reservas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Reserva</a>
@@ -21,8 +21,7 @@
         {{-- @can('admin.reservas.index')
             <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
         @endcan --}}
-        <a class="btn btn-warning float-right mr-2" href="{{route('admin.index')}}"><i class="fas fa-home"></i> Home</a>
-        <a class="btn btn-warning float-right mr-2" href="{{route('admin.zonas.index')}}"><i class="fas fa-angle-double-left"></i></a>
+        <a class="btn btn-primary float-right mr-2" href="{{route('admin.zonas.index')}}"><i class="fas fa-swimmer"></i> Zonas Comunes</a>
 
     </div>
     <!-- /.card-header -->

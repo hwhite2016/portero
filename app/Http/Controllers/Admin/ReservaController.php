@@ -41,6 +41,13 @@ class ReservaController extends Controller
 
     public function getHoras(Request $request){
 
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Residente')){
+            $unidad = Unidad::join('residentes','residentes.unidadid', 'unidads.id')
+            ->where('residentes.personaid', $user->personaid)
+            ->select('unidads.id')->first();
+        }
+
         $horas = EventCalendar::where('event_calendars.zonaid', $request->get('zonaid'))
         ->join("zonas","zonas.id", "=", "event_calendars.zonaid")
         ->leftJoin('reservas', function ($join) {
@@ -48,17 +55,17 @@ class ReservaController extends Controller
                 ->on('reservas.reservafecha', '=', 'event_calendars.fecha')
                 ->on('reservas.reservahora', '=', 'event_calendars.hora');
         })
-        ->select(EventCalendar::raw('zonaaforomax, event_calendars.hora, SUM(coalesce(reservacupos,0)) as reservas'))
+        ->select(EventCalendar::raw('event_calendars.id, zonaaforomax, event_calendars.start, event_calendars.end, SUM(coalesce(reservacupos,0)) as reservas'))
         ->where('event_calendars.fecha', $request->get('fecha'))
         ->where('event_calendars.start', '>', date('Y-m-d H:i:s'))
-        ->where(Zona::raw('zonaaforomax-coalesce(reservacupos,0)'), '>=', $request->get('reservacupos'))
-        ->groupBy('zonaaforomax', 'event_calendars.hora')
+        ->groupBy('event_calendars.id', 'zonaaforomax', 'event_calendars.hora')
+        ->having(Zona::raw('zonaaforomax-reservas'), '>=', $request->get('reservacupos'))
         ->get();
 
         if(isset($horas)){
             return response()->json(['horas' => $horas], 200);
         }else{
-            return "Lo seentimos, no hay disponibilidad de horarios en la fecha seleccionada";
+            return "Lo sentimos, no hay disponibilidad de horarios en la fecha seleccionada";
         }
 
     }
@@ -82,6 +89,31 @@ class ReservaController extends Controller
 
     public function store(Request $request)
     {
+        $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $user = User::find(Auth::user()->id);
+
+        if ($user->hasRole('Residente')){
+            $codigo = "R-".substr(str_shuffle($permitted_chars), 0, 3)."-".date('His');
+        }else{
+            $codigo = "A-".substr(str_shuffle($permitted_chars), 0, 3)."-".date('His');
+        }
+        $evento = EventCalendar::whereId($request->get('calendarid'))->first();
+        $reserva = Reserva::create([
+            'zonaid'=> $request->get('zonaid'),
+            'unidadid'=> $request->get('unidadid'),
+            'reservacodigo'=> $codigo,
+            'reservacupos'=> $request->get('reservacupos'),
+            'reservafecha'=> $evento->fecha,
+            'reservahora'=> $evento->hora,
+            'valor'=> $request->get('precio'),
+            'reservaestado'=> 1,
+        ]);
+
+        $evento->update([
+            'backgroundColor'=> '#EEA214',
+        ]);
+
+        return response()->json(['reserva' => $reserva], 200);
 
     }
 
@@ -101,11 +133,12 @@ class ReservaController extends Controller
             $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
 
         }else{
-            $unidad = Unidad::all()->pluck('unidadnombre', 'unidads.id');
-            $zona = Zona::find($id)->pluck('zonanombre', 'id');
+            $unidad = Unidad::all()->pluck('unidadnombre', 'id');
+            $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
 
         }
-        $zonareserva = Zona::whereId($id)->select('zonacuporeservamax', 'zonatiemporeservamax')->first();
+        $zonareserva = Zona::whereId($id)
+        ->select('zonaaforomax', 'zonafranjatiempo', 'zonacuporeservamax', 'zonatiemporeservamax', 'zonaprecio')->first();
         //$zona->prepend('Seleccione la zona', '');
 
         return view('admin.reserva.edit', compact('zona', 'unidad', 'zonareserva'));

@@ -12,16 +12,16 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        {{-- <h1 class="card-title text-primary">
-            Zonas Comunes
-        </h1> --}}
+        <h1 class="card-title text-primary">
+            <label>Zonas Comunes</label>
+        </h1>
         @can('admin.zonas.create')
             <a href="{{route('admin.zonas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Zona</a>
         @endcan
         @can('admin.reservas.index')
-            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
+            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="far fa-calendar-check"></i> &nbsp Mis reservas</a>
         @endcan
-        <a class="btn btn-warning float-right mr-2" href="{{route('admin.index')}}"><i class="fas fa-home"></i> Home</a>
+
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -75,7 +75,7 @@
                                     </a>
 
                                     @if($zona->zonareservable == 1)
-                                    <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Editar Calendario" >
+                                    <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-warning float-right mr-2" data-toggle="tooltip" title="Editar Calendario" >
                                         <i class="fas fa-calendar-alt"></i>
                                     </a>
                                     @endif
