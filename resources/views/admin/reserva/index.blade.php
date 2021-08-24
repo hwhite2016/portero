@@ -31,8 +31,8 @@
         <div class="row">
             @php
                 setlocale(LC_TIME, "spanish");
-                $dias = array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
-                $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+                $dias = array('Dom','Lun','Mar','Mié','Jue','Vie','Sáb');
+                $meses = array('Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
                 $cont = 1
 
             @endphp
@@ -57,7 +57,7 @@
                 <div class="col-12 col-md-4">
                     <div class="card shadow-lg {{$collapsed}}">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{ strftime("%d de %B", strtotime($reserva->reservafecha)) }} | {{ date('g:i a', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
+                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{date('j', strtotime($reserva->reservafecha))}} de {{ $meses[date('n', strtotime($reserva->reservafecha))] }} | {{ date('g:i', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{$icon}}"></i>
                                 </button>
@@ -67,7 +67,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-9 col-md-9">
+                                <div class="col-12">
                                     <label class="card-title">{{$reserva->zonanombre}}</label>
                                     <p class="card-text">
                                         <i class="fas fa-caret-right"></i> {{$reserva->unidadnombre}} &nbsp; - &nbsp; <b>{{$reserva->reservacupos}}</b> Cupo(s)<br>
@@ -75,11 +75,11 @@
                                         <i class="fas fa-caret-right"></i> Valor de la Reserva: <b>$ {{$reserva->valor}}</b>
                                     </p>
                                 </div>
-                                <div class="col-3 col-md-3">
+                                {{-- <div class="col-3">
                                     <div class="title m-b-md">
                                         {!!QrCode::size(70)->color(170, 170, 170)->generate($reserva->reservacodigo) !!}
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
 
                         </div>
