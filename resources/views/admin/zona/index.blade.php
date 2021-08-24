@@ -59,37 +59,56 @@
                         <!-- /.card-body -->
 
                             <div class="card-footer">
-                                @if ($zona->zonareservable == 1)
-                                    @can('admin.reservas.edit')
-                                    {!! Form::open(['route'=>['admin.reservas.edit', $zona->id], 'method'=>'get']) !!}
-                                    <button class="btn btn-success btn-sm  float-right"  id="reservar_{{$zona->id}}">
-                                        <i class="fas fa-sign-in-alt"></i> Reservar
-                                    </button>
-                                    {!! Form::close() !!}
-                                    @endcan
-                                @endif
 
-                                @can('admin.zonas.edit')
-                                    <a href="{{route('admin.zonas.edit', $zona->id)}}" class="btn btn-sm btn-info  float-right mr-2" data-toggle="tooltip" title="Editar zona">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-
-                                    @if($zona->zonareservable == 1)
-                                    <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-warning float-right mr-2" data-toggle="tooltip" title="Editar Calendario" >
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </a>
+                                <div class="row">
+                                    @if ($zona->zonareservable == 1)
+                                    <div class="col-7">
+                                    @else
+                                    <div class="col-12">
                                     @endif
 
-                                @endcan
+                                        @can('admin.zonas.edit')
+                                            <a href="{{route('admin.zonas.edit', $zona->id)}}" class="btn btn-sm btn-default  float-right mr-2" data-toggle="tooltip" title="Editar zona">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            {{-- <a href="{{route('admin.zonas.edit', $zona->id)}}" class="btn btn-sm btn-default  float-right mr-2" data-toggle="tooltip" title="Editar zona">
+                                                <span style="font-size: 1em; color: #7F8C8D;">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                </span>
+                                            </a> --}}
+
+                                            @if($zona->zonareservable == 1)
+                                            <a href="{{route('admin.zonas.calendario', $zona->id)}}" class="btn btn-sm btn-default float-right mr-2" data-toggle="tooltip" title="Editar Calendario" >
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </a>
+                                            @endif
+
+                                        @endcan
 
 
-                                @can('admin.zonas.destroy')
-                                    {!! Form::model($zona, ['route'=>['admin.zonas.destroy', $zona], 'method'=>'delete', 'class'=>'frm_delete']) !!}
-                                    @csrf
-                                    {{-- @method('DELETE') --}}
-                                    <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Eliminar zona"><i class="far fa-trash-alt"></i></button>
-                                    {!! Form::close() !!}
-                                @endcan
+                                        @can('admin.zonas.destroy')
+                                            {!! Form::model($zona, ['route'=>['admin.zonas.destroy', $zona], 'method'=>'delete', 'class'=>'frm_delete']) !!}
+                                            @csrf
+                                            {{-- @method('DELETE') --}}
+                                            <button class="btn btn-sm btn-default float-right mr-2" data-toggle="tooltip" title="Eliminar zona"><i class="far fa-trash-alt"></i></button>
+                                            {!! Form::close() !!}
+                                        @endcan
+                                    </div>
+
+                                    @if ($zona->zonareservable == 1)
+                                        <div class="col-5">
+                                            @can('admin.reservas.edit')
+                                            {!! Form::open(['route'=>['admin.reservas.edit', $zona->id], 'method'=>'get']) !!}
+                                            <button class="btn btn-block btn-outline-success btn-sm  float-right"  id="reservar_{{$zona->id}}">
+                                                <i class="fas fa-sign-in-alt"></i> Reservar
+                                            </button>
+                                            {!! Form::close() !!}
+                                            @endcan
+                                        </div>
+                                    @endif
+
+                                </div>
+
                             </div>
                             <!-- /.card-footer -->
 

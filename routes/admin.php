@@ -43,9 +43,8 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
 	Route::resource('/bloques', BloqueController::class)->names('admin.bloques');
     Route::resource('/parqueaderos', ParqueaderoController::class)->names('admin.parqueaderos');
     Route::resource('/zonas', ZonaController::class)->names('admin.zonas');
-    Route::resource('/zonaHorario', ZonaHorarioController::class)->names('admin.zonaHorario');
+    //Route::resource('/zonaHorario', ZonaHorarioController::class)->names('admin.zonaHorario');
     Route::get('/terminosModal/{id}', [ZonaController::class, 'terminosModal'])->name('admin.zonas.terminosModal');
-    //Route::get('/horario/{id}', [ZonaController::class, 'horario'])->name('admin.zonas.horario');
     Route::get('/calendario/{id}', [ZonaController::class, 'calendario'])->name('admin.zonas.calendario');
     Route::resource('/event', EventCalendarController::class)->names('admin.eventCalendar');
     Route::get('/eventos', [ZonaController::class, 'eventos'])->name('admin.zonas.eventos');

@@ -25,7 +25,10 @@ class ReservaController extends Controller
     {
         $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
             ->join("residentes","residentes.unidadid", "=", "reservas.unidadid")
-             ->wherePersonaid(Auth::user()->personaid)
+            ->join("unidads","unidads.id", "=", "residentes.unidadid")
+            ->select("reservas.*", "zonanombre", "unidadnombre")
+            ->wherePersonaid(Auth::user()->personaid)
+             ->whereReservaestado(1)
              ->orderBy('reservafecha', 'ASC')
              ->get();
              return view('admin.reserva.index')->with('reservas', $reservas);
@@ -89,6 +92,7 @@ class ReservaController extends Controller
 
     public function store(Request $request)
     {
+
         $permitted_chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $user = User::find(Auth::user()->id);
 
@@ -98,13 +102,15 @@ class ReservaController extends Controller
             $codigo = "A-".substr(str_shuffle($permitted_chars), 0, 3)."-".date('His');
         }
         $evento = EventCalendar::whereId($request->get('calendarid'))->first();
-        $reserva = Reserva::create([
+
+        Reserva::create([
             'zonaid'=> $request->get('zonaid'),
             'unidadid'=> $request->get('unidadid'),
             'reservacodigo'=> $codigo,
             'reservacupos'=> $request->get('reservacupos'),
             'reservafecha'=> $evento->fecha,
             'reservahora'=> $evento->hora,
+            'reservahorafin'=> date('H:i:s', strtotime($evento->end)),
             'valor'=> $request->get('precio'),
             'reservaestado'=> 1,
         ]);
@@ -113,7 +119,8 @@ class ReservaController extends Controller
             'backgroundColor'=> '#EEA214',
         ]);
 
-        return response()->json(['reserva' => $reserva], 200);
+        return response()->json(['info' => 'La reserva se realizo de forma exitosa'], 200);
+        //return redirect()->route('admin.reservas.index')->with('info','La reserva se realizo de forma exitosa');
 
     }
 
@@ -149,8 +156,28 @@ class ReservaController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+
+        $reserva = Reserva::find($id);
+        $reserva->delete();
+
+        $reserva_cont = Reserva::whereZonaid($request->get('zonaid'))
+        ->whereReservafecha($request->get('reservafecha'))
+        ->whereReservahora($request->get('reservahora'))
+        ->count();
+
+        if($reserva_cont <= 0){
+            $evento = EventCalendar::whereZonaid($request->get('zonaid'))
+            ->whereFecha($request->get('reservafecha'))
+            ->whereHora($request->get('reservahora'))
+            ->first();
+
+            $evento->update([
+                'backgroundColor'=> '#3788D8',
+            ]);
+        }
+
+        return redirect()->route('admin.reservas.index')->with('info','La reserva fue cancelada exitosamente');
     }
 }

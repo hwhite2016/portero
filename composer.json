@@ -16,6 +16,7 @@
     "guzzlehttp/guzzle": "^7.0.1",
     "intervention/image": "^2.5",
     "jeroennoten/laravel-adminlte": "^3.6",
+    "khanamiryan/qrcode-detector-decoder": "1.0.5.2",
     "laravel-notification-channels/webpush": "^5.1",
     "laravel/framework": "^8.12",
     "laravel/sanctum": "^2.11",
@@ -26,6 +27,7 @@
     "livewire/livewire": "^2.4",
     "mercadopago/dx-php": "^2.3",
     "pusher/pusher-php-server": "^4.1",
+    "simplesoftwareio/simple-qrcode": "~4",
     "spatie/laravel-permission": "^4.2"
   },
   "require-dev": {

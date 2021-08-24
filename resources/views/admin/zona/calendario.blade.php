@@ -12,14 +12,17 @@
 @stop
 
 @section('content')
-
+<br>
+@php
+setlocale(LC_TIME, "spanish");
+@endphp
 <div class="card card-primary">
     {!! Form::model($zona, ['route'=>['admin.zonas.update', $zona], 'method'=>'put', 'enctype'=>'multipart/form-data']) !!}
     @csrf
     {{-- @method('POST') --}}
 
     <div class="card-header bg-primary">
-        <h1 class="card-title"><i class="far fa-calendar-alt"></i> HORARIO ZONA COMUN - {{$zona->zonanombre}}</h1>
+        <h1 class="card-title"><i class="far fa-calendar-alt"></i> Horario Zona Comun - {{$zona->zonanombre}}</h1>
 
     </div>
     <!-- /.card-header -->
@@ -88,12 +91,13 @@
       var calendarEl = document.getElementById('calendar');
 
       var calendar = new Calendar(calendarEl, {
-        nowIndicator: false,
+        nowIndicator: true,
         initialView: 'timeGridWeek',
-        firstDay: date.getUTCDay()-1,
+        firstDay: date.getUTCDay(),
         allDaySlot: false,
         selectable: false,
         selectMirror: false,
+        locale: 'spanish',
 
         eventResize: function(info) {
             info.revert();
@@ -108,7 +112,7 @@
 
         validRange: {
             start: new Date(date.getTime() + (60*60*1000)),
-            end: new Date(date.getTime() + (7*24*60*60*1000))
+            end: new Date(date.getTime() + (6*24*60*60*1000))
         },
         // businessHours: [ // specify an array instead
         // {
@@ -135,7 +139,7 @@
           center: 'title',
           right : ''
         },
-            buttonText: {
+        buttonText: {
             today:    'hoy',
             month:    'mes',
             week:     'semana',
@@ -162,7 +166,7 @@
                             id: data,
                             title: 'Disponible',
                             start: info.dateStr,
-                            end: info.dateStr,
+                            //end: info.dateStr,
                             //display: 'background'
                             // backgroundColor: '#217524',
                             // borderColor: '#217524',
@@ -238,7 +242,6 @@
       var slotDuration = calendar.getOption('slotDuration')
 
       calendar.render();
-      // $('#calendar').fullCalendar()
 
     })
   </script>

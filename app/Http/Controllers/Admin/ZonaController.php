@@ -131,35 +131,8 @@ class ZonaController extends Controller
              ->orderBy('zonanombre', 'ASC')
              ->get();
 
-        return view('admin.zona.zonacomun')->with('zonas', $zonas);
-        $user = User::find(Auth::user()->id);
-        if ($user->hasRole('Residente')){
-            return view('admin.zona.zonacomun')->with('zonas', $zonas);
-        }else{
-            return view('admin.zona.index')->with('zonas', $zonas);
-        }
+        return view('admin.zona.index')->with('zonas', $zonas);
 
-    }
-
-    public function horario($id)
-    {
-        $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
-        $lunes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(1)->get();
-        $martes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(2)->get();
-        $miercoles = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(3)->get();
-        $jueves = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(4)->get();
-        $viernes = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(5)->get();
-        $sabado = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(6)->get();
-        $domingo = ZonaHorario::join("zonas","zonas.id", "=", "zona_horarios.zonaid")
-            ->join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")->whereZonaid($id)->whereDia(7)->get();
-
-        return view('admin.zona.horario', compact('zona', 'lunes','martes','miercoles','jueves','viernes','sabado','domingo'));
     }
 
     public function calendario($id)
@@ -168,8 +141,6 @@ class ZonaController extends Controller
         $zonaHorario = ZonaHorario::whereZonaid($id)->get();
         return view('admin.zona.calendario', compact('zona', 'zonaHorario'));
     }
-
-
 
     public function edit($id)
     {
@@ -241,7 +212,7 @@ class ZonaController extends Controller
 
             $zona->save();
 
-            return redirect()->route('admin.zonas.show', $zona->conjuntoid)->with('info','La zona comun fue actualizada de forma exitosa');
+            return redirect()->route('admin.zonas.index')->with('info','La zona comun fue actualizada de forma exitosa');
 
     }
 
@@ -256,6 +227,6 @@ class ZonaController extends Controller
             File::delete($fullpath_old);
         }
 
-        return redirect()->route('admin.zonas.show', $zona->conjuntoid)->with('info','La zona fue eliminada exitosamente');
+        return redirect()->route('admin.zonas.index')->with('info','La zona fue eliminada exitosamente');
     }
 }

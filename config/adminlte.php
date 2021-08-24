@@ -737,6 +737,7 @@ return [
                     'asset' => false,
                     'location' => '//adminlte.io/themes/v3/plugins/fullcalendar/main.css',
                 ],
+
             ],
         ],
     ],

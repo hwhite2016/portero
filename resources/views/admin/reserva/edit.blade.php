@@ -226,12 +226,11 @@
                                 })
                             })
                         }else{
-                          arr = "<div class='alert alert-default-warning' role='alert'><i class='fas fa-exclamation-triangle'></i>&nbsp; Lo sentimos, no hay disponibilidad de horarios en la fecha seleccionada.</div>";
+                          arr = "<div class='col-12'><div class='alert alert-default-warning' role='alert'><i class='fas fa-exclamation-triangle'></i>&nbsp; Lo sentimos, no hay disponibilidad de horarios en la fecha seleccionada.</div></div>";
                         }
                         $('#disponibilidad').html(arr);
 
                         $(".btn_reservar").on('click', function(){
-                            alert($(this).attr('id'));
                             $.ajax({
                                 data: {
                                     calendarid: $(this).attr('id'),

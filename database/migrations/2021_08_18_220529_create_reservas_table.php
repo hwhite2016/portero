@@ -21,8 +21,9 @@ class CreateReservasTable extends Migration
             $table->foreign('unidadid')->references('id')->on('unidads');
             $table->string('reservacodigo', 12);
             $table->tinyInteger('reservacupos');
-            $table->string('reservafecha', 8);
-            $table->string('reservahora', 8);
+            $table->date('reservafecha');
+            $table->time('reservahora');
+            $table->time('reservahorafin');
             $table->integer('valor')->nullable();
             $table->boolean('reservaestado')->default(1);
             $table->timestamps();

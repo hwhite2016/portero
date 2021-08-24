@@ -10,6 +10,7 @@
 @stop
 
 @section('content')
+
 <div class="card">
     <div class="card-header">
         <h1 class="card-title text-primary">
@@ -28,24 +29,59 @@
     <div class="card-body">
 
         <div class="row">
+            @php
+                setlocale(LC_TIME, "spanish");
+                $dias = array('Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado');
+                $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+                $cont = 1
+
+            @endphp
+            @if(!$reservas->count())
+                <div class="col-12">
+                    <div class='alert alert-default-warning' role='alert'>
+                        <i class='fas fa-exclamation-triangle'></i>
+                        &nbsp; No hay reservas pendientes, para realizar una reserva vaya a <a class="text-primary" href="{{route('admin.zonas.index')}}">zonas comunes</a>
+                    </div>
+                </div>
+            @endif
             @foreach ($reservas as $reserva)
+                @php
+                    if($cont <= 3){
+                        $collapsed = "";
+                        $icon = "minus";
+                    }else{
+                        $collapsed = "collapsed-card";
+                        $icon = "plus";
+                    }
+                @endphp
                 <div class="col-12 col-md-4">
-                    <div class="card card card-primary shadow-lg {{($reservas->count()<=3?'':'collapsed-card')}}">
+                    <div class="card shadow-lg {{$collapsed}}">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $reserva->reservafecha }} | {{ $reserva->reservahora }} </h3>
+                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{ strftime("%d de %B", strtotime($reserva->reservafecha)) }} | {{ date('g:i a', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{($reservas->count()<=3?'minus':'plus')}}"></i>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{$icon}}"></i>
                                 </button>
                             </div>
                             <!-- /.card-tools -->
 
                         </div>
                         <div class="card-body">
-                            <label class="card-title">{{$reserva->zonanombre}}</label>
-                            <p class="card-text">
-                                <i class="fas fa-caret-right"></i> Codigo de la reserva: <b class="text-primary">{{$reserva->reservacodigo}}</b><br>
-                                <i class="fas fa-caret-right"></i> Cupos: <b>{{$reserva->reservacupos}}</b>
-                            </p>
+                            <div class="row">
+                                <div class="col-9 col-md-9">
+                                    <label class="card-title">{{$reserva->zonanombre}}</label>
+                                    <p class="card-text">
+                                        <i class="fas fa-caret-right"></i> {{$reserva->unidadnombre}} &nbsp; - &nbsp; <b>{{$reserva->reservacupos}}</b> Cupo(s)<br>
+                                        <i class="fas fa-caret-right"></i> Codigo de la reserva: <b class="text-primary">{{$reserva->reservacodigo}}</b><br>
+                                        <i class="fas fa-caret-right"></i> Valor de la Reserva: <b>$ {{$reserva->valor}}</b>
+                                    </p>
+                                </div>
+                                <div class="col-3 col-md-3">
+                                    <div class="title m-b-md">
+                                        {!!QrCode::size(70)->color(170, 170, 170)->generate($reserva->reservacodigo) !!}
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <!-- /.card-body -->
 
@@ -53,8 +89,11 @@
                             @can('admin.reservas.destroy')
                               {!! Form::model($reserva, ['route'=>['admin.reservas.destroy', $reserva], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @csrf
+                              {!! Form::hidden('zonaid', $reserva->zonaid) !!}
+                              {!! Form::hidden('reservafecha', $reserva->reservafecha) !!}
+                              {!! Form::hidden('reservahora', $reserva->reservahora) !!}
                               {{-- @method('DELETE') --}}
-                              <button class="btn btn-sm btn-danger float-right"><i class="fas fa-ban"></i> Cancelar Reserva</button>
+                              <button class="btn btn-sm btn-block btn-outline-danger float-right"><i class="fas fa-ban"></i> Cancelar Reserva</button>
                               {!! Form::close() !!}
                             @endcan
 
@@ -64,6 +103,9 @@
                     </div>
                     <!-- /.card-->
                 </div>
+                @php
+                    $cont++
+                @endphp
             @endforeach
         </div>
         <!-- /.row-->
