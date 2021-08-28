@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('evento:calendario')->dailyAt('23:40');
+        $schedule->command('evento:calendario')->dailyAt('23:52');
     }
 
     /**
