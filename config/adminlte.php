@@ -402,7 +402,7 @@ return [
             'text' => 'Zonas Comunes',
             'route'  => 'admin.zonas.index',
             'icon' => 'fas fa-swimmer',
-            'can'  => 'admin.zonas.index',
+            'can'  => 'admin.pqrs.index',
             'label'       => 'PRO',
             'label_color' => 'warning',
         ],

@@ -200,6 +200,7 @@
                             zonaid: zonaid,
                             fecha: fecha,
                             reservacupos: reservacupos,
+                            reservadiariamax: {{$zonareserva->zonareservadiariamax}},
                             _token: "{{csrf_token()}}"
                         },
                     type: "POST",
@@ -244,9 +245,9 @@
                                 dataType: "json",
                                 url: "{{ route('admin.reservas.store') }}",
                                 success: function(data) {
-                                    //console.log(data);
-                                    obtenerHoras();
-                                    toastr.success("La reserva se realizo de forma exitosa.")
+                                    window.location.replace("{{ route('admin.reservas.index') }}");
+                                    // obtenerHoras();
+                                    // toastr.success("La reserva se realizo de forma exitosa.")
                                 },
                                 error: function(error){
                                     console.log(error);

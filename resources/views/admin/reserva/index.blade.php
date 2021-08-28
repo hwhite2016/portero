@@ -61,11 +61,14 @@
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{$icon}}"></i>
                                 </button>
+
                             </div>
                             <!-- /.card-tools -->
+                            <span class="float-right mt-1 mr-2 badge {{$reserva->reservaestado == 1 ? 'bg-success' : 'bg-danger'}}">{{$reserva->reservaestado == 1 ? 'Activa' : 'Expirada'}}</span>
 
                         </div>
                         <div class="card-body">
+
                             <div class="row">
                                 <div class="col-12">
                                     <label class="card-title">{{$reserva->zonanombre}}</label>
@@ -93,7 +96,7 @@
                               {!! Form::hidden('reservafecha', $reserva->reservafecha) !!}
                               {!! Form::hidden('reservahora', $reserva->reservahora) !!}
                               {{-- @method('DELETE') --}}
-                              <button class="btn btn-sm btn-block btn-outline-danger float-right"><i class="fas fa-ban"></i> Cancelar Reserva</button>
+                              <button class="btn btn-sm btn-block btn-outline-danger float-right"><i class="fas fa-ban"></i> Eliminar Reserva</button>
                               {!! Form::close() !!}
                             @endcan
 

@@ -16,7 +16,8 @@ class EventCalendarController extends Controller
         ->leftJoin('reservas', function ($join) {
             $join->on('reservas.zonaid', '=', 'event_calendars.zonaid')
                 ->on('reservas.reservafecha', '=', 'event_calendars.fecha')
-                ->on('reservas.reservahora', '=', 'event_calendars.hora');
+                ->on('reservas.reservahora', '=', 'event_calendars.hora')
+                ->where('reservas.reservaestado', '=', 1);;
         })
         ->select(EventCalendar::raw('event_calendars.id, title, start, end, backgroundColor, SUM(coalesce(reservacupos,0)) as reservas'))
         ->groupBy('event_calendars.id', 'title', 'start', 'end', 'backgroundColor')
@@ -88,7 +89,8 @@ class EventCalendarController extends Controller
         if (EventCalendar::join('reservas', function ($join) {
             $join->on('reservas.zonaid', '=', 'event_calendars.zonaid')
                 ->on('reservas.reservafecha', '=', 'event_calendars.fecha')
-                ->on('reservas.reservahora', '=', 'event_calendars.hora');
+                ->on('reservas.reservahora', '=', 'event_calendars.hora')
+                ->where('reservas.reservaestado', '=', 1);
             })->where('event_calendars.id', $id)->exists()) {
 
             return null;

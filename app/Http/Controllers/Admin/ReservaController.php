@@ -23,12 +23,14 @@ class ReservaController extends Controller
 
     public function index()
     {
+
         $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
             ->join("residentes","residentes.unidadid", "=", "reservas.unidadid")
             ->join("unidads","unidads.id", "=", "residentes.unidadid")
             ->select("reservas.*", "zonanombre", "unidadnombre")
             ->wherePersonaid(Auth::user()->personaid)
-             ->whereReservaestado(1)
+             //->whereReservaestado(1)
+             ->orderBy('reservaestado', 'DESC')
              ->orderBy('reservafecha', 'ASC')
              ->get();
              return view('admin.reserva.index')->with('reservas', $reservas);
@@ -53,16 +55,24 @@ class ReservaController extends Controller
 
         $horas = EventCalendar::where('event_calendars.zonaid', $request->get('zonaid'))
         ->join("zonas","zonas.id", "=", "event_calendars.zonaid")
-        ->leftJoin('reservas', function ($join) {
-            $join->on('reservas.zonaid', '=', 'zonas.id')
-                ->on('reservas.reservafecha', '=', 'event_calendars.fecha')
-                ->on('reservas.reservahora', '=', 'event_calendars.hora');
+        ->leftJoin('reservas as r', function ($join) {
+            $join->on('r.zonaid', '=', 'zonas.id')
+                ->on('r.reservafecha', '=', 'event_calendars.fecha')
+                ->on('r.reservahora', '=', 'event_calendars.hora')
+                ->where('r.reservaestado', '=', 1);
         })
-        ->select(EventCalendar::raw('event_calendars.id, zonaaforomax, event_calendars.start, event_calendars.end, SUM(coalesce(reservacupos,0)) as reservas'))
+        ->leftJoin('reservas as r2', function ($join) use ($unidad) {
+            $join->on('r2.zonaid', '=', 'zonas.id')
+                ->on('r2.reservafecha', '=', 'event_calendars.fecha')
+                ->where('r2.reservaestado', '=', 1)
+                ->where('r2.unidadid', '=', $unidad->id);
+        })
+        ->select(EventCalendar::raw('event_calendars.id, zonaaforomax, event_calendars.start, event_calendars.end, SUM(coalesce(r.reservacupos,0)) as reservas, COUNT(r2.id) as contador '))
         ->where('event_calendars.fecha', $request->get('fecha'))
         ->where('event_calendars.start', '>', date('Y-m-d H:i:s'))
         ->groupBy('event_calendars.id', 'zonaaforomax', 'event_calendars.hora')
         ->having(Zona::raw('zonaaforomax-reservas'), '>=', $request->get('reservacupos'))
+        ->having(Zona::raw('contador'), '<', $request->get('reservadiariamax'))
         ->get();
 
         if(isset($horas)){
@@ -145,7 +155,7 @@ class ReservaController extends Controller
 
         }
         $zonareserva = Zona::whereId($id)
-        ->select('zonaaforomax', 'zonafranjatiempo', 'zonacuporeservamax', 'zonatiemporeservamax', 'zonaprecio')->first();
+        ->select('zonaaforomax', 'zonafranjatiempo', 'zonacuporeservamax', 'zonatiemporeservamax', 'zonareservadiariamax', 'zonaprecio')->first();
         //$zona->prepend('Seleccione la zona', '');
 
         return view('admin.reserva.edit', compact('zona', 'unidad', 'zonareserva'));
@@ -178,6 +188,6 @@ class ReservaController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.reservas.index')->with('info','La reserva fue cancelada exitosamente');
+        return redirect()->route('admin.reservas.index')->with('info','La reserva fue eliminada exitosamente');
     }
 }
