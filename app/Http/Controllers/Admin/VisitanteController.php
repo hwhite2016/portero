@@ -109,19 +109,35 @@ class VisitanteController extends Controller
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
-        $parqueaderos = Parqueadero::where('parqueaderotipo','=','Visitante')
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Residente')){
+            $parqueaderos = Parqueadero::where('parqueaderotipo','=','Visitante')
+            ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', parqueaderotipo) AS parqueaderonumero"),'id')
             ->where('parqueaderoestado','=',0)
             ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
 
+            $unidads = Residente::join('unidads','unidads.id','=','residentes.unidadid')
+                ->join('bloques','bloques.id','=','unidads.bloqueid')
+                ->select(
+                DB::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
+                ->whereIn('conjuntoid', session('dependencias'))
+                ->where('residentes.personaid', Auth::user()->personaid)
+                ->orderBy('unidad','ASC')
+                ->pluck('unidad', 'unidads.id');
+        }else{
+            $parqueaderos = Parqueadero::where('parqueaderotipo','<>','Asignado')
+            ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', parqueaderotipo) AS parqueaderonumero"),'id')
+            ->where('parqueaderoestado','=',0)
+            ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
+
+            $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+                ->select(
+                DB::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
+                ->whereIn('conjuntoid', session('dependencias'))
+                ->orderBy('unidad','ASC')
+                ->pluck('unidad', 'unidads.id');
+        }
         $parqueaderos->prepend('Seleccione un parqueadero disponible', '');
-
-        $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
-            ->select(
-            DB::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
-            ->whereIn('conjuntoid', session('dependencias'))
-            ->orderBy('unidad','ASC')
-            ->pluck('unidad', 'unidads.id');
-
         return view('admin.visitante.create', compact('tipo_documentos', 'conjuntos', 'unidads', 'parqueaderos'));
     }
 
