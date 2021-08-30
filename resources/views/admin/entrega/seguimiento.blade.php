@@ -125,7 +125,7 @@
                     {
                         text: '<i class="far fa-file-excel"></i> Excel',
                         extend: 'excel',
-                        title: 'entregas'
+                        title: 'ENTREGAS'
                     }
                 ],
                 responsive: true,

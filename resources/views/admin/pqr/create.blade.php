@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    {{ Form::label('conjuntoid', 'Copropiedad') }}
+                    {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%']) !!}
                     @error('conjuntoid')
                         <small class="text-danger">
@@ -36,7 +36,10 @@
 
             <div class="col-md-4">
                 <div class="form-group">
-                    {{ Form::label('tipopqrid', 'Tipo de Ticket') }}
+                    {{ Form::label('tipopqrid', '* Tipo de Ticket') }}&nbsp;
+                    <a href="#" data-placement="bottom"  tabindex="0" data-toggle="popover" data-trigger="focus" data-popover-content="#a2">
+                        <i class="far fa-question-circle"></i>
+                    </a>
                     {!! Form::select('tipopqrid', $tipo_pqrs, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el tipo de Ticket']) !!}
                     @error('tipopqrid')
                         <small class="text-danger">
@@ -45,11 +48,32 @@
                     @enderror
 
                 </div>
+
+                <!-- Content for Popover -->
+                <div id="a2" class="d-none popover">
+                    <div class="popover-heading"><i class="far fa-envelope"></i> &nbsp; <b>Tipos de Ticket</b></div>
+
+                    <div class="popover-body">
+                        <div class='row'>
+                            <div class='col-4 border'><b>Petición</b></div>
+                            <div class='col-8 border'>En esta opción podrás realizar solicitudes y trámites de procedimientos a la administración, referente a los servicios preestablecidos.</div>
+                            <div class='col-4 border'><b>Queja</b></div>
+                            <div class='col-8 border'>Utiliza esta opción si necesitas comunicar a la administración la conducta de alguno de nuestros colaboradores o si consideras apropiado alertar sobre el incumplimiento de un procedimiento o suspensión de un servicio.</div>
+                            <div class='col-4 border'><b>Reclamo</b></div>
+                            <div class='col-8 border'>Utiliza esta opción para exigir o demandar una solución, ya sea por motivo general o particular, referente a la prestación indebida de un servicio o a la falta de atención de una solicitud.</div>
+                            <div class='col-4 border'><b>Sugerencia</b></div>
+                            <div class='col-8 border'>Utiliza esta opción si deseas aportar ideas o iniciativas para mejorar la calidad del conjunto.</div>
+                            <div class='col-4 border'><b>Felicitación</b></div>
+                            <div class='col-8 border'>Utiliza esta opción si deseas expresar tu satisfacción frente a un colaborador, un procedimiento o un servicio del conjunto.</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-md-4">
                 <div class="form-group">
-                    {{ Form::label('asuntoid', 'Asunto') }}
+                    {{ Form::label('asuntoid', '* Asunto') }}
                     {!! Form::select('asuntoid', $asuntos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el asunto']) !!}
                     @error('asuntoid')
                         <small class="text-danger">
@@ -62,8 +86,8 @@
 
             <div class="col-12">
                 <div class="form-group"> <!-- Detalle del caso -->
-                    {{ Form::label('mensaje', 'A continuación detalle su caso') }} <small class="font-italic"> (Max. 3.000 caractéres)</small>
-                    {!! Form::textarea('mensaje', null, ['class' => 'form-control' , 'rows' => 4, 'cols' => 20, 'style' => 'resize:none']) !!}
+                    {{ Form::label('mensaje', '* A continuación detalle su caso') }} <small class="font-italic"> (Max. 3.000 caractéres)</small>
+                    {!! Form::textarea('mensaje', null, ['spellcheck' => true, 'class' => 'form-control' , 'rows' => 4, 'cols' => 20, 'style' => 'resize:none']) !!}
                     @error('mensaje')
                         <small class="text-danger">
                             {{$message}}
@@ -76,7 +100,7 @@
 
             <div class="col-12">
                 <div class="form-group"> <!-- Logo del conjunto -->
-
+                    {{ Form::label('adjunto', 'Adjuntar Evidencia') }} <small class="font-italic"> (Opcional)</small><br>
                     {{ Form::file('adjunto', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
                     <br>
                     @error('adjunto')
@@ -112,14 +136,49 @@
 
 @section('css')
     <!-- /<link rel="stylesheet" href="/css/admin_custom.css">-->
+    <style>
+        @media (min-width: 320px) {
+            .popover {
+                max-width: 90%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .popover {
+                max-width: 600px;
+                justify-content: flex-start;
+            }
+        }
+
+    </style>
+
  @stop
 
 @section('js')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
 
 <script>
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2();
+      $(function(){
+    $("[data-toggle=popover]").popover({
+            html : true,
+            container: 'body',
+            content: function() {
+            var content = $(this).attr("data-popover-content");
+            return $(content).children(".popover-body").html();
+            },
+            title: function() {
+            var title = $(this).attr("data-popover-content");
+            return $(title).children(".popover-heading").html();
+            }
+        });
+    });
+
 
     })
 

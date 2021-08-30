@@ -181,7 +181,9 @@
         });
 
         $("#reservacupos").on('change', function(e) {
-            obtenerHoras()
+            if($( "#fecha" ).val()){
+                obtenerHoras();
+            }
         });
 
         $("#fecha").on('focusout', function(e) {
@@ -245,9 +247,11 @@
                                 dataType: "json",
                                 url: "{{ route('admin.reservas.store') }}",
                                 success: function(data) {
-                                    window.location.replace("{{ route('admin.reservas.index') }}");
-                                    // obtenerHoras();
-                                    // toastr.success("La reserva se realizo de forma exitosa.")
+                                    //window.location.replace("{{ route('admin.reservas.index') }}");
+                                     //obtenerHoras();
+                                     toastr.success("La reserva se realizó de forma exitosa.");
+                                     arr = "<div class='col-12'><div class='alert alert-default-success' role='alert'><i class='fas fa-check'></i>&nbsp; La reserva se realizó de forma exitosa. Para ver todas sus reservas pendientes haga click en <a class='text-primary' href='/admin/reservas'>Mis Reservas</a></div></div>";
+                                     $('#disponibilidad').html(arr);
                                 },
                                 error: function(error){
                                     console.log(error);

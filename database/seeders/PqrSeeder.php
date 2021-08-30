@@ -17,9 +17,10 @@ class PqrSeeder extends Seeder
      */
     public function run()
     {
-        TipoPqr::create(['tipopqrnombre' => 'Solicitud']);
+        TipoPqr::create(['tipopqrnombre' => 'Petición']);
         TipoPqr::create(['tipopqrnombre' => 'Queja']);
         TipoPqr::create(['tipopqrnombre' => 'Reclamo']);
+        TipoPqr::create(['tipopqrnombre' => 'Sugerencia']);
         TipoPqr::create(['tipopqrnombre' => 'Felicitación']);
 
         EstadoPqr::create(['estadonombre' => 'Abierto']);
@@ -27,19 +28,20 @@ class PqrSeeder extends Seeder
         EstadoPqr::create(['estadonombre' => 'Resuelto']);
         EstadoPqr::create(['estadonombre' => 'Cerrado']);
 
-        Asunto::create(['asunto' => 'Cuota de Administración']);
-        Asunto::create(['asunto' => 'Zonas Comunes']);
-        Asunto::create(['asunto' => 'Recepción - Porteria']);
+        Asunto::create(['asunto' => 'Administración']);
+        Asunto::create(['asunto' => 'Contratistas']);
+        Asunto::create(['asunto' => 'Mascotas']);
+        Asunto::create(['asunto' => 'Parqueaderos']);
         Asunto::create(['asunto' => 'Personal de Mantenimiento']);
         Asunto::create(['asunto' => 'Personal de Seguridad']);
-        Asunto::create(['asunto' => 'Contratistas']);
-        Asunto::create(['asunto' => 'Unidad / Apartamento']);
-        Asunto::create(['asunto' => 'Mascotas']);
-        Asunto::create(['asunto' => 'Vehiculos']);
+        Asunto::create(['asunto' => 'Recepción - Porteria']);
         Asunto::create(['asunto' => 'Residentes']);
+        Asunto::create(['asunto' => 'Unidad / Apartamento']);
+        Asunto::create(['asunto' => 'Vehiculos']);
+        Asunto::create(['asunto' => 'Zonas Comunes']);
 
         Motivo::create(['motivo' => 'Se creo el ticket por error']);
-        Motivo::create(['motivo' => 'Solucionado !!']);
+        Motivo::create(['motivo' => 'Solucionado']);
         Motivo::create(['motivo' => 'Ticket no valido']);
     }
 }

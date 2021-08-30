@@ -105,7 +105,7 @@ class PqrController extends Controller
     {
         $tipo_pqrs = TipoPqr::all()->pluck('tipopqrnombre', 'id');
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
-        $asuntos = Asunto::all()->pluck('asunto', 'id');
+        $asuntos = Asunto::orderBy('asunto')->pluck('asunto', 'id');
 
         return view('admin.pqr.create', compact('tipo_pqrs', 'conjuntos', 'asuntos'));
     }

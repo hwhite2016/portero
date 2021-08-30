@@ -57,7 +57,7 @@
                 <div class="col-12 col-md-4">
                     <div class="card shadow-lg {{$collapsed}}">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{date('j', strtotime($reserva->reservafecha))}} de {{ $meses[date('n', strtotime($reserva->reservafecha))] }} | {{ date('g:i', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
+                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{date('j', strtotime($reserva->reservafecha))}} de {{ $meses[date('n', strtotime($reserva->reservafecha)) - 1] }} | {{ date('g:i', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{$icon}}"></i>
                                 </button>
