@@ -190,7 +190,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '../',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -402,7 +402,7 @@ return [
             'text' => 'Zonas Comunes',
             'route'  => 'admin.zonas.index',
             'icon' => 'fas fa-swimmer',
-            'can'  => 'admin.pqrs.index',
+            'can'  => 'admin.zonas.index',
             'label'       => 'PRO',
             'label_color' => 'warning',
         ],
