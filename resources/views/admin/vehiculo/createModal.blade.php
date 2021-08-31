@@ -5,9 +5,9 @@
 
 <div class="card card-primary">
 
-    <div class="card-header bg-primary">
+    {{-- <div class="card-header bg-primary">
         <h1 class="card-title">CREAR NUEVO VEHICULO</h1>
-    </div>
+    </div> --}}
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
@@ -40,7 +40,7 @@
 
             <div class="col-md-4">
                 <div class="form-group"> <!-- Tipo -->
-                    {{ Form::label('tipovehiculoid', 'Tipo de vehiculo') }}
+                    {{ Form::label('tipovehiculoid', '* Tipo de vehiculo') }}
                     {!! Form::select('tipovehiculoid', $tipo_vehiculos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo']) !!}
                     @error('tipovehiculoid')
                         <small class="text-danger">

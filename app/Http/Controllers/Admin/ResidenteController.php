@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMailable;
 use App\Models\Bloque;
 use Illuminate\Http\Request;
 use illuminate\Database\Eloquent\Collection;
@@ -15,6 +16,7 @@ use App\Models\Persona;
 use App\Models\Relation;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ResidenteController extends Controller
 {
@@ -123,6 +125,7 @@ class ResidenteController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'conjuntoid'=>'required',
             'unidadid'=>'required',
@@ -157,6 +160,17 @@ class ResidenteController extends Controller
                 'email' => $request->get('personacorreo'),
                 'password' => bcrypt($psswd)
             ]);
+
+            if ($request->get('bienvenida') == 1){
+                $data = [
+                    'role_id' => $request->get('role_id'),
+                    'name' => $request->get('personanombre'),
+                    'email' => $request->get('personacorreo'),
+                    'password' => $psswd
+                ];
+                $correo = new WelcomeMailable($data);
+                Mail::to('kimita0627@gmail.com')->send($correo);
+            }
         }
 
         if (Unidad::where('id', '=', $request->get('unidadid'))->exists()) {
@@ -179,7 +193,6 @@ class ResidenteController extends Controller
             }
         }
 
-        //$persona->conjuntos()->sync($request->conjuntoid);
         $persona->conjuntos()->detach($request->conjuntoid);
         $persona->conjuntos()->attach($request->conjuntoid);
         $user->assignRole($request->rol);

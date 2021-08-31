@@ -14,26 +14,26 @@
 </head>
 <body>
 
-    <h1>Estimado {{$contacto['name']}},</h1>
-    @if($contacto['role_id'] == 3)
+    <h1>Estimado(a) {{$contacto['name']}},</h1>
+    @if($contacto['role_id'] != 5)
         <p>Reciba un cordial saludo.</p>
     @else
         <p>Recibe un cordial saludo por parte de la Administración. ¡Ahora eres parte de nuestra familia!</p>
     @endif
 
-    @if($contacto['role_id'] == 3)
-        <p>Su cuenta como administrador ha sido creada, y ahora usted puede iniciar sesion con las siguientes credenciales:</p>
+    @if($contacto['role_id'] != 5)
+        <p>Su cuenta como colaborador del conjunto ha sido creada, y ahora usted puede iniciar sesion con las siguientes credenciales:</p>
     @else
-        <p>Tu cuenta como residente ha sido creada, y ahora puedes iniciar sesion con las siguientes credenciales:</p>
+        <p>Su cuenta como residente ha sido creada, y ahora puede iniciar sesion con las siguientes credenciales:</p>
     @endif
 
 
-    <p><strong>Plataforma WEB: </strong>https://www.portero.com.co</p>
+    <p><strong>Aplicación Web: </strong>https://www.portero.com.co/admin</p>
     <p><strong>Usuario: </strong>{{$contacto['email']}}</p>
     <p><strong>Contraseña: </strong>{{$contacto['password']}}</p>
 
     <p>Tendras acceso a los siguientes modulos:</p>
-    @if($contacto['role_id'] == 3)
+    @if($contacto['role_id'] != 5)
         <p>Configuracion Propiedad Horizontal:</p>
         <ol>
             <li>Gestión de la Propiedad Horizontal (Paerqueaderos, Unidades, Residentes, Zonas Comunes, etc..</li>
@@ -48,6 +48,18 @@
         </ol>
 
         <p>Si tiene preguntas, por favor coloquese en contacto al siguiente correo: support@portero.com.co</p>
+
+    @else
+        <p>Opciones disponibles en su Plan:</p>
+        <ol>
+            <li>Gestión de Visitantes</li>
+            <li>Gestión de Correspondencia y/o Paqueteria</li>
+            <li>Reserva de Zonas Comunes</li>
+            <li>Sistema de PQRS (Peticiones, Quejas, Reclamos y Sugerencias)</li>
+            <li>Pago de la Cuota de Administración</li>
+        </ol>
+
+        <p>Si tiene preguntas, por favor coloquese en contacto con la administración del conjunto</p>
 
     @endif
 

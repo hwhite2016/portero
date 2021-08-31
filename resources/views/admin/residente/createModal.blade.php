@@ -4,9 +4,9 @@
 
 <div class="card card-primary">
 
-    <div class="card-header bg-primary">
+    {{-- <div class="card-header bg-primary">
         <h1 class="card-title">CREAR NUEVO RESIDENTE</h1>
-    </div>
+    </div> --}}
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
@@ -170,6 +170,15 @@
                             {{$message}}
                         </small>
                     @enderror
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>
+                        {!! Form::checkbox('bienvenida', 1, true, ['class'=>'mr-1']) !!}
+                        {{ config('adminlte.enviar_credenciales')}}
+                    </label>
                 </div>
             </div>
 

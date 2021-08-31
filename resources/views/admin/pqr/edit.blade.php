@@ -143,7 +143,7 @@
                                         <div class="tab-pane fade" id="custom-tabs-four-comentarios" role="tabpanel" aria-labelledby="custom-tabs-four-comentarios-tab">
                                             @if($pqr->estadoid != 4)
                                                 {{ Form::label('comentario', 'Comentarios') }} <small class="font-italic"> (Max. 400 caractéres)</small>
-                                                {!! Form::textarea('comentario', null, ['class' => 'form-control' , 'rows' => 3, 'cols' => 20, 'style' => 'resize:none']) !!}
+                                                {!! Form::textarea('comentario', null, ['spellcheck' => true, 'class' => 'form-control' , 'rows' => 3, 'cols' => 20, 'style' => 'resize:none']) !!}
                                                 @error('comentario')
                                                     <small class="text-danger">
                                                         {{$message}}

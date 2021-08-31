@@ -41,8 +41,8 @@ class EmpleadoController extends Controller
         $user = User::find(Auth::user()->id);
 
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
-        if ($user->hasRole('_superadministrador')) $roles = Role::all()->pluck('name', 'id');
-        if ($user->hasRole('_administrador')) $roles = Role::whereRaw("SUBSTR(name,1,1) != '_'")->pluck('name', 'id');
+        if ($user->hasRole('_superadministrador')) $roles = Role::all()->orderBy('name','ASC')->pluck('name', 'id');
+        if ($user->hasRole('_administrador')) $roles = Role::where('id','!=',5)->whereRaw("SUBSTR(name,1,1) != '_'")->orderBy('name','ASC')->pluck('name', 'id');
 
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
@@ -84,14 +84,17 @@ class EmpleadoController extends Controller
                 'email' => $request->get('personacorreo'),
                 'password' => bcrypt($psswd)
             ]);
-            $data = [
-                'role_id' => $request->get('role_id'),
-                'name' => $request->get('personanombre'),
-                'email' => $request->get('personacorreo'),
-                'password' => $psswd
-            ];
-            $correo = new WelcomeMailable($data);
-            Mail::to('victorlopez23@hotmail.com')->send($correo);
+
+            if ($request->get('bienvenida') == 1){
+                $data = [
+                    'role_id' => $request->get('role_id'),
+                    'name' => $request->get('personanombre'),
+                    'email' => $request->get('personacorreo'),
+                    'password' => $psswd
+                ];
+                $correo = new WelcomeMailable($data);
+                Mail::to('kimita0627@gmail.com')->send($correo);
+            }
         }
 
         if (!Empleado::where('personaid', '=', $persona->id)->whereConjuntoid($request->get('conjuntoid'))->exists()) {
