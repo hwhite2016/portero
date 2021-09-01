@@ -19,7 +19,7 @@
           <div class="col-12">
             <div class="card  mt-3">
               <div class="card-header">
-                @can('admin.pqrs.create')
+
 
                 <div class="row">
                     <div class="col-6 col-md-2" onclick="location.href='{{route('admin.pqrs.show', 1)}}'" style="cursor:pointer">
@@ -78,13 +78,14 @@
                     </div>
                     <!-- /.col -->
 
-
+                    @can('admin.pqrs.create')
                     <div class="col-md-4">
                         <a href="{{route('admin.pqrs.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Ticket</a>
                     </div>
+                    @endcan
                 </div>
                 <!-- /.row -->
-                @endcan
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">

@@ -190,7 +190,7 @@
 
       $('#fechanacimiento').datetimepicker({
            format: 'L',
-           format: 'YYYY-MM-DD'
+           format: 'YYYY/MM/DD'
       });
 
       $('#personadocumento').focus();

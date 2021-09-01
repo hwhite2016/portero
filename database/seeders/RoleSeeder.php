@@ -130,7 +130,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.seguimiento.edit', 'description' => 'Confirmar correspondencia'])->syncRoles([$role1, $role5]);
 
         Permission::create(['name' => 'admin.pqrs.index', 'description' => 'Ver los pqrs'])->syncRoles([$role1, $role2, $role5]);
-        Permission::create(['name' => 'admin.pqrs.create', 'description' => 'Crear un pqrs'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.pqrs.create', 'description' => 'Crear un pqrs'])->syncRoles([$role1, $role5]);
         Permission::create(['name' => 'admin.pqrs.edit', 'description' => 'Editar un pqrs'])->syncRoles([$role1, $role2, $role5]);
         Permission::create(['name' => 'admin.pqrs.destroy', 'description' => 'Eliminar un pqrs'])->syncRoles([$role1, $role2]);
 

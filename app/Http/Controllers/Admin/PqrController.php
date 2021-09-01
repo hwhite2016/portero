@@ -255,14 +255,15 @@ class PqrController extends Controller
 
     public function edit($id)
     {
+
         $pqr = Pqr::join('asuntos', 'asuntos.id', 'pqrs.asuntoid')
             ->join('estado_pqrs', 'estado_pqrs.id', 'pqrs.estadoid')
             ->join('tipo_pqrs', 'tipo_pqrs.id', 'pqrs.tipopqrid')
             ->join('users', 'users.id', 'pqrs.userid')
-            ->join('residentes', 'residentes.personaid', 'users.personaid')
-            ->join('unidads', 'unidads.id', 'residentes.unidadid')
-            ->join('bloques', 'bloques.id', 'unidads.bloqueid')
-            ->select('pqrs.*', 'estadoid', 'estadonombre', 'asunto', 'tipopqrnombre', 'users.name', 'unidadnombre', 'bloquenombre')
+            ->leftJoin('residentes', 'residentes.personaid', 'users.personaid')
+            ->leftJoin('unidads', 'unidads.id', 'residentes.unidadid')
+            ->leftJoin('bloques', 'bloques.id', 'unidads.bloqueid')
+            ->select('pqrs.*', 'estadonombre', 'asunto', 'tipopqrnombre', 'users.name', 'unidadnombre', 'bloquenombre')
             ->where('pqrs.id', $id)
             ->first();
 
@@ -315,12 +316,14 @@ class PqrController extends Controller
                 'estadoid'=>$request->get('estadoid'),
             ]);
 
-            DetallePqr::create([
-                'pqrid' => $pqrs->id,
-                'estadoid' => $request->get('estadoid'),
-                'userid' => Auth::user()->id,
-                //'motivoid' => $request->get('motivo'),
-            ]);
+            if($pqrs->estadoid != $request->get('estadoid')){
+                DetallePqr::create([
+                    'pqrid' => $pqrs->id,
+                    'estadoid' => $request->get('estadoid'),
+                    'userid' => Auth::user()->id,
+                    //'motivoid' => $request->get('motivo'),
+                ]);
+            }
 
             $txt = "El estado se actualizo exitosamente";
         }
@@ -349,7 +352,7 @@ class PqrController extends Controller
 
             Adjunto::create([
                 'pqrid' => $pqrs->id,
-                'archivo' => $filename,
+                'adjunto' => $filename,
                 'userid' => Auth::user()->id,
             ]);
 
