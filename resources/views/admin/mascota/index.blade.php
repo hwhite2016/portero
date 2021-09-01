@@ -31,6 +31,7 @@
                     <tr>
                       <th>Tipo</th>
                       <th>Unidad</th>
+                      <th>Nombre</th>
                       <th>Raza</th>
                       <th>Edad (meses)</th>
                       <th width="5%">...</th>
@@ -45,6 +46,7 @@
                           <label class="text-uppercase fw-bold"> {{ $mascota->unidadnombre }} </label>
                           <small> ({{ $mascota->bloquenombre }}) </small>
                         </td>
+                        <td> {{ $mascota->mascotanombre }} </td>
                         <td> {{ $mascota->mascotaraza }} </td>
                         <td> {{ $mascota->mascotaedad }} </td>
 

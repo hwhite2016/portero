@@ -26,10 +26,11 @@ class MascotaController extends Controller
              ->join('bloques','bloques.id','=','unidads.bloqueid')
              ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
              ->join('tipo_mascotas','tipo_mascotas.id','=','mascotas.tipomascotaid')
-             ->select(Mascota::raw('mascotas.id, conjuntonombre, bloquenombre, unidadnombre, tipomascotaid, tipomascotanombre, mascotaraza, mascotaedad'))
+             ->select(Mascota::raw('mascotas.id, conjuntonombre, bloquenombre, unidadnombre, tipomascotaid, tipomascotanombre, mascotaraza, mascotanombre, mascotaedad'))
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('unidadnombre', 'ASC')
              ->get();
+
              return view('admin.mascota.index')->with('mascotas', $mascotas);
     }
 
@@ -85,6 +86,7 @@ class MascotaController extends Controller
             'unidadid'=>$request->get('unidadid'),
             'tipomascotaid'=>$request->get('tipomascotaid'),
             'mascotaraza'=>$request->get('mascotaraza'),
+            'mascotanombre'=>$request->get('mascotanombre'),
             'mascotaedad'=>$request->get('mascotaedad')
         ]);
         if(!$request->get('mascotas'))
@@ -95,15 +97,16 @@ class MascotaController extends Controller
 
     public function show($id)
     {
-        $mascotas = mascota::join("unidads","unidads.id", "=", "mascotas.unidadid")
+        $mascotas = Mascota::join("unidads","unidads.id", "=", "mascotas.unidadid")
         ->join('bloques','bloques.id','=','unidads.bloqueid')
         ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
         ->join('tipo_mascotas','tipo_mascotas.id','=','mascotas.tipomascotaid')
-        ->select(mascota::raw('mascotas.id, conjuntonombre, bloquenombre, unidadnombre, tipomascotaid, tipomascotanombre, mascotaraza, mascotaedad'))
+        ->select(Mascota::raw('mascotas.id, conjuntonombre, bloquenombre, unidadnombre, tipomascotaid, tipomascotanombre, mascotaraza, mascotanombre, mascotaedad'))
         ->where('unidads.id', $id)
         ->whereIn('conjuntos.id', session('dependencias'))
         ->orderBy('unidadnombre', 'ASC')
         ->get();
+
         return view('admin.mascota.index')->with('mascotas', $mascotas);
     }
 
@@ -137,6 +140,7 @@ class MascotaController extends Controller
             'unidadid'=>$request->get('unidadid'),
             'tipomascotaid'=>$request->get('tipomascotaid'),
             'mascotaraza'=>$request->get('mascotaraza'),
+            'mascotanombre'=>$request->get('mascotanombre'),
             'mascotaedad'=>$request->get('mascotaedad'),
         ]);
         return redirect()->route('admin.mascotas.index')->with('info','La mascota fue actualizada de forma exitosa');

@@ -9,6 +9,7 @@
             <thead>
               <tr>
                 <th>Tipo</th>
+                <th>Nombre</th>
                 <th>Raza</th>
                 <th>Edad (meses)</th>
                 <th width="5%">...</th>
@@ -18,6 +19,7 @@
               @foreach ($mascotas as $mascota)
                 <tr>
                   <td> {{ $mascota->tipomascotanombre }} </td>
+                  <td> {{ $mascota->mascotanombre }} </td>
                   <td> {{ $mascota->mascotaraza }} </td>
                   <td> {{ $mascota->mascotaedad }} </td>
                   <td>

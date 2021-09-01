@@ -149,7 +149,7 @@ class UnidadController extends Controller
         ->get();
         $mascotas = Mascota::join('tipo_mascotas', 'tipo_mascotas.id', '=', 'tipomascotaid')
         ->join('unidads', 'unidads.id', '=', 'unidadid')
-        ->select(mascota::raw('mascotas.id, tipomascotanombre, mascotaraza, mascotaedad' ))
+        ->select(mascota::raw('mascotas.id, tipomascotanombre, mascotaraza, mascotanombre, mascotaedad' ))
         ->where('unidads.id', $id)
         ->get();
 
