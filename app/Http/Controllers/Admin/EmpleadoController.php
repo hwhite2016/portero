@@ -124,7 +124,7 @@ class EmpleadoController extends Controller
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
              ->join('personas','personas.id','=','empleados.personaid')
              ->join('roles','roles.id','=','empleados.role_id')
-             ->select('empleados.id', 'conjuntonombre', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
+             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
              ->where('conjuntos.id', $id)
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
