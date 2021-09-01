@@ -41,7 +41,7 @@ class EmpleadoController extends Controller
         $user = User::find(Auth::user()->id);
 
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
-        if ($user->hasRole('_superadministrador')) $roles = Role::all()->orderBy('name','ASC')->pluck('name', 'id');
+        if ($user->hasRole('_superadministrador')) $roles = Role::orderBy('name','ASC')->pluck('name', 'id');
         if ($user->hasRole('_administrador')) $roles = Role::where('id','!=',5)->whereRaw("SUBSTR(name,1,1) != '_'")->orderBy('name','ASC')->pluck('name', 'id');
 
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
@@ -58,12 +58,14 @@ class EmpleadoController extends Controller
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
-            'personacorreo'=>'required|email|unique:personas',
+            'personacorreo'=>'required|email',
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
         }else{
-
+            $request->validate([
+                'personacorreo'=>'unique:personas',
+            ]);
             $persona = Persona::create([
                 'tipodocumentoid'=>$request->get('tipodocumentoid'),
                 'personadocumento'=>$request->get('personadocumento'),
