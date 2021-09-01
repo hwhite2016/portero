@@ -111,12 +111,13 @@
                             <span class="input-group-text"><i class="fas fa-at"></i></span>
                         </div>
                         {{ Form::email('personacorreo', null, array('placeholder' => 'Ej: pedro@gmail.com', 'class' => 'form-control')) }}
-                        @error('personacorreo')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
+
                     </div>
+                    @error('personacorreo')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 
@@ -128,12 +129,13 @@
                             <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
                         </div>
                         {{ Form::text('personacelular', null, array('placeholder' => '', 'class' => 'form-control', 'data-inputmask'=>'"mask": "(999) 999-9999"')) }}
-                        @error('personacelular')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
+
                     </div>
+                    @error('personacelular')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 

@@ -21,21 +21,19 @@
         {{-- Custom right links --}}
         @yield('content_top_nav_right')
 
-        <div id="app" v-cloak>
-            {{-- See resources/assets/js/components/NotificationsDropdown.vue --}}
-
-            {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap-notifications.css') }}"> --}}
-            <div class="row mr-2">
-                <div class="col-7">
-                    <notifications-demo></notifications-demo>
-                </div>
-                <div class="col-5">
-                    <notifications-dropdown></notifications-dropdown>
+        @can('admin.notificaciones.show')
+            <div id="app" v-cloak>
+                <div class="row mr-2">
+                    <div class="col-7">
+                        <notifications-demo></notifications-demo>
+                    </div>
+                    <div class="col-5">
+                        <notifications-dropdown></notifications-dropdown>
+                    </div>
                 </div>
             </div>
-
-        </div>
-        <script src="/js/app.js"></script>
+            <script src="/js/app.js"></script>
+        @endcan
 
         {{-- Configured right links --}}
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')

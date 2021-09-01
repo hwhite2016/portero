@@ -28,9 +28,10 @@
                 <table id="empleados" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
                   <thead class="bg-primary">
                     <tr>
-                      <th>Nombre</th>
+                      <th># Documento</th>
                       <th>Conjunto</th>
-                      <th>Rol</th>
+                      <th>Nombre</th>
+                       <th>Rol</th>
                       <th>Celular</th>
                       <th>Correo</th>
                       <th>Estado</th>
@@ -41,10 +42,11 @@
                   <tbody>
                     @foreach ($empleados as $empleado)
                       <tr>
-                        <td> {{ $empleado->personanombre }} </td>
+                        <td> {{ $empleado->personadocumento }} </td>
                         <td>
                           <label class="text-uppercase fw-bold"> {{ $empleado->conjuntonombre }} </label>
                         </td>
+                        <td> {{ $empleado->personanombre }} </td>
                         <td> {{ $empleado->name }} </td>
                         <td> {{ $empleado->personacelular }} </td>
                         <td> {{ $empleado->personacorreo }} </td>
@@ -133,7 +135,7 @@
                     {
                         text: '<i class="far fa-file-excel"></i> Excel',
                         extend: 'excel',
-                        title: 'empleados'
+                        title: 'EMPLEADOS'
                     }
                 ],
                 responsive: true,
@@ -150,7 +152,7 @@
                     api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                         if ( last !== group ) {
                             $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+                                '<tr class="group"><td colspan="7">'+group+'</td></tr>'
                             );
 
                             last = group;

@@ -19,10 +19,12 @@
         @yield('title_postfix', config('adminlte.title_postfix', ''))
     </title>
 
-    <!-- GCM Manifest (optional if VAPID is used) -->
-    @if (config('webpush.gcm.sender_id'))
-        <link rel="manifest" href="/manifest.json">
-    @endif
+    @can('admin.notificaciones.show')
+        <!-- GCM Manifest (optional if VAPID is used) -->
+        @if (config('webpush.gcm.sender_id'))
+            <link rel="manifest" href="/manifest.json">
+        @endif
+    @endcan
 
     {{-- Custom stylesheets (pre AdminLTE) --}}
     @yield('adminlte_css_pre')
@@ -79,17 +81,19 @@
         <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png') }}">
     @endif
 
-    <script>
-        window.Laravel = {!! json_encode([
-            'user' => Auth::user(),
-            //'user'=> Auth::check() ? Auth::user()->id : 'null' ,
-            'vapidPublicKey' => config('webpush.vapid.public_key'),
-            'pusher' => [
-                'key' => config('broadcasting.connections.pusher.key'),
-                'cluster' => config('broadcasting.connections.pusher.options.cluster'),
-            ],
-        ]) !!};
-    </script>
+    @can('admin.notificaciones.show')
+        <script>
+            window.Laravel = {!! json_encode([
+                'user' => Auth::user(),
+                //'user'=> Auth::check() ? Auth::user()->id : 'null' ,
+                'vapidPublicKey' => config('webpush.vapid.public_key'),
+                'pusher' => [
+                    'key' => config('broadcasting.connections.pusher.key'),
+                    'cluster' => config('broadcasting.connections.pusher.options.cluster'),
+                ],
+            ]) !!};
+        </script>
+    @endcan
 </head>
 
 <body class="@yield('classes_body')" @yield('body_data')>

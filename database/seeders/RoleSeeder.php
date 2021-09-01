@@ -139,7 +139,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.reservas.edit', 'description' => 'Editar un reserva'])->syncRoles([$role1, $role2 , $role5]);
         Permission::create(['name' => 'admin.reservas.destroy', 'description' => 'Eliminar un reserva'])->syncRoles([$role1, $role2, $role5]);
 
-        Permission::create(['name' => 'admin.notificaciones.show', 'description' => 'Ver Notificaciones'])->syncRoles([$role1, $role2, $role5]);
+        Permission::create(['name' => 'admin.notificaciones.show', 'description' => 'Ver Notificaciones'])->syncRoles([$role1, $role5]);
 
     }
 }

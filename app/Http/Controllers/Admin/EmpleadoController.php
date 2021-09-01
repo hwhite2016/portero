@@ -29,7 +29,7 @@ class EmpleadoController extends Controller
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
              ->join('personas','personas.id','=','empleados.personaid')
              ->join('roles','roles.id','=','empleados.role_id')
-             ->select('empleados.id', 'conjuntonombre', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
+             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
              ->get();
@@ -58,6 +58,7 @@ class EmpleadoController extends Controller
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
+            'personacorreo'=>'required|email|unique:personas',
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
