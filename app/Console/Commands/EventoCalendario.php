@@ -40,12 +40,15 @@ class EventoCalendario extends Command
     {
         //return 0;
         $fecha = date('Y-m-d');
-        $evento = EventCalendar::whereFecha($fecha)->get();
+        $hora = date('H:i:s');
+        $evento = EventCalendar::where('fecha', '<=', $fecha)
+            ->where('hora', '<', $hora)
+            ->get();
         foreach($evento as $ev){
             $ev->update([
-                'fecha' => date('Y-m-d' , strtotime($ev->fecha." + 7 days")),
-                'start' => date('Y-m-d H:i:s' , strtotime($ev->start." + 7 days")),
-                'end' => date('Y-m-d H:i:s' , strtotime($ev->end." + 7 days")),
+                'fecha' => date('Y-m-d' , strtotime($ev->fecha.' + 7 days')),
+                'start' => date('Y-m-d H:i:s' , strtotime($ev->start.' + 7 days')),
+                'end' => date('Y-m-d H:i:s' , strtotime($ev->end.' + 7 days')),
                 'backgroundColor'=>'#3788D8',
             ]);
         }
