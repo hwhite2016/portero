@@ -20,6 +20,7 @@ class CreateMascotasTable extends Migration
             $table->unsignedBigInteger('tipomascotaid');
             $table->foreign('tipomascotaid')->references('id')->on('tipo_mascotas');
             $table->string('mascotaraza', 40)->nullable();
+            $table->string('mascotanombre', 20)->nullable();
             $table->tinyInteger('mascotaedad')->nullable();
             $table->timestamps();
         });

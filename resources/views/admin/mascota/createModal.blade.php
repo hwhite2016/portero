@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo -->
                     {{ Form::label('tipomascotaid', '* Tipo de mascota') }}
                     {!! Form::select('tipomascotaid', $tipo_mascotas, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo']) !!}
@@ -50,7 +50,19 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="form-group"> <!-- Nombre -->
+                    {{ Form::label('mascotanombre', 'Nombre') }}
+                    {!! Form::text('mascotanombre', null, array('class' => 'form-control')) !!}
+                    @error('mascotanombre')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Raza -->
                     {{ Form::label('mascotaraza', 'Raza') }}
                     {!! Form::text('mascotaraza', null, array('placeholder' => 'Ej: Pitbull, Labrador ...', 'class' => 'form-control')) !!}
@@ -62,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Edad -->
                     {{ Form::label('mascotaedad', 'Edad') }}
                     {!! Form::number('mascotaedad', null, array('placeholder' => 'Edad en meses', 'class' => 'form-control')) !!}

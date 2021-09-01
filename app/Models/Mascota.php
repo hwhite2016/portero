@@ -14,5 +14,5 @@ class Mascota extends Model
         return $this->belongsTo(Unidad::class, 'unidadid');
     }
 
-    protected $fillable = ['unidadid', 'tipomascotaid', 'mascotaraza', 'mascotaedad'];
+    protected $fillable = ['unidadid', 'tipomascotaid', 'mascotaraza', 'mascotanombre', 'mascotaedad'];
 }
