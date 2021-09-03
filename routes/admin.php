@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\MascotaController;
 use App\Http\Controllers\Admin\VisitanteController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\EventCalendarController;
+use App\Http\Controllers\Admin\InvitadoController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\PqrController;
 use App\Http\Controllers\Admin\ReservaController;
@@ -69,6 +70,8 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/hdestroy/{id}', [VisitanteController::class, 'hdestroy'])->name('admin.visitantes.hdestroy');
     Route::get('/restaurar/{id}', [VisitanteController::class, 'restaurar'])->name('admin.visitantes.restaurar');
     Route::get('/documento/{id}', [VisitanteController::class, 'getInfoDocumento'])->name('admin.visitantes.documento');
+    Route::get('/import',[InvitadoController::class, 'importForm'])->name('admin.invitados.importForm');
+    Route::post('/import',[InvitadoController::class, 'import'])->name('admin.invitados.import');
     Route::get('/persona/{id}', [EntregaController::class, 'getInfoPersona'])->name('admin.entregas.persona');
     Route::resource('/entregas', EntregaController::class)->names('admin.entregas');
     Route::resource('/seguimiento', SeguimientoController::class)->names('admin.seguimiento');

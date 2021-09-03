@@ -77,6 +77,9 @@
                                         <i class="fas fa-caret-right"></i> Codigo de la reserva: <b class="text-primary">{{$reserva->reservacodigo}}</b><br>
                                         <i class="fas fa-caret-right"></i> Valor de la Reserva: <b>$ {{$reserva->valor}}</b>
                                     </p>
+                                    @if($reserva->zonacompartida == 0)
+                                    <a href="/admin/import" class="text-primary float-right"><small class="font-italic"><i class="fas fa-upload"></i> Cargar lista de invitados</small></a>
+                                    @endif
                                 </div>
                                 {{-- <div class="col-3">
                                     <div class="title m-b-md">
@@ -89,6 +92,7 @@
                         <!-- /.card-body -->
 
                         <div class="card-footer">
+
                             @can('admin.reservas.destroy')
                               {!! Form::model($reserva, ['route'=>['admin.reservas.destroy', $reserva], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @csrf
@@ -96,6 +100,7 @@
                               {!! Form::hidden('reservafecha', $reserva->reservafecha) !!}
                               {!! Form::hidden('reservahora', $reserva->reservahora) !!}
                               {{-- @method('DELETE') --}}
+
                               <button class="btn btn-sm btn-block btn-outline-danger float-right"><i class="fas fa-ban"></i> Eliminar Reserva</button>
                               {!! Form::close() !!}
                             @endcan

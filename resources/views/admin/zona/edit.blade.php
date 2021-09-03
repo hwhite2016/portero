@@ -117,11 +117,23 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Aforo maximo -->
                     {!! Form::label('zonaaforomax', 'Aforo máximo') !!}
                     {!! Form::number('zonaaforomax', null, array('placeholder' => '', 'class' => 'form-control')) !!}
                     @error('zonaaforomax')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group"> <!-- uso compartido -->
+                    {!! Form::label('zonacompartida', 'Zona de uso compartido') !!}
+                    {!! Form::select('zonacompartida', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonacompartida')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -141,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Franja -->
                     {!! Form::label('zonafranjatiempo', 'Franjas de reserva') !!}
                     {!! Form::select('zonafranjatiempo', ['00:30:00'=>'30 Minutos', '01:00:00'=>'1 Hora','01:30:00'=>'1 Hora y media', '02:00:00'=>'2 Horas','02:30:00'=>'2 Horas y media', '03:00:00'=>'3 Horas','03:30:00'=>'3 Horas y media', '04:00:00'=>'4 Horas'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}

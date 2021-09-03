@@ -27,7 +27,7 @@ class ReservaController extends Controller
         $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
             ->join("residentes","residentes.unidadid", "=", "reservas.unidadid")
             ->join("unidads","unidads.id", "=", "residentes.unidadid")
-            ->select("reservas.*", "zonanombre", "unidadnombre")
+            ->select("reservas.*", "zonanombre", "zonacompartida", "unidadnombre")
             ->wherePersonaid(Auth::user()->personaid)
              //->whereReservaestado(1)
              ->orderBy('reservaestado', 'DESC')
@@ -155,7 +155,7 @@ class ReservaController extends Controller
 
         }
         $zonareserva = Zona::whereId($id)
-        ->select('zonaaforomax', 'zonafranjatiempo', 'zonacuporeservamax', 'zonatiemporeservamax', 'zonareservadiariamax', 'zonaprecio')->first();
+        ->select('zonaaforomax', 'zonacompartida', 'zonafranjatiempo', 'zonacuporeservamax', 'zonatiemporeservamax', 'zonareservadiariamax', 'zonaprecio')->first();
         //$zona->prepend('Seleccione la zona', '');
 
         return view('admin.reserva.edit', compact('zona', 'unidad', 'zonareserva'));

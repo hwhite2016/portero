@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Imports\VisitantesImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Visitante;
@@ -14,9 +15,13 @@ use App\Models\Persona;
 use App\Models\Residente;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+//use Maatwebsite\Excel\Facades\Excel;
+use Excel;
+
 
 class VisitanteController extends Controller
 {
+
     public function __construct(){
         $this->middleware('auth');
         $this->middleware('can:admin.visitantes.index')->only('index');
@@ -271,5 +276,17 @@ class VisitanteController extends Controller
         $visitante->update(['visitantesalida'=>now()]);
         $visitante->delete();
         return redirect()->route('admin.visitantes.index')->with('info','El visitante ha salido del conjunto de forma exitosa.');
+    }
+
+    public function importForm(){
+        return view('admin.visitante.import');
+    }
+
+    public function import(Request $request)
+    {
+
+        $import = new VisitantesImport();
+        Excel::import($import, request()->file('visitantes'));
+        return view('admin.visitante.import', ['numRows'=>$import->getRowCount()]);
     }
 }

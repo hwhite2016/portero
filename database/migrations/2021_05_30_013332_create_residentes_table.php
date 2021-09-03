@@ -16,7 +16,7 @@ class CreateResidentesTable extends Migration
         Schema::create('residentes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('unidadid');
-            $table->foreign('unidadid')->references('id')->on('unidads')->onDelete('cascade');;
+            $table->foreign('unidadid')->references('id')->on('unidads')->onDelete('cascade');
             $table->unsignedBigInteger('personaid');
             $table->foreign('personaid')->references('id')->on('personas')->onDelete('cascade');
             $table->unsignedBigInteger('tiporesidenteid')->nullable();

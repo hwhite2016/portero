@@ -24,6 +24,7 @@ class CreateZonasTable extends Migration
             $table->string('zonahoracierre', 5)->nullable();;
             $table->string('zonaterminos', 1800)->nullable();
             $table->boolean('zonareservable')->default(0);
+            $table->boolean('zonacompartida')->default(1);
             $table->string('zonafranjatiempo', 8)->comment('franjas de tiempo para la reserva en minutos');
             $table->tinyInteger('zonaaforomax')->nulable()->default(0)->comment('Aforo maximo por franja');
             $table->tinyInteger('zonacuporeservamax')->nullable()->comment('Cupo maximo de personas por reserva');

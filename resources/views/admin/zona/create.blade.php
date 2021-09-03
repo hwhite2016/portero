@@ -106,6 +106,18 @@
             </div>
 
             <div class="col-md-3">
+                <div class="form-group"> <!-- uso compartido -->
+                    {!! Form::label('zonacompartida', 'Zona de uso compartido') !!}
+                    {!! Form::select('zonacompartida', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonacompartida')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Valor de la reserva (precio) -->
                     {!! Form::label('zonaprecio', 'Valor de la reserva') !!}
                     {!! Form::number('zonaprecio', null, array('placeholder' => '0', 'class' => 'form-control')) !!}

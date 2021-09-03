@@ -106,6 +106,7 @@ class ZonaController extends Controller
             'zonahoracierre' => $request->get('zonahoracierre'),
             'zonafranjatiempo' => $request->get('zonafranjatiempo'),
             'zonaaforomax' => $request->get('zonaaforomax'),
+            'zonacompartida' => $request->get('zonacompartida'),
             'zonacuporeservamax' => $request->get('zonacuporeservamax'),
             'zonatiemporeservamax' => $request->get('zonatiemporeservamax'),
             'zonareservadiariamax' => $request->get('zonareservadiariamax'),
@@ -204,6 +205,7 @@ class ZonaController extends Controller
             $zona->zonahoracierre =  $request->get('zonahoracierre');
             $zona->zonafranjatiempo =  $request->get('zonafranjatiempo');
             $zona->zonaaforomax =  $request->get('zonaaforomax');
+            $zona->zonacompartida =  $request->get('zonacompartida');
             $zona->zonacuporeservamax =  $request->get('zonacuporeservamax');
             $zona->zonatiemporeservamax =  $request->get('zonatiemporeservamax');
             $zona->zonareservadiariamax =  $request->get('zonareservadiariamax');

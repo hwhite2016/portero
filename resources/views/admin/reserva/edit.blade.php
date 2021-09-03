@@ -84,23 +84,10 @@
         <!-- /.row -->
         <p></p>
         <div class="col-md-10">
-        <div class="row" id="disponibilidad">
+            <div class="row" id="mensajes"></div>
+            <div class="row" id="disponibilidad"></div>
 
-            {{-- <div class="col-md-3">
-                <div class="form-group input-group-prepend">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                        10:00 am
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item"><b>Plazas disponibles: 6</b></a>
-                         <a class="dropdown-item"><i class="fas fa-caret-right"></i> Ocupacion al <span class="text-success">34%</span></a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-success" href="#"><i class="fas fa-plus"></i> Reservar</a>
-                    </div>
-                </div>
-            </div> --}}
 
-        </div>
         </div>
     </div>
     <!-- /.card-body -->
@@ -126,11 +113,16 @@
 
 <script>
 
+
+
     $(function () {
         //Initialize Select2 Elements
         $('.select2').select2();
 
-        for (var i = 1; i <= {{$zonareserva->zonacuporeservamax}}; i++) {
+        var zc = {{$zonareserva->zonacompartida}};
+        var iter = 1;
+        if(zc == 0) iter = {{$zonareserva->zonacuporeservamax}};
+        for (var i = iter; i <= {{$zonareserva->zonacuporeservamax}}; i++) {
             $('#reservacupos').append('<option value="'+ i +'">'+ i +'</option>');
         }
         $('#fecha2').datetimepicker({
@@ -191,6 +183,7 @@
         });
 
         function obtenerHoras(){
+            $('#mensajes').html('');
             $('#disponibilidad').html('');
             if($( "#reservacupos" ).val()){
                 var zonaid = $( "#zonaid" ).val();
@@ -229,7 +222,8 @@
                                 })
                             })
                         }else{
-                          arr = "<div class='col-12'><div class='alert alert-default-warning' role='alert'><i class='fas fa-exclamation-triangle'></i>&nbsp; Lo sentimos, no hay disponibilidad de horarios en la fecha seleccionada.</div></div>";
+                          arr = "<div class='col-12'><div class='alert alert-default-warning alert-dismissible fade show' role='alert'><i class='fas fa-exclamation-triangle'></i>&nbsp; Lo sentimos, no hay disponibilidad de horarios en la fecha seleccionada.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div></div>";
+                          //$('#mensajes').html(msg);
                         }
                         $('#disponibilidad').html(arr);
 
@@ -248,9 +242,11 @@
                                 url: "{{ route('admin.reservas.store') }}",
                                 success: function(data) {
                                     //window.location.replace("{{ route('admin.reservas.index') }}");
-                                     //obtenerHoras();
+                                    //obtenerHoras();
+                                    console.log(cont);
                                      toastr.success("La reserva se realizó de forma exitosa.");
-                                     arr = "<div class='col-12'><div class='alert alert-default-success' role='alert'><i class='fas fa-check'></i>&nbsp; La reserva se realizó de forma exitosa. Para ver todas sus reservas pendientes haga click en <a class='text-primary' href='/admin/reservas'>Mis Reservas</a></div></div>";
+                                     arr = "<div class='col-12'><div class='alert alert-default-success alert-dismissible fade show' role='alert'><i class='fas fa-check'></i>&nbsp; La reserva se realizó de forma exitosa. Para ver todas sus reservas pendientes haga click en <a class='text-primary' href='/admin/reservas'>Mis Reservas</a><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div></div>";
+                                     //$('#mensajes').html(msg);
                                      $('#disponibilidad').html(arr);
                                 },
                                 error: function(error){
