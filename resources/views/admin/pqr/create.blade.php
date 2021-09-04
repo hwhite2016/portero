@@ -164,23 +164,20 @@
     $(function () {
       //Initialize Select2 Elements
       $('.select2').select2();
-      $(function(){
-    $("[data-toggle=popover]").popover({
+
+        $("[data-toggle=popover]").popover({
             html : true,
             container: 'body',
             content: function() {
-            var content = $(this).attr("data-popover-content");
-            return $(content).children(".popover-body").html();
-            },
-            title: function() {
-            var title = $(this).attr("data-popover-content");
-            return $(title).children(".popover-heading").html();
+                var content = $(this).attr("data-popover-content");
+                return $(content).children(".popover-body").html();
+                },
+                title: function() {
+                var title = $(this).attr("data-popover-content");
+                return $(title).children(".popover-heading").html();
             }
         });
-    });
-
-
-    })
+     })
 
 </script>
 @stop

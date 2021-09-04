@@ -78,7 +78,7 @@
                                         <i class="fas fa-caret-right"></i> Valor de la Reserva: <b>$ {{$reserva->valor}}</b>
                                     </p>
                                     @if($reserva->zonacompartida == 0)
-                                    <a href="/admin/import" class="text-primary float-right"><small class="font-italic"><i class="fas fa-upload"></i> Cargar lista de invitados</small></a>
+                                        <a href="{{route('admin.invitados.importForm', $reserva->id)}}" class="text-primary float-right"><span class="font-italic"><i class="fas fa-caret-right"></i> Ver lista de invitados</span></a>
                                     @endif
                                 </div>
                                 {{-- <div class="col-3">
@@ -134,6 +134,8 @@
 
 @section('js')
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
     @if(session('info'))
     <script type="text/javascript">
         toastr.success("{{session('info')}}")
@@ -141,6 +143,7 @@
     @endif
 
     <script>
+
         $('.frm_delete').submit(function(e){
             e.preventDefault();
 

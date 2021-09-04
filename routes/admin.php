@@ -70,8 +70,10 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/hdestroy/{id}', [VisitanteController::class, 'hdestroy'])->name('admin.visitantes.hdestroy');
     Route::get('/restaurar/{id}', [VisitanteController::class, 'restaurar'])->name('admin.visitantes.restaurar');
     Route::get('/documento/{id}', [VisitanteController::class, 'getInfoDocumento'])->name('admin.visitantes.documento');
-    Route::get('/import',[InvitadoController::class, 'importForm'])->name('admin.invitados.importForm');
+    Route::resource('/invitados', InvitadoController::class)->names('admin.invitados');
+    Route::get('/import/{id}',[InvitadoController::class, 'importForm'])->name('admin.invitados.importForm');
     Route::post('/import',[InvitadoController::class, 'import'])->name('admin.invitados.import');
+    Route::get('/export/{id}', [InvitadoController::class, 'export'])->name('admin.invitados.export');
     Route::get('/persona/{id}', [EntregaController::class, 'getInfoPersona'])->name('admin.entregas.persona');
     Route::resource('/entregas', EntregaController::class)->names('admin.entregas');
     Route::resource('/seguimiento', SeguimientoController::class)->names('admin.seguimiento');

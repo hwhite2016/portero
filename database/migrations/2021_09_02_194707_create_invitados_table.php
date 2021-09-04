@@ -18,9 +18,9 @@ class CreateInvitadosTable extends Migration
             $table->unsignedBigInteger('reservaid');
             $table->foreign('reservaid')->references('id')->on('reservas')->onDelete('cascade');;
             $table->string('invitadodocumento', 30);
-            $table->string('invitadonombre', 50);
-            $table->tinyInteger('invitadoedad');
-            $table->string('invitadocelular', 15)->nullable();
+            $table->string('invitadonombre', 60);
+            $table->string('invitadoedad', 10);
+            $table->string('invitadocelular', 30)->nullable();
             $table->timestamps();
         });
     }

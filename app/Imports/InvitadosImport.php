@@ -15,7 +15,7 @@ class InvitadosImport implements ToModel, WithHeadingRow, WithValidation
     {
         ++$this->numRows;
         return new Invitado([
-            'reservaid' => 1,
+            'reservaid' => session('reservaid'),
             'invitadodocumento' => $row['invitadodocumento'],
             'invitadonombre' => $row['invitadonombre'],
             'invitadoedad' => ($row['invitadoedad']),
@@ -27,8 +27,8 @@ class InvitadosImport implements ToModel, WithHeadingRow, WithValidation
     {
         return [
             'invitadodocumento' => 'required|max:30',
-            'invitadonombre' => 'required|max:50',
-            'invitadoedad' => 'required|max:3',
+            'invitadonombre' => 'required|max:60',
+            'invitadoedad' => 'required|max:10',
             'invitadocelular' => 'nullable|max:15',
         ];
     }
