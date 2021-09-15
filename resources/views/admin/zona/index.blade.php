@@ -61,7 +61,7 @@
                             <div class="card-footer">
 
                                 <div class="row">
-                                    @if (($zona->zonareservable == 1) and ($zona->zonaestado != 1))
+                                    @if (($zona->zonareservable == 1))
                                     <div class="col-7">
                                     @elseif(($zona->zonareservable == 0) and (($zona->zonaestado == 0) or ($zona->zonaestado == 2)))
                                     <div class="col-7">
