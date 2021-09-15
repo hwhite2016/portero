@@ -61,29 +61,26 @@
               </div>
               <ul class="site-menu-main">
                 <li class="nav-item nav-item-has-children">
-                  <a href="#" class="nav-link-item drop-trigger">Servicios <i class="fas fa-angle-down"></i>
+                  <a href="#" class="nav-link-item drop-trigger">Módulos <i class="fas fa-angle-down"></i>
                   </a>
                   <ul class="sub-menu" id="submenu-9">
                     <li class="sub-menu--item">
-                      <a href="#">Control de acceso</a>
+                      <a href="#">Módulo Administrativo</a>
                     </li>
                     <li class="sub-menu--item">
-                      <a href="#">Servicio de notificaciones</a>
+                      <a href="#">Módulo Residentes</a>
                     </li>
                     <li class="sub-menu--item">
-                      <a href="#">Gestion de reserva de zonas comunes</a>
-                    </li>
-                    <li class="sub-menu--item">
-                      <a href="#">PQRS</a>
+                      <a href="#">Módulo Seguridad</a>
                     </li>
                   </ul>
                 </li>
                 <li class="nav-item">
                   <a href="#pricing" class="nav-link-item">Precios</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                   <a href="{{ url('/register') }}" class="nav-link-item">Registrarme</a>
-                </li>
+                </li> --}}
               </ul>
             </nav>
           </div>
@@ -134,8 +131,8 @@
         <div class="row position-relative justify-content-center">
           <div class="col-xxl-8 col-xl-8 col-lg-8 col-md-11 order-lg-1 order-1" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
             <div class="content text-center">
-              <h1>Plataforma Administrativa, ideal para edificios y condominios.</h1>
-              <p>Software que permite administrar en tiempo real los servicios prestados a los residentes.</p>
+              <h1>Sistema integral para el control de acceso para edificios y condominios.</h1>
+              <p>Integra un software que permite gestionar los servicios prestados a los residentes.</p>
               <a href="#" class="btn">Comience la prueba gratuita de 15 días</a>
               <span>No requiere tarjeta de crédito</span>
             </div>
@@ -157,8 +154,8 @@
               <div class="circle-dot-1">
                 <i class="fas fa-circle"></i>
               </div>
-              <h4>Los residentes</h4>
-              <p>Mejoramos las relaciones y servicios para los residentes por medio de un único canal de comunicación para recibir y compartir información.
+              <h4>Plataforma Administrativa</h4>
+              <p>Software para facilitar la gestión administrativa en las copropiedades, integrando los diferentes servicios que requiere la comunidad.
               </p>
             </div>
           </div>
@@ -167,8 +164,8 @@
               <div class="circle-dot-2">
                 <i class="fas fa-circle"></i>
               </div>
-              <h4>Reduce la cartera</h4>
-              <p>Reduce la cartera con un sistema de notificaciones y canales de pago, para que los residentes estén siempre al día.</p>
+              <h4>Propietarios y Residentes</h4>
+              <p>Servicios que permiten mejorar las relaciones con la administración, y estar bien informado de todo lo que sucede alrededor.</p>
             </div>
           </div>
           <div class="col-lg-4 col-md-6 col-sm-9">
@@ -176,8 +173,8 @@
               <div class="circle-dot-3">
                 <i class="fas fa-circle"></i>
               </div>
-              <h4>Pago oportuno</h4>
-              <p>Notificamos a los residentes de las cuotas de administración y de sus responsabilidades a tiempo.</p>
+              <h4>Seguridad - Control de Acceso</h4>
+              <p>Controla el ingreso al interior de la copropiedad y zonas comunes, integrando sistemas de control de acceso biométricos y/o tarjetas inteligentes.</p>
             </div>
           </div>
         </div>
@@ -192,10 +189,10 @@
               <div class="col-lg-6 col-md-8" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
                 <div class="content-img position-relative">
                   <div class="image-1">
-                    <img src="image/l8/content-image-6.png" alt="">
+                    <img src="image/l8/content-image-5.png" alt="">
                   </div>
                   <div class="image-2">
-                    <img src="image/l8/content-image-5.png" alt="">
+                    <img src="image/l8/content-image-6.png" alt="">
                   </div>
                 </div>
               </div>
@@ -222,18 +219,19 @@
             <div class="row align-items-center justify-content-center">
               <div class="col-xxl-5 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-1" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
                 <div class="content section-heading-11">
-                  <h2> Reservas de las zonas comunes</h2>
-                  <p>Cambie el calendario de reservaciones en papel por reservas automáticas o que usted puede aprobar o rechazar en un instante.</p>
+                  <h2> Reserva de zonas comunes.</h2>
+                  <p>Si eres administrador, ya no volveras a gestionar el calendario de reservaciones en papel, ya que todas seran automáticas o que usted puede rechazar en un instante.</p>
+                  <p>Si eres residente, haz las reservaciones desde tu telefono movil en la comodidad de tu hogar sin filas ni esperas.</p>
                   <a href="#" class="btn focus-reset">Comience la prueba gratuita de 15 días</a>
                 </div>
               </div>
               <div class="offset-xxl-1 col-xxl-6 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
                 <div class="content-img position-relative">
                   <div class="image-1">
-                    <img src="image/l8/content-image-3.png" alt="">
+                    <img src="image/l8/zona.png" alt="">
                   </div>
                   <div class="image-2">
-                    <img src="image/l8/content-image-4.png" alt="">
+                    <img src="image/l8/calendar.png" alt="">
                   </div>
                 </div>
               </div>
@@ -283,30 +281,40 @@
           <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
             <div class="single-price" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
               <div class="price-top justify-content-between">
-                <span>Gratis</span>
+                <span>Basico</span><br>Desde
               </div>
               <div class="main-price">
                 <div class="price d-flex position-relative ">
                   <span class="d-inline-block dynamic-value">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="0" data-yearly="0"><span
-                  class="dynamic-value" data-active="" data-monthly="" data-yearly=""></span></h2>
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="399" data-yearly="3.990"><span
+                  class="dynamic-value" data-active="" data-monthly=" | por vivienda" data-yearly=" | por vivienda"></span></h2>
                 </div>
               </div>
-              <p>Plataforma administrativa</p>
+              <p>Administración</p>
+              <div class="price-body pt-8">
+                <ul class="pricing-list list-unstyled">
+                  <li> <i class="icon icon-check-2-2"></i> Bloques, Unidades y Residentes</li>
+                  <li> <i class="icon icon-check-2-2"></i> Vehiculos y Mascotas</li>
+                  <li> <i class="icon icon-check-2-2"></i> Parqueaderos</li>
+                </ul>
+              </div>
+              <p>Recepción</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
                   <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
-                  <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
+                  <li> <i class="icon icon-check-2-2"></i> Entrada y salida de personas</li>
+                  <li> <i class="icon icon-check-2-2"></i> Entrada y salida de vehículos</li>
                   <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Pagos de administración </del></li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes </del></li>
-                  <li><del> <i class="icon icon-check-2-2"></i>PQRs y Tickets</del></li>
-                  <li><del> <i class="icon icon-check-2-2"></i>Gestión de cartera</del></li>
+                </ul>
+              </div>
+              <p>Residentes</p>
+              <div class="price-body pt-8">
+                <ul class="pricing-list list-unstyled">
+                  <li> <i class="icon icon-check-2-2"></i> Programación de Visitantes</li>
                 </ul>
               </div>
               <div class="price-btn">
-                <a class="btn" href="#">Comenzar</a>
+                <a class="btn" href="#">Contáctenos</a>
                 <!-- <p>No credit card required</p> -->
               </div>
             </div>
@@ -315,70 +323,77 @@
           <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
             <div class="single-price  popular-pricing popular-pricing-3" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
               <div class="price-top justify-content-between">
-                <span>Basico</span>
+                <span>Estandar (Recomendado)</span><br>Desde
               </div>
               <div class="main-price">
                 <div class="price d-flex position-relative ">
                   <span class="d-inline-block dynamic-value">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="1.500" data-yearly="15.000"><span
-                  class="dynamic-value" data-active="/ por Unidad" data-monthly="/ por Unidad" data-yearly="/ por Unidad"></span></h2>
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="699" data-yearly="6.990"><span
+                  class="dynamic-value" data-active="" data-monthly=" | por vivienda" data-yearly=" | por vivienda"></span></h2>
                 </div>
               </div>
-              <p>Plataforma administrativa</p>
+              <p>Administración</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
-                  <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
-                  <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
-                  <li> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
-                  <li> <i class="icon icon-check-2-2"></i> Pagos de administración</li>
+                    <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
+                    <li> <i class="icon icon-check-2-2"></i> Noticias y Anuncios</li>
+                    <li> <i class="icon icon-check-2-2"></i> Configuración de zonas comunes</li>
+                    <li> <i class="icon icon-check-2-2"></i> Gestión de Tickets (PQRS)</li>
+                </ul>
+              </div>
+              <p>Recepción</p>
+              <div class="price-body pt-8">
+                <ul class="pricing-list list-unstyled">
+                  <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
+                  <li> <i class="icon icon-check-2-2"></i> Notificación facturas de servicio</li>
+                  <li> <i class="icon icon-check-2-2"></i> Recibo de correspondencia</li>
+                </ul>
+              </div>
+              <p>Residentes</p>
+              <div class="price-body pt-8">
+                <ul class="pricing-list list-unstyled">
+                  <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
+                  <li> <i class="icon icon-check-2-2"></i> Noticias y Anuncios</li>
                   <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
-                  <li> <i class="icon icon-check-2-2"></i> PQRs y Tickets</li>
-                  <li><del> <i class="icon icon-check-2-2"></i> Gestión de cartera</del></li>
+                  <li> <i class="icon icon-check-2-2"></i> Gestión de Tickets (PQRS)</li>
                 </ul>
               </div>
               <div class="price-btn">
-                <a class="btn" href="#">Comience la prueba gratuita de 15 días</a>
-                <p>No requiere tarjeta de credito</p>
+                <a class="btn" href="#">Contáctenos</a>
+                {{-- <p>No requiere tarjeta de credito</p> --}}
               </div>
             </div>
           </div>
-          <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
+          {{-- <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
             <div class="single-price position-relative" data-aos="fade-up" data-aos-duration="800" data-aos-once="true">
               <div class="price-top justify-content-between">
-                <span>Pro</span>
+                <span>Premium</span>
               </div>
               <div class="main-price">
                 <div class="price d-flex position-relative">
                   <span class="d-inline-block dynamic-value ">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="750.000" data-yearly="7.500.000"> <span
-                  class="dynamic-value" data-active="/  mensual" data-monthly="/ mensual" data-yearly="/ anual"></span></h2>
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="" data-yearly=""> <span
+                  class="dynamic-value" data-active="" data-monthly=" | Consultar" data-yearly=" | Consultar"></span></h2>
                 </div>
               </div>
-              <p>Good for small business launching their products less then once a year</p>
+              <p>Plataforma administrativa y Control de Acceso</p>
               <div class="price-body">
                 <ul class="pricing-list list-unstyled">
-                    <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
-                    <li> <i class="icon icon-check-2-2"></i> Control de acceso vehicular</li>
-                    <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
-                    <li> <i class="icon icon-check-2-2"></i> Gestión de paqueteria</li>
-                    <li> <i class="icon icon-check-2-2"></i> Pagos de administración</li>
-                    <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
-                    <li> <i class="icon icon-check-2-2"></i> PQRs y Tickets</li>
+                    <li> <i class="icon icon-check-2-2"></i> Plan Estandar incluido</li>
+                    <li> <i class="icon icon-check-2-2"></i> Integración dispositivos biométricos</li>
                     <li> <i class="icon icon-check-2-2"></i> Gestión de cartera</del></li>
                 </ul>
               </div>
               <div class="price-btn">
-                <a class="btn" href="#">Start free 14 days trial</a>
-                <p>No credit card required</p>
+                <a class="btn" href="#">Contáctenos</a>
               </div>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
     <!--Brand Area-->
-    <div class="brand-area-l-17">
+    {{-- <div class="brand-area-l-17">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xl-9 col-lg-11 col-md-12">
@@ -402,10 +417,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--Testimonial Area-->
 
-    <div class="testimonial-area-l-17">
+    {{-- <div class="testimonial-area-l-17">
       <div class="container">
         <div class="row justify-content-center no-gutters border-collapse-1">
 
@@ -469,7 +484,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--CTA Area-->
     <div class="cta-area-l-17">
       <div class="container">
@@ -495,9 +510,7 @@
               <p class="widget-title">Store</p>
               <ul class="widget-links pl-0 list-unstyled ">
                 <li><a href="">Catalog</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Features</a></li>
-                <li><a href="">F.a.q.</a></li>
+
               </ul>
             </div>
           </div>
@@ -506,8 +519,7 @@
               <p class="widget-title">About</p>
               <ul class="widget-links pl-0 list-unstyled ">
                 <li><a href="">Catalog</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Features</a></li>
+
               </ul>
             </div>
           </div>
@@ -516,8 +528,7 @@
               <p class="widget-title">Policy</p>
               <ul class="widget-links pl-0 list-unstyled ">
                 <li><a href="">Catalog</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Features</a></li>
+
               </ul>
             </div>
           </div>
@@ -526,8 +537,7 @@
               <p class="widget-title">Team</p>
               <ul class="widget-links pl-0 list-unstyled ">
                 <li><a href="">Catalog</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Features</a></li>
+
               </ul>
             </div>
           </div>
@@ -536,8 +546,7 @@
               <p class="widget-title">Support</p>
               <ul class="widget-links pl-0 list-unstyled ">
                 <li><a href="">Catalog</a></li>
-                <li><a href="">Popular</a></li>
-                <li><a href="">Features</a></li>
+
               </ul>
             </div>
           </div>

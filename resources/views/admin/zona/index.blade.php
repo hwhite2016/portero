@@ -61,7 +61,9 @@
                             <div class="card-footer">
 
                                 <div class="row">
-                                    @if ($zona->zonareservable == 1)
+                                    @if (($zona->zonareservable == 1) and ($zona->zonaestado != 1))
+                                    <div class="col-7">
+                                    @elseif(($zona->zonareservable == 0) and (($zona->zonaestado == 0) or ($zona->zonaestado == 2)))
                                     <div class="col-7">
                                     @else
                                     <div class="col-12">
@@ -95,7 +97,16 @@
                                         @endcan
                                     </div>
 
-                                    @if ($zona->zonareservable == 1)
+                                    @if ($zona->zonaestado == 0)
+                                        <div class="col-5">
+                                            <small class="font-italic text-danger">[ Deshabilitada ]</small>
+                                        </div>
+                                    @elseif ($zona->zonaestado == 2)
+                                        <div class="col-5">
+                                            <small class="font-italic text-danger">[ En mantenimiento ]</small>
+                                        </div>
+                                    @endcan
+                                    @if (($zona->zonareservable == 1) and ($zona->zonaestado == 1))
                                         <div class="col-5">
                                             @can('admin.reservas.edit')
                                             {!! Form::open(['route'=>['admin.reservas.edit', $zona->id], 'method'=>'get']) !!}
@@ -106,6 +117,7 @@
                                             @endcan
                                         </div>
                                     @endif
+
 
                                 </div>
 

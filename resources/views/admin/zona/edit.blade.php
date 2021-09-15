@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Imagen de la zona -->
                     <img width="70px" src="/storage/{{ $zona->zonaimagen }}" alt="image">
                     {{ Form::label('zonaimagen', 'Imagen de la zona') }}
@@ -110,6 +110,18 @@
                         {!! Form::time('zonahoracierre', null, array('class' => 'form-control')) !!}
                     </div>
                     @error('zonahoracierre')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group"> <!-- Estado -->
+                    {!! Form::label('zonaestado', 'Estado') !!}
+                    {!! Form::select('zonaestado', ['0'=>'Deshabilitada', '1'=>'Habilitada', '2'=>'Mantenimiento'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonaestado')
                         <small class="text-danger">
                             {{$message}}
                         </small>

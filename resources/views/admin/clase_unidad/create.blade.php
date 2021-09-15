@@ -35,7 +35,7 @@
             </div>
             <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Nombre del Tipo -->
-                    {{ Form::label('claseunidadnombre', 'Nombre del tipo de unidad') }}
+                    {{ Form::label('claseunidadnombre', '* Nombre del tipo de unidad') }}
                     {{ Form::text('claseunidadnombre', null, array('placeholder' => 'Ej: Tipo A, Tipo B, Clase C ...', 'class' => 'form-control')) }}
                     @error('claseunidadnombre')
                         <small class="text-danger">
@@ -63,7 +63,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                         </div>
-                        {{ Form::text('claseunidadcuota', null, array('placeholder' => '', 'class' => 'form-control')) }}
+                        {{ Form::number('claseunidadcuota', null, array('placeholder' => '0', 'class' => 'form-control')) }}
                     </div>
                     @error('claseunidadcuota')
                         <small class="text-danger">

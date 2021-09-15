@@ -32,6 +32,7 @@ class CreateZonasTable extends Migration
             $table->tinyInteger('zonareservadiariamax')->nullable()->comment('Numero maximo de reservas de una misma unidad por dia');
             $table->integer('zonaprecio')->nullable();
             $table->boolean('zonamorosos')->default(0)->comment('Si los morosos pueden reservar o no');
+            $table->tinyInteger('zonaestado')->comment('Inactivo, Activo, Mantenimiento');
             $table->timestamps();
             $table->unique(['conjuntoid', 'zonanombre'], 'indice_conjunto_zona');
         });

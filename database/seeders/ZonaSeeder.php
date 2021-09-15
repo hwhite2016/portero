@@ -30,7 +30,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 3,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 0,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Piscina para adultos',
             'zonaimagen'=>'1/zonas/20210614115731.jpg',
@@ -47,7 +48,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 3,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 0,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Parque infantil',
             'zonaimagen'=>'1/zonas/20210614115732.jpg',
@@ -63,7 +65,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 3,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 0,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Gimnasio',
             'zonaimagen'=>'1/zonas/20210614115733.jpg',
@@ -79,7 +82,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 2,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 0,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Sauna',
             'zonaimagen'=>'1/zonas/20210614115734.jpg',
@@ -95,7 +99,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 2,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 0,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 1',
             'zonaimagen'=>'1/zonas/20210614115736.jpg',
@@ -111,7 +116,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 2,
             'zonareservadiariamax'=> 2,
             'zonaprecio'=> 30000,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 2',
             'zonaimagen'=>'1/zonas/20210614115736.jpg',
@@ -127,7 +133,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 2,
             'zonareservadiariamax'=> 2,
             'zonaprecio'=> 30000,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Salon de Eventos 3',
             'zonaimagen'=>'1/zonas/20210614115736.jpg',
@@ -143,7 +150,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 2,
             'zonareservadiariamax'=> 2,
             'zonaprecio'=> 30000,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
         Zona::create(['conjuntoid' => 1, 'zonanombre' => 'Teatrino',
             'zonaimagen'=>'1/zonas/20210614115735.jpg',
@@ -159,7 +167,8 @@ class ZonaSeeder extends Seeder
             'zonatiemporeservamax'=> 7,
             'zonareservadiariamax'=> 1,
             'zonaprecio'=> 50000,
-            'zonamorosos'=> 0
+            'zonamorosos'=> 0,
+            'zonaestado'=> 1
         ]);
     }
 }

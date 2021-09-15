@@ -25,13 +25,24 @@ class ZonaController extends Controller
 
     public function index()
     {
-        $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Residente')){
+            $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
+             ->join('barrios','barrios.id','=','conjuntos.barrioid')
+             ->select(Zona::raw('zonas.id, barrionombre, conjuntonombre, zonas.*'))
+             ->where('zonaestado', '>', 0)
+             ->whereIn('conjuntos.id', session('dependencias'))
+             ->orderBy('zonas.zonanombre', 'ASC')
+             ->get();
+        }else{
+            $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
              ->join('barrios','barrios.id','=','conjuntos.barrioid')
              ->select(Zona::raw('zonas.id, barrionombre, conjuntonombre, zonas.*'))
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('zonas.zonanombre', 'ASC')
              ->get();
-             return view('admin.zona.index')->with('zonas', $zonas);
+        }
+        return view('admin.zona.index')->with('zonas', $zonas);
     }
 
     public function zonacomun()
@@ -102,7 +113,7 @@ class ZonaController extends Controller
             'zonadescripcion' => $request->get('zonadescripcion'),
             'zonaterminos' => $request->get('zonaterminos'),
             'zonareservable' => $request->get('zonareservable'),
-            'zonahoraapertura' => $request->get('zonaapertura'),
+            'zonahoraapertura' => $request->get('zonahoraapertura'),
             'zonahoracierre' => $request->get('zonahoracierre'),
             'zonafranjatiempo' => $request->get('zonafranjatiempo'),
             'zonaaforomax' => $request->get('zonaaforomax'),
@@ -112,6 +123,7 @@ class ZonaController extends Controller
             'zonareservadiariamax' => $request->get('zonareservadiariamax'),
             'zonaprecio' => $request->get('zonaprecio'),
             'zonamorosos' => $request->get('zonamorosos'),
+            'zonaestado' => $request->get('zonaestado'),
             'zonaimagen' => $filename_db
         ]);
 
@@ -127,7 +139,7 @@ class ZonaController extends Controller
         $zonas = Zona::join("conjuntos","conjuntos.id", "=", "zonas.conjuntoid")
              ->join('barrios','barrios.id','=','conjuntos.barrioid')
              ->select(Zona::raw('zonas.id, barrionombre, conjuntonombre, zonas.*'))
-              ->where('zonas.conjuntoid', '=', $id)
+             ->where('zonas.conjuntoid', '=', $id)
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('zonanombre', 'ASC')
              ->get();
@@ -211,6 +223,7 @@ class ZonaController extends Controller
             $zona->zonareservadiariamax =  $request->get('zonareservadiariamax');
             $zona->zonaprecio =  $request->get('zonaprecio');
             $zona->zonamorosos =  $request->get('zonamorosos');
+            $zona->zonaestado =  $request->get('zonaestado');
 
             $zona->save();
 

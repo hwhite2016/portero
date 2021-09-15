@@ -2302,21 +2302,21 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
             <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<*/
   .content-area-l-17-1 {
     background: #F8FBFE;
-    padding-top: 60px;
+    padding-top: 30px;
     padding-bottom: 60px;
   }
 
   @media (min-width: 768px) {
     .content-area-l-17-1 {
-      padding-top: 80px;
-      padding-bottom: 80px;
+      padding-top: 30px;
+      padding-bottom: 60px;
     }
   }
 
   @media (min-width: 992px) {
     .content-area-l-17-1 {
-      padding-top: 130px;
-      padding-bottom: 240px;
+      padding-top: 20px;
+      padding-bottom: 60px;
     }
   }
 
@@ -2792,7 +2792,7 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
   .pricing-area-l-17 .btn-toggle-2:before {
     font-family: Inter;
     position: absolute;
-    content: "Monthly";
+    content: "Mensual";
     width: 46%;
     font-size: 12px;
     letter-spacing: -0.3px;
@@ -2809,7 +2809,7 @@ body[data-theme='dark'], .dark-bg, .dark-mode-texts {
   .pricing-area-l-17 .btn-toggle-2:after {
     font-family: Inter;
     position: absolute;
-    content: "Yearly";
+    content: "Anual";
     width: 46%;
     font-size: 12px;
     letter-spacing: -0.3px;

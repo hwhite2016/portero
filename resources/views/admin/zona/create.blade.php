@@ -20,7 +20,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Conjunto -->
                     {!! Form::label('conjuntoid', 'Conjunto') !!}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un conjunto']) !!}
@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Nombre de la Zona -->
                     {!! Form::label('zonanombre', 'Nombre de la zona') !!}
                     {!! Form::text('zonanombre', null, array('placeholder' => 'Ej: Piscina de niños, Gimnasio, ...', 'class' => 'form-control')) !!}
@@ -56,7 +56,19 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-3">
+                <div class="form-group"> <!-- Morosos -->
+                    {!! Form::label('zonamorosos', 'Los morosos pueden reservar') !!}
+                    {!! Form::select('zonamorosos', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonamorosos')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Imagen de la zona -->
                     {{ Form::label('zonaimagen', 'Imagen de la zona') }}
                     {{ Form::file('zonaimagen', array('accept' => 'image/jpg,image/jpeg,image/png,image/svg', 'class' => 'form-control')) }}
@@ -86,6 +98,18 @@
                     {!! Form::label('zonahoracierre', 'Hora de cierre') !!}
                     {!! Form::time('zonahoracierre', null, array('class' => 'form-control')) !!}
                     @error('zonahoracierre')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group"> <!-- Estado -->
+                    {!! Form::label('zonaestado', 'Estado') !!}
+                    {!! Form::select('zonaestado', ['0'=>'Deshabilitada', '1'=>'Habilitada', '2'=>'Mantenimiento'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('zonaestado')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -141,17 +165,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="form-group"> <!-- Morosos -->
-                    {!! Form::label('zonamorosos', 'Los morosos pueden reservar') !!}
-                    {!! Form::select('zonamorosos', ['0'=>'NO', '1'=>'SI'], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
-                    @error('zonamorosos')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div>
+
 
             <div class="col-md-4">
                 <div class="form-group"> <!-- Cupo maximo de personas por reserva -->

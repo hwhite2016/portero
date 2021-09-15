@@ -38,6 +38,11 @@
                 <div class="form-group"> <!-- Numero Unidad -->
                     {{ Form::label('unidadnombre', '* Numero') }}
                     {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
+                    @error('unidadnombre')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 
