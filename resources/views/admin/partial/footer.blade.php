@@ -19,11 +19,13 @@ All rights reserved.
 </a>
 @endcan
 
+@can('admin.entregas.seguimiento')
 <a href="{{route('admin.seguimiento.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Correspondencia">
     <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-inbox"></i>
     </span>
 </a>
+@endcan
 
 <a href="{{route('admin.pqrs.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Pqr">
     <span style="font-size: 1.5em; color: #7F8C8D;">

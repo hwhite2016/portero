@@ -23,8 +23,9 @@ class ReservaController extends Controller
 
     public function index()
     {
-
-        $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
+        $user = User::find(Auth::user()->id);
+        if ($user->hasRole('Residente')){
+            $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
             ->join("residentes","residentes.unidadid", "=", "reservas.unidadid")
             ->join("unidads","unidads.id", "=", "residentes.unidadid")
             ->select("reservas.*", "zonanombre", "zonacompartida", "unidadnombre")
@@ -33,6 +34,15 @@ class ReservaController extends Controller
              ->orderBy('reservaestado', 'DESC')
              ->orderBy('reservafecha', 'ASC')
              ->get();
+        }else{
+            $reservas = Reserva::join("zonas","zonas.id", "=", "reservas.zonaid")
+             ->join("unidads","unidads.id", "=", "reservas.unidadid")
+             ->select("reservas.*", "zonanombre", "zonacompartida", "unidadnombre")
+             ->whereReservaestado(1)
+             ->orderBy('reservaestado', 'DESC')
+             ->orderBy('reservafecha', 'ASC')
+             ->get();
+        }
              return view('admin.reserva.index')->with('reservas', $reservas);
     }
 
@@ -46,12 +56,18 @@ class ReservaController extends Controller
 
     public function getHoras(Request $request){
 
-        $user = User::find(Auth::user()->id);
-        if ($user->hasRole('Residente')){
-            $unidad = Unidad::join('residentes','residentes.unidadid', 'unidads.id')
-            ->where('residentes.personaid', $user->personaid)
-            ->select('unidads.id')->first();
-        }
+        // $user = User::find(Auth::user()->id);
+        // if ($user->hasRole('Residente')){
+        //     $unidad = Unidad::join('residentes','residentes.unidadid', 'unidads.id')
+        //     ->where('residentes.personaid', $user->personaid)
+        //     ->select('unidads.id')->first();
+        // }else{
+        //     $unidad = Unidad::join('bloques','bloques.id', 'unidads.bloqueid')
+        //     ->whereIn('bloques.conjuntoid', session('dependencias'))
+        //     ->select('unidads.id')->get();
+        // }
+
+        $unidad = Unidad::whereId($request->get('unidadid'))->select('unidads.id')->first();
 
         $horas = EventCalendar::where('event_calendars.zonaid', $request->get('zonaid'))
         ->join("zonas","zonas.id", "=", "event_calendars.zonaid")
@@ -71,8 +87,8 @@ class ReservaController extends Controller
         ->where('event_calendars.fecha', $request->get('fecha'))
         ->where('event_calendars.start', '>', date('Y-m-d H:i:s'))
         ->groupBy('event_calendars.id', 'zonaaforomax', 'event_calendars.hora')
-        ->having(Zona::raw('zonaaforomax-reservas'), '>=', $request->get('reservacupos'))
-        ->having(Zona::raw('contador'), '<', $request->get('reservadiariamax'))
+        //->having(Zona::raw('zonaaforomax-reservas'), '>=', $request->get('reservacupos'))
+        //->having(Zona::raw('contador'), '<', $request->get('reservadiariamax'))
         ->get();
 
         if(isset($horas)){
@@ -150,7 +166,8 @@ class ReservaController extends Controller
             $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
 
         }else{
-            $unidad = Unidad::all()->pluck('unidadnombre', 'id');
+            $unidad = Unidad::join('bloques', 'bloques.id', '=', 'unidads.bloqueid')
+                ->whereIn('bloques.conjuntoid', session('dependencias'))->pluck('unidadnombre', 'unidads.id');
             $zona = Zona::whereId($id)->pluck('zonanombre', 'id');
 
         }

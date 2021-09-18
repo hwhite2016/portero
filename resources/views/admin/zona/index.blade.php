@@ -16,10 +16,10 @@
             <label>Zonas Comunes</label>
         </h1>
         @can('admin.zonas.create')
-            <a href="{{route('admin.zonas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Zona</a>
+            <a href="{{route('admin.zonas.create')}}" class="btn btn-primary ml-2 float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Zona</a>
         @endcan
         @can('admin.reservas.index')
-            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="far fa-calendar-check"></i> &nbsp Mis reservas</a>
+            <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="far fa-calendar-check"></i> &nbsp Reservas</a>
         @endcan
 
     </div>

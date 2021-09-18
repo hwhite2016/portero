@@ -14,11 +14,11 @@
 <div class="card">
     <div class="card-header">
         <h1 class="card-title text-primary">
-            <label>Mis reservas</label>
+            <label>Reservas</label>
         </h1>
-        @can('admin.zonas.create')
+        {{-- @can('admin.zonas.create')
             <a href="{{route('admin.reservas.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nueva Reserva</a>
-        @endcan
+        @endcan --}}
         {{-- @can('admin.reservas.index')
             <a href="{{route('admin.reservas.index')}}" class="btn btn-primary float-right"><i class="fas fa-swimmer"></i> &nbsp Mis reservas</a>
         @endcan --}}
