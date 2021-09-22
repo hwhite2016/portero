@@ -41,7 +41,7 @@
                                 <div class="col-12">
                                     <small class="text-muted">
                                         {!! Form::checkbox('terminos[]', $zona->id, true, ['class'=>'mr-1 terminos']) !!}
-                                        <a href="#" data-toggle="modal" data-target="#idModal" data-whatever="{{$zona->id}}" title="{{$zona->id}}">
+                                        <a href="#" data-toggle="modal" data-target="#idModal" data-whatever="{{$zona->id}}">
                                             Terminos y condiciones de uso
                                         </a>
                                     </small>

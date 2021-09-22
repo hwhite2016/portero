@@ -72,6 +72,7 @@
                                                 </div>
                                                 <div class="col-9 p-2 border">
                                                     {{$pqr->tipopqrnombre}}
+                                                    <br><small>Tiempo de respuesta: {{$pqr->tipopqrtiempo}} dia(s)</small>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -84,10 +85,18 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-3 p-2 border">
-                                                    <span class="font-weight-bold">Fecha:</span>
+                                                    <span class="font-weight-bold">Fecha creación:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
                                                     {{$pqr->created_at}}
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-3 p-2 border">
+                                                    <span class="font-weight-bold">Fecha respuesta:</span>
+                                                </div>
+                                                <div class="col-9 p-2 border">
+                                                    {{ date("Y-m-d",strtotime($pqr->created_at."+ 15 days")) }}
                                                 </div>
                                             </div>
                                             <div class="row">

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Relation;
+use App\Models\TipoPropietario;
 use Illuminate\Database\Seeder;
 use App\Models\TipoResidente;
 
@@ -15,7 +16,12 @@ class ResidenteSeeder extends Seeder
      */
     public function run()
     {
+        TipoPropietario::create(['tipopropietarionombre' => 'Propietario']);
+        TipoPropietario::create(['tipopropietarionombre' => 'Locatario']);
+        TipoPropietario::create(['tipopropietarionombre' => 'Inmobiliaria']);
+
         TipoResidente::create(['tiporesidentenombre' => 'Propietario']);
+        TipoResidente::create(['tiporesidentenombre' => 'Locatario']);
         TipoResidente::create(['tiporesidentenombre' => 'Arrendatario']);
         TipoResidente::create(['tiporesidentenombre' => 'Inquilino']);
         TipoResidente::create(['tiporesidentenombre' => 'Servicio Domestico']);

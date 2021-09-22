@@ -65,7 +65,14 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-3">
+                <div class="form-group"> <!-- Tipo Propietario -->
+                    {{ Form::label('tipopropietarioid', '* Tenedor') }}
+                    {!! Form::select('tipopropietarioid', $tipo_propietarios, old('tipopropietarioid'), ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-5">
                 <div class="form-group"> <!-- Parqueaderos asignados -->
                     {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
                     {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'100%']) !!}

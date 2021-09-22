@@ -15,6 +15,7 @@ use App\Models\Vehiculo;
 use App\Models\Mascota;
 use App\Models\Persona;
 use App\Models\TipoDocumento;
+use App\Models\TipoPropietario;
 
 class UnidadController extends Controller
 {
@@ -54,13 +55,14 @@ class UnidadController extends Controller
 
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
         $tipo_unidads = TipoUnidad::all()->pluck('tipounidadnombre', 'tipounidadnombre');
+        $tipo_propietarios = TipoPropietario::all()->pluck('tipopropietarionombre', 'id');
         $clase_unidads = ClaseUnidad::select(
             DB::raw("CONCAT(claseunidadnombre,' (',claseunidaddescripcion,')') AS clasenombre"),'id')
             ->whereIn('conjuntoid', session('dependencias'))
             ->orderBy('id', 'DESC')
             ->pluck('clasenombre', 'id');
 
-            return view('admin.unidad.create', compact('bloques','tipo_unidads','clase_unidads','parqueaderos', 'bloqueid'));    }
+            return view('admin.unidad.create', compact('bloques','tipo_unidads','clase_unidads','tipo_propietarios','parqueaderos', 'bloqueid'));    }
 
     public function store(Request $request)
     {
@@ -73,7 +75,8 @@ class UnidadController extends Controller
         $unidad = Unidad::create([
             'bloqueid'=>$request->get('bloqueid'),
             'unidadnombre'=>$request->get('tipounidadid').' '.$request->get('unidadnombre'),
-            'claseunidadid'=>$request->get('claseunidadid')
+            'claseunidadid'=>$request->get('claseunidadid'),
+            'tipopropietarioid'=>$request->get('tipopropietarioid')
         ]);
 
         $unidad->parqueaderos()->sync($request->parqueaderos);
@@ -128,6 +131,7 @@ class UnidadController extends Controller
         $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
         $tipo_unidads = TipoUnidad::all()->pluck('tipounidadnombre', 'tipounidadnombre');
+        $tipo_propietarios = TipoPropietario::all()->pluck('tipopropietarionombre', 'id');
         $clase_unidads = ClaseUnidad::select(
             DB::raw("CONCAT(claseunidadnombre,' (',claseunidaddescripcion,')') AS clasenombre"),'id')
             ->whereIn('conjuntoid', session('dependencias'))
@@ -154,7 +158,7 @@ class UnidadController extends Controller
         ->get();
 
         $act_residentes = 'active'; $act_vehiculos = ''; $act_mascotas = '';
-        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques', 'bloqueid', 'tipo_unidads','clase_unidads','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
+        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques', 'bloqueid', 'tipo_unidads','clase_unidads','tipo_propietarios','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
 
     }
 

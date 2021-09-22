@@ -55,15 +55,15 @@
 
                     <div class="popover-body">
                         <div class='row'>
-                            <div class='col-4 border'><b>Petición</b></div>
+                            <div class='col-4 border'><b>Petición</b><br><small>Tiempo de respuesta: 15 dias</small></div>
                             <div class='col-8 border'>En esta opción podrás realizar solicitudes y trámites de procedimientos a la administración, referente a los servicios preestablecidos.</div>
-                            <div class='col-4 border'><b>Queja</b></div>
+                            <div class='col-4 border'><b>Queja</b><br><small>Tiempo de respuesta: 15 dias</small></div>
                             <div class='col-8 border'>Utiliza esta opción si necesitas comunicar a la administración la conducta de alguno de nuestros colaboradores o si consideras apropiado alertar sobre el incumplimiento de un procedimiento o suspensión de un servicio.</div>
-                            <div class='col-4 border'><b>Reclamo</b></div>
+                            <div class='col-4 border'><b>Reclamo</b><br><small>Tiempo de respuesta: 15 dias</small></div>
                             <div class='col-8 border'>Utiliza esta opción para exigir o demandar una solución, ya sea por motivo general o particular, referente a la prestación indebida de un servicio o a la falta de atención de una solicitud.</div>
-                            <div class='col-4 border'><b>Sugerencia</b></div>
+                            <div class='col-4 border'><b>Sugerencia</b><br><small>Tiempo de respuesta: 15 dias</small></div>
                             <div class='col-8 border'>Utiliza esta opción si deseas aportar ideas o iniciativas para mejorar la calidad del conjunto.</div>
-                            <div class='col-4 border'><b>Felicitación</b></div>
+                            <div class='col-4 border'><b>Felicitación</b><br><small>Tiempo de respuesta: 15 dias</small></div>
                             <div class='col-8 border'>Utiliza esta opción si deseas expresar tu satisfacción frente a un colaborador, un procedimiento o un servicio del conjunto.</div>
                         </div>
                     </div>

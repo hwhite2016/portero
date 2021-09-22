@@ -17,11 +17,11 @@ class PqrSeeder extends Seeder
      */
     public function run()
     {
-        TipoPqr::create(['tipopqrnombre' => 'Petición']);
-        TipoPqr::create(['tipopqrnombre' => 'Queja']);
-        TipoPqr::create(['tipopqrnombre' => 'Reclamo']);
-        TipoPqr::create(['tipopqrnombre' => 'Sugerencia']);
-        TipoPqr::create(['tipopqrnombre' => 'Felicitación']);
+        TipoPqr::create(['tipopqrnombre' => 'Petición','tipopqrtiempo' => 15]);
+        TipoPqr::create(['tipopqrnombre' => 'Queja','tipopqrtiempo' => 15]);
+        TipoPqr::create(['tipopqrnombre' => 'Reclamo','tipopqrtiempo' => 15]);
+        TipoPqr::create(['tipopqrnombre' => 'Sugerencia','tipopqrtiempo' => 15]);
+        TipoPqr::create(['tipopqrnombre' => 'Felicitación','tipopqrtiempo' => 15]);
 
         EstadoPqr::create(['estadonombre' => 'Abierto']);
         EstadoPqr::create(['estadonombre' => 'En tramite']);

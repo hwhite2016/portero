@@ -104,7 +104,7 @@ class ZonaController extends Controller
             //Image::make($file->getRealPath())->resize(350, 120, function ($constraint) {
             //$constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
          }else{
-            $filename = 'images/zonacomun.png';
+            $filename_db = 'images/zonacomun.png';
         }
 
         $zonas = Zona::create([

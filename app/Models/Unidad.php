@@ -30,5 +30,5 @@ class Unidad extends Model
         return $this->belongsTo(Bloque::class, 'bloqueid');
     }
 
-    protected $fillable = ['bloqueid', 'claseunidadid', 'unidadnombre', 'propietarioid'];
+    protected $guarded = [];
 }

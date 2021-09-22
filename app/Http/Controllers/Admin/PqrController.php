@@ -263,7 +263,7 @@ class PqrController extends Controller
             ->leftJoin('residentes', 'residentes.personaid', 'users.personaid')
             ->leftJoin('unidads', 'unidads.id', 'residentes.unidadid')
             ->leftJoin('bloques', 'bloques.id', 'unidads.bloqueid')
-            ->select('pqrs.*', 'estadonombre', 'asunto', 'tipopqrnombre', 'users.name', 'unidadnombre', 'bloquenombre')
+            ->select('pqrs.*', 'estadonombre', 'asunto', 'tipopqrnombre', 'tipopqrtiempo','users.name', 'unidadnombre', 'bloquenombre')
             ->where('pqrs.id', $id)
             ->first();
 

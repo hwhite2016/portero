@@ -46,4 +46,35 @@
 
     </form>
 
+    <hr>
+    <small>
+    Leer los <a class="text-info" href="/terminos" target="_blank">términos y condiciones</a> y las <a class="text-info" href="/privacidad" target="_blank">politicas de privacidad.</a>
+    </small>
+
+@stop
+
+@section('auth_footer')
+
+@if (Route::has('login'))
+    <a class="btn sign-in-btn focus-reset text-info"
+    href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="fas fa-power-off"></i>&nbsp; Salir
+    </a>
+
+    <form id="logout-form" action="{{ config('adminlte.logout_url', 'logout') }}" method="POST" style="display: none;">
+        @if(config('adminlte.logout_method'))
+            {{ method_field(config('adminlte.logout_method')) }}
+        @endif
+        {{ csrf_field() }}
+    </form>
+@endif
+
+    {{-- Register link --}}
+    {{-- @if($register_url)
+        <p class="my-0">
+            <a class="text-info" href="{{ $register_url }}">
+                {{ __('adminlte::adminlte.register_a_new_membership') }}
+            </a>
+        </p>
+    @endif --}}
 @stop

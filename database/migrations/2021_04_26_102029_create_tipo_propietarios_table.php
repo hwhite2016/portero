@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoPqrsTable extends Migration
+class CreateTipoPropietariosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateTipoPqrsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_pqrs', function (Blueprint $table) {
+        Schema::create('tipo_propietarios', function (Blueprint $table) {
             $table->id();
-            $table->string('tipopqrnombre', 20);
-            $table->string('tipopqrtiempo', 2);
+            $table->string('tipopropietarionombre', 20);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateTipoPqrsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_pqrs');
+        Schema::dropIfExists('tipo_propietarios');
     }
 }
