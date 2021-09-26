@@ -20,7 +20,7 @@
                 @can('admin.bloques.create')
                 <a href="{{route('admin.bloques.create')}}" class="btn btn-primary float-right"><i class="fas fa-plus-circle"></i> &nbsp Nuevo Bloque</a>
                 @endcan
-                <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ver unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-right"></i></a>
+                <a class="btn btn-warning  float-right mr-2" data-toggle="tooltip" title="Ver unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-angle-double-right"></i></a>
                 <a class="btn btn-warning float-right mr-2" data-toggle="tooltip" title="Ir al inicio" href="{{route('admin.conjuntos.index')}}"><i class="fas fa-angle-double-left"></i></a>
 
 
@@ -28,7 +28,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="bloques" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Bloque</th>
                       <th>Conjunto</th>

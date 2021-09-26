@@ -281,12 +281,12 @@
           <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
             <div class="single-price" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
               <div class="price-top justify-content-between">
-                <span>Basico</span><br>Desde
+                <span>Básico</span><br>Desde (COP)
               </div>
               <div class="main-price">
                 <div class="price d-flex position-relative ">
                   <span class="d-inline-block dynamic-value">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="399" data-yearly="3.990"><span
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="199" data-yearly="1.990"><span
                   class="dynamic-value" data-active="" data-monthly=" | por vivienda" data-yearly=" | por vivienda"></span></h2>
                 </div>
               </div>
@@ -323,39 +323,37 @@
           <div class="col-xl-4 col-lg-5 col-md-6 col-sm-8">
             <div class="single-price  popular-pricing popular-pricing-3" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
               <div class="price-top justify-content-between">
-                <span>Estandar (Recomendado)</span><br>Desde
+                <span>Estandar (Recomendado)</span><br>Desde (COP)
               </div>
               <div class="main-price">
                 <div class="price d-flex position-relative ">
                   <span class="d-inline-block dynamic-value">$</span>
-                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="699" data-yearly="6.990"><span
+                  <h2 class="d-inline-block dynamic-value" data-active="15" data-monthly="399" data-yearly="3.990"><span
                   class="dynamic-value" data-active="" data-monthly=" | por vivienda" data-yearly=" | por vivienda"></span></h2>
                 </div>
               </div>
-              <p>Administración</p>
+              <p>Administración (+ Básico)</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                    <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
                     <li> <i class="icon icon-check-2-2"></i> Noticias y Anuncios</li>
                     <li> <i class="icon icon-check-2-2"></i> Configuración de zonas comunes</li>
                     <li> <i class="icon icon-check-2-2"></i> Gestión de Tickets (PQRS)</li>
                 </ul>
               </div>
-              <p>Recepción</p>
+              <p>Recepción (+ Básico)</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
-                  <li> <i class="icon icon-check-2-2"></i> Notificación facturas de servicio</li>
+                  <li> <i class="icon icon-check-2-2"></i> Recibo de facturas de servicio</li>
                   <li> <i class="icon icon-check-2-2"></i> Recibo de correspondencia</li>
                 </ul>
               </div>
-              <p>Residentes</p>
+              <p>Residentes (+ Básico)</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Plan Básico incluido</li>
                   <li> <i class="icon icon-check-2-2"></i> Noticias y Anuncios</li>
                   <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
                   <li> <i class="icon icon-check-2-2"></i> Gestión de Tickets (PQRS)</li>
+                  <li> <i class="icon icon-check-2-2"></i> Notificación de correspondencia</li>
                 </ul>
               </div>
               <div class="price-btn">

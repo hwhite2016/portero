@@ -20,7 +20,7 @@ class ConjuntoSeeder extends Seeder
         $conjunto->conjuntonit = 123456789;
         $conjunto->conjuntonombre = 'Conjunto Residencial Siena';
         $conjunto->conjuntodireccion = 'Transversal 44 # 102 - 167';
-        $conjunto->conjuntologo = 'logos/20210614115730.jpg';
+        $conjunto->conjuntologo = 'logos/20210925112647.jpg';
         $conjunto->conjuntocorreo = 'siena@gmail.com';
         $conjunto->conjuntocelular = '3008765432';
         $conjunto->conjuntotelefono = '2334556';

@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::open(['route'=>'admin.bloques.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">CREAR NUEVO BLOQUE/TORRE</h1>
     </div>
     <!-- /.card-header -->

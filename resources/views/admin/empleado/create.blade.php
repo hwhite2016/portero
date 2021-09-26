@@ -11,18 +11,18 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card card-info">
     {!! Form::open(['route'=>'admin.empleados.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">CREAR NUEVO EMPLEADO</h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2', 'style'=>'width: 100%']) !!}
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Documento ID -->
                     {{ Form::label('personadocumento', '* Documento ID') }}
                     <div class="input-group">
@@ -52,10 +52,27 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Tipo Documento -->
                     {{ Form::label('tipodocumentoid', '* Tipo Documento') }}
                     {!! Form::select('tipodocumentoid', $tipo_documentos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo de documento']) !!}
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <div class="form-group"> <!-- Fecha de Nacimiento -->
+                    {{ Form::label('personafechanacimiento', 'Fecha de Nacimiento') }}
+                    <div class="input-group date" id="fechanacimiento" data-target-input="nearest">
+                        {!! Form::text('personafechanacimiento', null, array('data-toggle' => 'datetimepicker','data-target' => '#fechanacimiento', 'class' => 'form-control datetimepicker-input')) !!}
+                        <div class="input-group-append" data-target="#fechanacimiento" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
+                        </div>
+                    </div>
+                    @error('personafechanacimiento')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 
@@ -71,16 +88,23 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
-                <div class="form-group"> <!-- Fecha de Nacimiento -->
-                    {{ Form::label('personafechanacimiento', 'Fecha de Nacimiento') }}
-                    <div class="input-group date" id="fechanacimiento" data-target-input="nearest">
-                        {!! Form::text('personafechanacimiento', null, array('data-toggle' => 'datetimepicker','data-target' => '#fechanacimiento', 'class' => 'form-control datetimepicker-input')) !!}
-                        <div class="input-group-append" data-target="#fechanacimiento" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar-alt"></i></div>
-                        </div>
-                    </div>
-                    @error('personafechanacimiento')
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Estructura -->
+                    {{ Form::label('organo_id', 'Estructura') }}
+                    {!! Form::select('organo_id', $organos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione la estructura']) !!}
+                    @error('organo_id')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Cargo -->
+                    {{ Form::label('cargo_id', 'Cargo') }}
+                    {!! Form::select('cargo_id', $cargos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el cargo']) !!}
+                    @error('cargo_id')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -124,7 +148,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            {{-- <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo -->
                     {{ Form::label('role_id', 'Rol') }}
                     {!! Form::select('role_id', $roles, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione un rol']) !!}
@@ -134,7 +158,7 @@
                         </small>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
             <div class="col-md-4">
                 <div class="form-group"> <!-- Estado -->
@@ -179,7 +203,8 @@
 
 @section('css')
     <!-- /<link rel="stylesheet" href="/css/admin_custom.css">-->
-  @stop
+
+@stop
 
 @section('js')
 

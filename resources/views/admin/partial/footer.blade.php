@@ -4,12 +4,12 @@ All rights reserved.
 <b>Version</b> 1.0.0
 </div> --}}
 
-<a href="#" class="btn btn-warning  float-right mr-2" data-toggle="tooltip" title="Market Place">
+{{-- <a href="#" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Market Place">
     <span style="font-size: 1.5em; color: tomato;">
         <i class="fas fa-shopping-basket"></i>
     </span>
     <small><b>Market</b></small>
-</a>
+</a> --}}
 
 @can('admin.zonas.index')
 <a href="{{route('admin.zonas.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">
@@ -22,7 +22,7 @@ All rights reserved.
 @can('admin.entregas.seguimiento')
 <a href="{{route('admin.seguimiento.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Correspondencia">
     <span style="font-size: 1.5em; color: #7F8C8D;">
-        <i class="fas fa-inbox"></i>
+        <i class="fas fa-shipping-fast"></i>
     </span>
 </a>
 @endcan
@@ -33,11 +33,19 @@ All rights reserved.
     </span>
 </a>
 
+<a href="{{route('admin.organos.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Organigrama">
+    <span style="font-size: 1.5em; color: #7F8C8D;">
+        <i class="fas fa-sitemap"></i>
+    </span>
+</a>
+
 <a href="{{route('admin.index')}}" class="btn btn-default   float-right mr-2" data-toggle="tooltip" title="Home">
     <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-home"></i>
     </span>
 </a>
+
+
 
 {{-- @can('admin.zonas.index')
     <a href="{{route('admin.zonas.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Zonas Comunes">

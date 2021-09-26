@@ -26,12 +26,12 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="empleados" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th># Documento</th>
                       <th>Conjunto</th>
                       <th>Nombre</th>
-                       <th>Rol</th>
+                      <th>Cargo</th>
                       <th>Celular</th>
                       <th>Correo</th>
                       <th>Estado</th>
@@ -47,7 +47,9 @@
                           <label class="text-uppercase fw-bold"> {{ $empleado->conjuntonombre }} </label>
                         </td>
                         <td> {{ $empleado->personanombre }} </td>
-                        <td> {{ $empleado->name }} </td>
+                        <td> {{ $empleado->cargonombre }}
+                            @if($empleado->name) <br> <small><u><b>Rol:</b> {{ $empleado->name }}</u></small> @endif
+                        </td>
                         <td> {{ $empleado->personacelular }} </td>
                         <td> {{ $empleado->personacorreo }} </td>
                         <td class="text-center">
@@ -55,37 +57,48 @@
                           </td>
                         <td>
 
-                                @can('admin.empleados.destroy')
-                                {!! Form::model($empleado, ['route'=>['admin.empleados.destroy', $empleado], 'method'=>'delete', 'class'=>'frm_delete']) !!}
-                                @endcan
+                            @can('admin.empleados.destroy')
+                            {!! Form::model($empleado, ['route'=>['admin.empleados.destroy', $empleado], 'method'=>'delete', 'class'=>'frm_delete']) !!}
+                            @endcan
 
-                                @can('admin.empleados.edit')
-                                @if($empleado->name == '_administrador')
-                                    @if(!Auth::user()->hasRole('_administrador'))
+                            @can('admin.empleados.edit')
+                                @if(Auth::user()->hasRole('_consejero'))
+                                    @if($empleado->cargonivel > 0)
                                         <a href="{{route('admin.empleados.edit', $empleado->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Empleado">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
                                     @endif
-                                @else
+                                @elseif(Auth::user()->hasRole('_administrador'))
+                                    @if($empleado->cargonivel > 1)
+                                        <a href="{{route('admin.empleados.edit', $empleado->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Empleado">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
+                                    @endif
+                                @elseif(Auth::user()->hasRole('_superadministrador'))
                                     <a href="{{route('admin.empleados.edit', $empleado->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Empleado">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
                                 @endif
+                            @endcan
 
-                                @endcan
-
-                                @can('admin.empleados.destroy')
-                                @csrf
-                                @if($empleado->name == '_administrador')
-                                    @if(!Auth::user()->hasRole('_administrador'))
+                            @can('admin.empleados.destroy')
+                            @csrf
+                                @if(Auth::user()->hasRole('_consejero'))
+                                    @if($empleado->cargonivel > 0)
                                         <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Eliminar Empleado"><i class="far fa-trash-alt"></i></button>
                                         {!! Form::close() !!}
                                     @endif
-                                @else
+                                @elseif(Auth::user()->hasRole('_administrador'))
+                                    @if($empleado->cargonivel > 1)
+                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Eliminar Empleado"><i class="far fa-trash-alt"></i></button>
+                                        {!! Form::close() !!}
+                                    @endif
+                                @elseif(Auth::user()->hasRole('_superadministrador'))
                                     <button class="btn btn-sm btn-danger" data-toggle="tooltip" title="Eliminar Empleado"><i class="far fa-trash-alt"></i></button>
                                     {!! Form::close() !!}
                                 @endif
-                                @endcan
+
+                            @endcan
 
                         </td>
                       </tr>

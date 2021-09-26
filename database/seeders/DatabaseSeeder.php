@@ -33,6 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EntregaSeeder::class);
         $this->call(ZonaSeeder::class);
         $this->call(PqrSeeder::class);
+        $this->call(OrganoSeeder::class);
+        $this->call(CargoSeeder::class);
 
     }
 }

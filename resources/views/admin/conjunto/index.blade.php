@@ -13,7 +13,7 @@
 @section('content')
 <div class="row">
     @foreach ($conjuntos as $conjunto)
-        <div class="col-12 col-md-3">
+        <div class="col-12 col-md-6">
             <div class="card">
 
                 <img src="/storage/{{ $conjunto->conjuntologo }}" width="250px" class="card-img" alt="...">
@@ -22,6 +22,7 @@
                     <small class="card-text text-muted">{{ $conjunto->barrionombre }}</small><br>
                     <label class="card-title">{{ $conjunto->conjuntonombre }}</label>
                     <p class="card-text">{{ $conjunto->conjuntodireccion }}</p>
+                    <small class="text-muted"><b>Administración:</b></small>
                     <div class="row">
                         <div class="col-12">
                             <small class="text-muted"><i class="far fa-envelope"></i> {{ $conjunto->conjuntocorreo }}</small>
@@ -31,6 +32,20 @@
                         </div>
                         <div class="col-6">
                             <small class="text-muted"><i class="fas fa-phone-volume"></i> {{ $conjunto->conjuntotelefono }}</small>
+                        </div>
+                    </div>
+
+                    <hr style="color: rgb(209, 208, 208)">
+                    <small class="text-muted"><b>Correo Consejo de Administración:</b></small>
+                    <div class="row">
+                        <div class="col-12">
+                            <small class="text-muted"><i class="far fa-envelope"></i> {{ $conjunto->conjuntocorreoconsejo }}</small>
+                        </div>
+                    </div>
+                    <small class="text-muted"><b>Correo Comité de Convivencia:</b></small>
+                    <div class="row">
+                        <div class="col-12">
+                            <small class="text-muted"><i class="far fa-envelope"></i> {{ $conjunto->conjuntocorreocomite }}</small>
                         </div>
                     </div>
 

@@ -19,8 +19,12 @@ class CreateEmpleadosTable extends Migration
             $table->foreign('conjuntoid')->references('id')->on('conjuntos')->onDelete('cascade');
             $table->unsignedBigInteger('personaid');
             $table->foreign('personaid')->references('id')->on('personas')->onDelete('cascade');
-            $table->unsignedBigInteger('role_id');
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->unsignedBigInteger('organo_id')->nullable();
+            $table->foreign('organo_id')->references('id')->on('organos')->onDelete('set null');
+            $table->unsignedBigInteger('cargo_id');
+            $table->foreign('cargo_id')->references('id')->on('cargos')->onDelete('cascade');
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
             $table->boolean('empleadoestado')->default(0);
             $table->timestamps();
         });

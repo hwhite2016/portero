@@ -10,18 +10,18 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::model($empleado, ['route'=>['admin.empleados.update', $empleado], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">EDITAR EMPLEADO </h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2', 'style'=>'width: 100%']) !!}
@@ -35,6 +35,30 @@
             </div>
 
             <div class="col-md-3">
+                <div class="form-group"> <!-- Estructura -->
+                    {{ Form::label('organo_id', 'Estructura') }}
+                    {!! Form::select('organo_id', $organos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione la estructura']) !!}
+                    @error('organo_id')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Cargo -->
+                    {{ Form::label('cargo_id', 'Cargo') }}
+                    {!! Form::select('cargo_id', $cargos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el cargo']) !!}
+                    @error('cargo_id')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo -->
                     {{ Form::label('role_id', 'Rol') }}
                     {!! Form::select('role_id', $roles, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione un rol']) !!}
@@ -44,9 +68,9 @@
                         </small>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group"> <!-- Estado -->
                     {{ Form::label('empleadoestado', 'Estado') }}
                     {!! Form::select('empleadoestado', ['0'=>'Inactivo','1'=>'Activo'], null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}

@@ -53,7 +53,7 @@ class CondominioController extends Controller
             $file = $request->file('conjuntologo');
             $filename = 'logos/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
             //\Storage::disk('public')->put($filename,  \File::get($file));
-            Image::make($file->getRealPath())->resize(250, 120, function ($constraint) {
+            Image::make($file->getRealPath())->resize(700, 390, function ($constraint) {
             $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
          }else{
             $filename = 'images/yourlogo.png';
@@ -65,6 +65,8 @@ class CondominioController extends Controller
             'conjuntonombre' => $request->get('conjuntonombre'),
             'conjuntodireccion' => $request->get('conjuntodireccion'),
             'conjuntocorreo' => $request->get('conjuntocorreo'),
+            'conjuntocorreoconsejo' => $request->get('conjuntocorreoconsejo'),
+            'conjuntocorreocomite' => $request->get('conjuntocorreocomite'),
             'conjuntocelular' => $request->get('conjuntocelular'),
             'conjuntotelefono' => $request->get('conjuntotelefono'),
             'conjuntoestado' => $request->get('conjuntoestado'),
@@ -112,7 +114,7 @@ class CondominioController extends Controller
             $filename = 'logos/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
             $fullpath_old = $destinationPath.'/'.$conjunto->conjuntologo;
             //\Storage::disk('public')->put($filename,  \File::get($file));
-            Image::make($file->getRealPath())->resize(250, 120, function ($constraint) {
+            Image::make($file->getRealPath())->resize(700, 390, function ($constraint) {
             $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
             if((File::exists($fullpath_old)) && ($conjunto->conjuntologo <> 'images/yourlogo.png')) {
                 File::delete($fullpath_old);
@@ -125,6 +127,8 @@ class CondominioController extends Controller
          $conjunto->conjuntonombre = $request->get('conjuntonombre');
          $conjunto->conjuntodireccion = $request->get('conjuntodireccion');
          $conjunto->conjuntocorreo = $request->get('conjuntocorreo');
+         $conjunto->conjuntocorreoconsejo = $request->get('conjuntocorreoconsejo');
+         $conjunto->conjuntocorreocomite = $request->get('conjuntocorreocomite');
          $conjunto->conjuntocelular = $request->get('conjuntocelular');
          $conjunto->conjuntotelefono = $request->get('conjuntotelefono');
          $conjunto->conjuntoestado = $request->get('conjuntoestado');

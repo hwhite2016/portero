@@ -242,10 +242,27 @@ return [
 
         // Sidebar items:
         [
-            'text'        => 'Home',
+            'text'        => 'Mi Conjunto',
             'route'         => 'admin.index',
-            'icon'        => 'fas fa-house-user',
+            'icon'        => 'fas fa-home',
             'can'          => 'admin.conjuntos.index',
+            'submenu' => [
+                [
+                    'text' => 'Home',
+                    'route'  => 'admin.index',
+                    'can'  => 'admin.conjuntos.index',
+                ],
+                [
+                    'text' => 'Organigrama',
+                    'route'  => 'admin.organos.index',
+                    'can'  => 'admin.conjuntos.index',
+                ],
+                [
+                    'text' => 'Normatividad y Reglamentos',
+                    //'route'  => 'admin.normatividad.index',
+                    'can'  => 'admin.conjuntos.index',
+                ],
+            ],
         ],
         [
             'text'        => 'Pqrs',

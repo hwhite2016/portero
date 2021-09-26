@@ -32,5 +32,5 @@ class Conjunto extends Model
 
     //protected $dates = ['deleted_at']; //Registramos la nueva columna
 
-    protected $fillable = ['barrioid', 'conjuntonit', 'conjuntonombre', 'conjuntodireccion', 'conjuntologo', 'conjuntocorreo', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado'];
+    protected $fillable = ['barrioid', 'conjuntonit', 'conjuntonombre', 'conjuntodireccion', 'conjuntologo', 'conjuntocorreo', 'conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado'];
 }

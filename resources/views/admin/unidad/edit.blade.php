@@ -238,7 +238,7 @@
         $(":input").inputmask();
 
         $('#delPropietario').on('click', function () {
-            console.log($('#propietarioid').val());
+            //console.log($('#propietarioid').val());
 
             $('#propietarioid option').each(function() {
                     $(this).remove();

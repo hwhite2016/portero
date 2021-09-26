@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::model($bloque, ['route'=>['admin.bloques.update', $bloque], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">EDITAR BLOQUE/TORRE</h1>
     </div>
     <!-- /.card-header -->

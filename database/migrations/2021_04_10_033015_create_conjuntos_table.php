@@ -21,6 +21,8 @@ class CreateConjuntosTable extends Migration
             $table->string('conjuntodireccion', 100);
             $table->string('conjuntologo', 30)->nullable()->default('images/yourlogo.png');
             $table->string('conjuntocorreo', 100);
+            $table->string('conjuntocorreoconsejo', 80)->nullable();
+            $table->string('conjuntocorreocomite', 80)->nullable();
             $table->string('conjuntocelular', 15)->nullable();
             $table->string('conjuntotelefono', 15)->nullable();
             $table->boolean('conjuntoestado')->default(0);

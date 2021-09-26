@@ -10,29 +10,18 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::model($conjunto, ['route'=>['admin.conjuntos.update', $conjunto], 'method'=>'put', 'enctype'=>'multipart/form-data']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">EDITAR CONJUNTO</h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-12">
-                <div class="form-group"> <!-- Logo del conjunto -->
-                    {{ Form::label('conjuntologo', 'Imagen del conjunto') }}
-                    <img width="70px" src="/storage/{{ $conjunto->conjuntologo }}" alt="image">
-                    {{ Form::file('conjuntologo', array('accept' => 'image/jpg,image/jpeg,image/png,image/svg', 'class' => 'form-control')) }}
-                    @error('conjuntologo')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div>
+
             <div class="col-md-4">
                 <div class="form-group"> <!-- Nit -->
                     {{ Form::label('conjuntonit', '* Nit') }}
@@ -49,22 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Correo -->
-                    {{ Form::label('conjuntocorreo', '* Correo electrónico') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                        </div>
-                        {{ Form::text('conjuntocorreo', $conjunto->conjuntocorreo, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
-                        @error('conjuntocorreo')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-4">
                 <div class="form-group"> <!-- Numero celular -->
                     {{ Form::label('conjuntocelular', '* Numero Celular') }}
@@ -97,6 +71,71 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Correo -->
+                    {{ Form::label('conjuntocorreo', '* Correo Administración') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-at"></i></span>
+                        </div>
+                        {{ Form::text('conjuntocorreo', $conjunto->conjuntocorreo, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
+                        @error('conjuntocorreo')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Correo -->
+                    {{ Form::label('conjuntocorreoconsejo', 'Correo Consejo de Administración') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-at"></i></span>
+                        </div>
+                        {{ Form::text('conjuntocorreoconsejo', $conjunto->conjuntocorreoconsejo, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
+                        @error('conjuntocorreoconsejo')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Correo -->
+                    {{ Form::label('conjuntocorreocomite', 'Correo Comite de Convivencia') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-at"></i></span>
+                        </div>
+                        {{ Form::text('conjuntocorreocomite', $conjunto->conjuntocorreocomite, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
+                        @error('conjuntocorreocomite')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="form-group"> <!-- Logo del conjunto -->
+                    {{ Form::label('conjuntologo', 'Imagen del conjunto') }}
+                    <img width="70px" src="/storage/{{ $conjunto->conjuntologo }}" alt="image">
+                    {{ Form::file('conjuntologo', array('accept' => 'image/jpg,image/jpeg,image/png,image/svg', 'class' => 'form-control')) }}
+                    @error('conjuntologo')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
         </div>
         <!-- /.row -->
     </div>

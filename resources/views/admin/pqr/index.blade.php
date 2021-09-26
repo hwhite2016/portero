@@ -90,7 +90,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="pqrs" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Radicado</th>
                       <th>Asunto</th>

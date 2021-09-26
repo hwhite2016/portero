@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeMailable;
+use App\Models\Cargo;
 use App\Models\Conjunto;
 use App\Models\Empleado;
+use App\Models\Organo;
 use App\Models\Persona;
 use App\Models\TipoDocumento;
 use App\Models\User;
@@ -28,8 +30,9 @@ class EmpleadoController extends Controller
     {
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
              ->join('personas','personas.id','=','empleados.personaid')
-             ->join('roles','roles.id','=','empleados.role_id')
-             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
+             ->leftJoin('roles','roles.id','=','empleados.role_id')
+             ->join('cargos','cargos.id','=','empleados.cargo_id')
+             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel','empleadoestado')
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
              ->get();
@@ -41,12 +44,19 @@ class EmpleadoController extends Controller
         $user = User::find(Auth::user()->id);
 
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
-        if ($user->hasRole('_superadministrador')) $roles = Role::orderBy('name','ASC')->pluck('name', 'id');
-        if ($user->hasRole('_administrador')) $roles = Role::where('id','!=',5)->whereRaw("SUBSTR(name,1,1) != '_'")->orderBy('name','ASC')->pluck('name', 'id');
+
+        if ($user->hasRole('_superadministrador')) $cargos = Cargo::orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+        if ($user->hasRole('_consejero')) $cargos = Cargo::where('cargonivel',1)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+        if ($user->hasRole('_administrador')) $cargos = Cargo::where('cargonivel',2)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+
+        if ($user->hasRole('_superadministrador')) $organos = Organo::orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>=',1)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_administrador')) $organos = Organo::where('organonivel','>=',2)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+
 
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
-        return view('admin.empleado.create', compact('tipo_documentos', 'roles', 'conjuntos'));
+        return view('admin.empleado.create', compact('tipo_documentos', 'cargos', 'organos', 'conjuntos'));
     }
 
     public function store(Request $request)
@@ -54,12 +64,16 @@ class EmpleadoController extends Controller
 
         $request->validate([
             'conjuntoid'=>'required',
-            'role_id'=>'required',
+            'cargo_id'=>'required',
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
             'personacorreo'=>'required|email',
         ]);
+
+        $role_id = Cargo::where('id', $request->get('cargo_id'))
+                ->select('cargorole')->first();
+
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
         }else{
@@ -90,13 +104,13 @@ class EmpleadoController extends Controller
 
             if ($request->get('bienvenida') == 1){
                 $data = [
-                    'role_id' => $request->get('role_id'),
+                    'role_id' => $role_id->cargorole,
                     'name' => $request->get('personanombre'),
                     'email' => $request->get('personacorreo'),
                     'password' => $psswd
                 ];
                 $correo = new WelcomeMailable($data);
-                Mail::to('kimita0627@gmail.com')->send($correo);
+                Mail::to('victorlopez23@hotmail.com')->send($correo);
             }
         }
 
@@ -104,7 +118,9 @@ class EmpleadoController extends Controller
             Empleado::create([
                 'personaid'=>$persona->id,
                 'conjuntoid'=>$request->get('conjuntoid'),
-                'role_id'=>$request->get('role_id'),
+                'role_id'=>$role_id->cargorole,
+                'cargo_id'=>$request->get('cargo_id'),
+                'organo_id'=>$request->get('organo_id'),
                 'empleadoestado'=>$request->get('empleadoestado'),
             ]);
 
@@ -112,7 +128,7 @@ class EmpleadoController extends Controller
             $persona->conjuntos()->detach($request->conjuntoid);
             $persona->conjuntos()->attach($request->conjuntoid);
             if($request->get('empleadoestado') == 1){
-                $user->assignRole($request->role_id);
+                $user->assignRole($role_id->cargorole);
             }
             return redirect()->route('admin.empleados.index')->with('info','El empleado fue agregado de forma exitosa');
         }
@@ -126,7 +142,8 @@ class EmpleadoController extends Controller
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
              ->join('personas','personas.id','=','empleados.personaid')
              ->join('roles','roles.id','=','empleados.role_id')
-             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'empleadoestado')
+             ->join('cargos','cargos.id','=','empleados.cargo_id')
+             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel', 'empleadoestado')
              ->where('conjuntos.id', $id)
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
@@ -140,27 +157,39 @@ class EmpleadoController extends Controller
         $empleado = Empleado::find($id);
         $user = User::find(Auth::user()->id);
 
-        if ($user->hasRole('_superadministrador')) $roles = Role::all()->pluck('name', 'id');
-        if ($user->hasRole('_administrador')) $roles = Role::whereRaw("SUBSTR(name,1,1) != '_'")->pluck('name', 'id');
+        if ($user->hasRole('_superadministrador')) $cargos = Cargo::orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+        if ($user->hasRole('_consejero')) $cargos = Cargo::where('cargonivel','>',0)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+        if ($user->hasRole('_administrador')) $cargos = Cargo::where('cargonivel',2)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
+
+        if ($user->hasRole('_superadministrador')) $organos = Organo::orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>=',1)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_administrador')) $organos = Organo::where('organonivel','>=',2)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
         //$unidads->prepend('Seleccione la unidad', '');
         $persona = Persona::where('id', $empleado->personaid)->get();
 
-        return view('admin.empleado.edit', compact('empleado', 'persona', 'roles', 'conjuntos'));
+        return view('admin.empleado.edit', compact('empleado', 'persona', 'organos','cargos','conjuntos'));
 
     }
 
     public function update(Request $request, Empleado $empleado)
     {
+        $role_id = Cargo::where('id', $request->get('cargo_id'))
+                ->select('cargorole')->first();
+
         $request->validate([
             'conjuntoid'=>'required',
-            'role_id'=>'required'
+            //'role_id'=>'required',
+            'cargo_id'=>'required'
         ]);
 
         $empleado->update([
             'conjuntoid'=>$request->get('conjuntoid'),
-            'role_id'=>$request->get('role_id'),
+            'role_id'=>$role_id->cargorole,
+            'cargo_id'=>$request->get('cargo_id'),
+            'organo_id'=>$request->get('organo_id'),
             'empleadoestado'=>$request->get('empleadoestado'),
         ]);
 
@@ -173,10 +202,10 @@ class EmpleadoController extends Controller
         //$persona->conjuntos()->detach($request->conjuntoid);
         //$persona->conjuntos()->attach($request->conjuntoid);
         if($request->get('empleadoestado') == 1){
-            if(!$user->hasRole($request->get('role_id')))  $user->syncRoles($request->role_id);
+            if(!$user->hasRole($role_id->cargorole))  $user->syncRoles($role_id->cargorole);
         }else{
-            $user->syncRoles($request->role_id);
-            $user->removeRole($request->get('role_id'));
+            $user->syncRoles($role_id->cargorole);
+            $user->removeRole($role_id->cargorole);
         }
 
         return redirect()->route('admin.empleados.index')->with('info','El empleado fue actualizado de forma exitosa');

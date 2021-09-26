@@ -43,9 +43,9 @@ class ConjuntoController extends Controller
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocorreoconsejo, conjuntocorreocomite, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->whereIn('conjuntos.id', session('dependencias'))
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo','conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
@@ -84,10 +84,10 @@ class ConjuntoController extends Controller
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocorreoconsejo, conjuntocorreocomite, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->where('conjuntos.barrioid', '=', $id)
             ->whereIn('conjuntos.id', session('dependencias'))
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo','conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
@@ -123,7 +123,7 @@ class ConjuntoController extends Controller
            $filename = 'logos/'.date('YmdHis').'.'.$file->getClientOriginalExtension();
            $fullpath_old = $destinationPath.'/'.$conjunto->conjuntologo;
            //\Storage::disk('public')->put($filename,  \File::get($file));
-           Image::make($file->getRealPath())->resize(250, 120, function ($constraint) {
+           Image::make($file->getRealPath())->resize(700, 390, function ($constraint) {
            $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
            if((File::exists($fullpath_old)) && ($conjunto->conjuntologo <> 'images/yourlogo.png')) {
             File::delete($fullpath_old);
@@ -133,6 +133,8 @@ class ConjuntoController extends Controller
 
         $conjunto->conjuntonit = $request->get('conjuntonit');
         $conjunto->conjuntocorreo = $request->get('conjuntocorreo');
+        $conjunto->conjuntocorreoconsejo = $request->get('conjuntocorreoconsejo');
+        $conjunto->conjuntocorreocomite = $request->get('conjuntocorreocomite');
         $conjunto->conjuntocelular = $request->get('conjuntocelular');
         $conjunto->conjuntotelefono = $request->get('conjuntotelefono');
 
