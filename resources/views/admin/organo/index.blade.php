@@ -182,7 +182,7 @@
                 name: 'Revisoria Fiscal',
                 //image: 'https://ui-avatars.com/api?name=R F&color=5F91E2&background=EBF4FF&bold=true&rounded=true',
                 //column: 1,
-                offset: '75%'
+                offset: '60%'
             }, {
                 id: 'Consejo',
                 name: 'Consejo de Admon',
@@ -203,7 +203,7 @@
                     color: 'black'
                 },
                 //column: 3,
-                offset: '75%'
+                offset: '60%'
             }, {
                 id: 'Administrador',
                 name: 'Administración',
@@ -222,7 +222,7 @@
                 dataLabels: {
                     color: 'black'
                 },
-                offset: '75%'
+                offset: '60%'
             }, {
                 id: 'Empleados',
                 name: 'Empleados',
