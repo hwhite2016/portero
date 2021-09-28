@@ -10,13 +10,13 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card">
     {!! Form::open(['route'=>'admin.clase_unidads.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO TIPO DE UNIDAD</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Crear Nuevo Tipo de Unidad</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -13,13 +13,13 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card">
     {!! Form::model($unidad, ['route'=>['admin.unidads.update', $unidad], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">EDITAR UNIDAD</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Editar Unidad</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -279,7 +279,7 @@
                 type: 'GET',
                 dataType: "html",
                 success: function (data) {
-                    modal.find('.modal-title').text('Propietario')
+                    modal.find('.modal-title').text('Asignar Tenedor')
                     modal.find('.modal-body').html(data)
                 },
                 error: function (error) {

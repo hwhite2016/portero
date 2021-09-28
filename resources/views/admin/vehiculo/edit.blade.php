@@ -10,13 +10,13 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card ">
     {!! Form::model($vehiculo, ['route'=>['admin.vehiculos.update', $vehiculo], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">EDITAR VEHICULO </h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Editar Vehiculo</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

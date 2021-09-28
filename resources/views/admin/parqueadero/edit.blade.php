@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card">
     {!! Form::model($parqueadero, ['route'=>['admin.parqueaderos.update', $parqueadero], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">EDITAR PARQUEADERO</h1>
     </div>
     <!-- /.card-header -->

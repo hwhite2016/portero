@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PqrSeeder::class);
         $this->call(OrganoSeeder::class);
         $this->call(CargoSeeder::class);
+        $this->call(NormaSeeder::class);
 
     }
 }

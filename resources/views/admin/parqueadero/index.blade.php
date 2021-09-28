@@ -27,7 +27,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="parqueaderos" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Parqueadero</th>
                       <th>Conjunto</th>

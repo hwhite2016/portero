@@ -16,7 +16,7 @@
     @csrf
     {{-- @method('PUT') --}}
     <div class="card-header bg-light">
-        <h1 class="card-title">EDITAR EMPLEADO </h1>
+        <h1 class="card-title">EDITAR COLABORADOR </h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

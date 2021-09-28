@@ -27,7 +27,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="clase_unidads" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Tipo</th>
                       <th>Conjunto</th>

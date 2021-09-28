@@ -23,7 +23,7 @@
     <div class="col-md-8">
         <div class="card card-light">
             <div class="card-header">
-                <h3 class="card-title">Organigrama | {{$conjunto->conjuntonombre}}</h3>
+                <h3 class="card-title">Estructura Orgánica | {{$conjunto->conjuntonombre}}</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">

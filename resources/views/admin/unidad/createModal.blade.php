@@ -4,9 +4,9 @@
 
 <div class="card card-primary">
 
-    <div class="card-header bg-primary">
+    {{-- <div class="card-header bg-primary">
         <h1 class="card-title">Asignar propietario</h1>
-    </div>
+    </div> --}}
     <!-- /.card-header -->
     <div class="card-body">
         {!! Form::hidden('unidad_propietario', 1) !!}

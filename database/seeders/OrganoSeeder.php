@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Organo;
+use App\Models\TipoNorma;
 use Illuminate\Database\Seeder;
 
 class OrganoSeeder extends Seeder
@@ -18,6 +19,8 @@ class OrganoSeeder extends Seeder
         Organo::create(['organonombre' => 'Consejo de Administración','organonombrecorto' => 'revisoriafiscal@gmail.com','organonivel' => 1]);
         Organo::create(['organonombre' => 'Comite de Convivencia','organonombrecorto' => 'revisoriafiscal@gmail.com','organonivel' => 1]);
         Organo::create(['organonombre' => 'Administración','organonombrecorto' => 'revisoriafiscal@gmail.com','organonivel' => 2]);
+
+
 
     }
 }

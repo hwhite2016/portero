@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\VisitanteController;
 use App\Http\Controllers\Admin\EntregaController;
 use App\Http\Controllers\Admin\EventCalendarController;
 use App\Http\Controllers\Admin\InvitadoController;
+use App\Http\Controllers\Admin\NormaController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\OrganoController;
 use App\Http\Controllers\Admin\PqrController;
@@ -87,6 +88,7 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::post('/estado/{id?}', [PqrController::class, 'changeEstado'])->name('admin.pqrs.estado');
 
     Route::resource('/organigrama', OrganoController::class)->names('admin.organos');
+    Route::resource('/documentos', NormaController::class)->names('admin.normas');
 
     Route::get('/markAsRead', function(){
         Auth::user()->unreadNotifications->markAsRead();

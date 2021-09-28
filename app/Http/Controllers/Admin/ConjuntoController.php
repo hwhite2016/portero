@@ -126,8 +126,8 @@ class ConjuntoController extends Controller
            Image::make($file->getRealPath())->resize(700, 390, function ($constraint) {
            $constraint->aspectRatio();})->save($destinationPath.'/'.$filename);
            if((File::exists($fullpath_old)) && ($conjunto->conjuntologo <> 'images/yourlogo.png')) {
-            File::delete($fullpath_old);
-            }
+                File::delete($fullpath_old);
+           }
             $conjunto->conjuntologo = $filename;
         }
 

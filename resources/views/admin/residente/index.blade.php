@@ -36,7 +36,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="residentes" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Nombre</th>
                       <th>Unidad</th>

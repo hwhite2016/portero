@@ -10,13 +10,13 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::open(['route'=>'admin.condominios.store', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO CONJUNTO</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Crear Nuevo Conjunto</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

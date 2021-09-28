@@ -11,12 +11,12 @@
 
 @section('content')
 
-<div class="card card-primary">
+<div class="card">
     {!! Form::model($residente, ['route'=>['admin.residentes.update', $residente], 'method'=>'put']) !!}
     @csrf
     {{-- @method('PUT') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">EDITAR RESIDENTE </h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Editar Residente</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -11,13 +11,13 @@
 @stop
 
 @section('content')
-
+<br>
 <div class="card card-primary">
     {!! Form::model($visitante, ['route'=>['admin.visitantes.update', $visitante], 'method'=>'put']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO VISITANTE</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Editar Visitante</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

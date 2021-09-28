@@ -258,8 +258,8 @@ return [
                     'can'  => 'admin.conjuntos.index',
                 ],
                 [
-                    'text' => 'Normatividad y Reglamentos',
-                    //'route'  => 'admin.normatividad.index',
+                    'text' => 'Documentos',
+                    'route'  => 'admin.normas.index',
                     'can'  => 'admin.conjuntos.index',
                 ],
             ],
@@ -399,7 +399,7 @@ return [
             'can'  => 'admin.barrios.index',
         ],
         [
-            'text'   => 'Empleados',
+            'text'   => 'Colaboradores',
             'route'  => 'admin.empleados.index',
             'icon'   => 'fas fa-user-tie fa-fw',
             'can'    => 'admin.empleados.index',

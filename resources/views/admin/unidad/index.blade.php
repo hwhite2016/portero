@@ -32,7 +32,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="unidads" class="table table-striped table-bordered table-hover table-sm nowrap" style="width:100%">
-                  <thead class="bg-primary">
+                  <thead class="bg-light">
                     <tr>
                       <th>Unidad</th>
                       <th>Bloque</th>

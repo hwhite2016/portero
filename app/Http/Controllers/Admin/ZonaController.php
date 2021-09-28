@@ -235,7 +235,7 @@ class ZonaController extends Controller
     {
         $zona = Zona::find($id);
         $zona->delete();
-        $destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'zonas');
+        //$destinationPath = public_path('storage/'.$request->get('conjuntoid').'/'.'zonas');
         $destinationPath = public_path('/storage');
         $fullpath_old = $destinationPath.'/'.$zona->zonaimagen;
         if((File::exists($fullpath_old)) && ($zona->zonaimagen <> 'images/zonacomun.png')) {

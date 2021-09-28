@@ -12,12 +12,12 @@
 
 @section('content')
 
-<div class="card card-primary">
+<div class="card">
     {!! Form::open(['route'=>'admin.residentes.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO RESIDENTE</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Crear Nuevo Residente</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -1,10 +1,9 @@
 
 <div class="card card-primary">
 
-    {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
+    {{-- <div class="card-header bg-primary">
         <h1 class="card-title">CREAR NUEVO TIPO DE UNIDAD</h1>
-    </div>
+    </div> --}}
     <!-- /.card-header -->
     <div class="card-body">
         {{ Form::hidden('modal', 1) }}

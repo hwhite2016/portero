@@ -17,7 +17,7 @@
     @csrf
     {{-- @method('POST') --}}
     <div class="card-header bg-light">
-        <h1 class="card-title">CREAR NUEVO EMPLEADO</h1>
+        <h1 class="card-title">CREAR NUEVO COLABORADOR</h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card">
     {!! Form::open(['route'=>'admin.parqueaderos.store', 'method'=>'post']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">CREAR NUEVO PARQUEADERO</h1>
     </div>
     <!-- /.card-header -->

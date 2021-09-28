@@ -9,12 +9,12 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
+<br>
+<div class="card">
     {!! Form::model($zona, ['route'=>['admin.zonas.update', $zona], 'method'=>'put', 'enctype'=>'multipart/form-data']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
+    <div class="card-header bg-light">
         <h1 class="card-title">EDITAR ZONA COMUN</h1>
     </div>
     <!-- /.card-header -->
