@@ -176,7 +176,15 @@ class UnidadController extends Controller
             'claseunidadid'=>'required',
             'unidadnombre' => 'unique:unidads,unidadnombre,'.$validar_update.',id,bloqueid,' . $request->get('bloqueid')
         ]);
-        $unidad->update($request->all());
+        //$unidad->update($request->all());
+
+        $unidad->update([
+            'bloqueid'=>$request->get('bloqueid'),
+            'tipopropietarioid'=>$request->get('tipopropietarioid'),
+            'propietarioid'=>$request->get('propietarioid'),
+            'unidadnombre'=>$request->get('unidadnombre'),
+            'claseunidadid'=>$request->get('claseunidadid'),
+        ]);
 
         $unidad->parqueaderos()->sync($request->parqueaderos);
         return redirect()->route('admin.unidads.edit', $unidad->id )->with('info','La unidad fue actualizada de forma exitosa');
