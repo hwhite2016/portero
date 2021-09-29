@@ -63,7 +63,8 @@
                                                     <span class="font-weight-bold">Asignado a:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
-                                                    Administración
+                                                    {{$pqr->cargonombre}}<br>
+                                                    <span class="text-primary font-italic">{{$pqr->empleadocorreo}} </span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -93,7 +94,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-3 p-2 border">
-                                                    <span class="font-weight-bold">Fecha respuesta:</span>
+                                                    <span class="font-weight-bold">Fecha Max. respuesta:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
                                                     {{ date("Y-m-d",strtotime($pqr->created_at."+ 15 days")) }}

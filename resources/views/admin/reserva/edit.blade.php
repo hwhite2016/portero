@@ -225,7 +225,7 @@
                                     }else{
                                         color = 'secondary';
                                     }
-                                    arr += "<div class='col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2'><div class='form-group input-group-prepend'><button type='button' class='btn btn-block btn-outline-"+ color +" dropdown-toggle' data-toggle='dropdown'>" + moment(res1.start, 'YYYY-MM-DD HH:mm').format('hh:mm') + " - " + moment(res1.end, 'YYYY-MM-DD HH:mm').format('hh:mm a') +"</button><div class='dropdown-menu'><a class='dropdown-item'><i class='fas fa-user-friends'></i>&nbsp; <b>Aforo Maximo: "+ res1.zonaaforomax +"</b></a><div class='dropdown-divider'></div><a class='dropdown-item'><i class='fas fa-caret-right'></i> Plazas disponibles: <b>"+ (res1.zonaaforomax - res1.reservas) +"</b></a><a class='dropdown-item'><i class='fas fa-caret-right'></i> Cupos reservados: <b>"+ res1.reservas +"</b></a><a class='dropdown-item'><i class='fas fa-caret-right'></i> Ocupacion: <span class='text-primary'>" + Math.round((1 - ((res1.zonaaforomax - res1.reservas)/res1.zonaaforomax))*100) + "%</span></a><div class='dropdown-divider'></div>" + btn_reserva + "</div></div></div>";
+                                    arr += "<div class='col-6 col-sm-3 col-md-2 col-lg-2 col-xl-2'><div class='form-group input-group-prepend'><button type='button' class='btn btn-block btn-outline-"+ color +" dropdown-toggle' data-toggle='dropdown'><small>" + moment(res1.start, 'YYYY-MM-DD HH:mm').format('h:mm') + " - " + moment(res1.end, 'YYYY-MM-DD HH:mm').format('h:mm a') +"</small></button><div class='dropdown-menu'><a class='dropdown-item'><i class='fas fa-user-friends'></i>&nbsp; <b>Aforo Maximo: "+ res1.zonaaforomax +"</b></a><div class='dropdown-divider'></div><a class='dropdown-item'><i class='fas fa-caret-right'></i> Plazas disponibles: <b>"+ (res1.zonaaforomax - res1.reservas) +"</b></a><a class='dropdown-item'><i class='fas fa-caret-right'></i> Cupos reservados: <b>"+ res1.reservas +"</b></a><a class='dropdown-item'><i class='fas fa-caret-right'></i> Ocupacion: <span class='text-primary'>" + Math.round((1 - ((res1.zonaaforomax - res1.reservas)/res1.zonaaforomax))*100) + "%</span></a><div class='dropdown-divider'></div>" + btn_reserva + "</div></div></div>";
 
                                     if (res1.contador >= {{$zonareserva->zonareservadiariamax}}){
                                         arr = "<div class='col-12'><div class='alert alert-default-warning alert-dismissible fade show' role='alert'><i class='fas fa-exclamation-triangle'></i>&nbsp; Ha superado el numero máximo de reservas diarias.<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div></div>";
@@ -253,10 +253,15 @@
                                 dataType: "json",
                                 url: "{{ route('admin.reservas.store') }}",
                                 success: function(data) {
+                                    zonacompartida = {{$zonareserva->zonacompartida}};
                                     //obtenerHoras();
-                                     toastr.success("La reserva se realizó de forma exitosa.");
-                                     arr = "<div class='col-12'><div class='alert alert-default-success alert-dismissible fade show' role='alert'><i class='fas fa-check'></i>&nbsp; La reserva se realizó de forma exitosa. Para ver todas las reservas pendientes haga click en <a class='text-primary' href='/admin/reservas'>Reservas</a><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div></div>";
-                                     $('#disponibilidad').html(arr);
+                                    toastr.success("La reserva se realizó de forma exitosa.");
+                                    if (zonacompartida == 1){
+                                        arr = "<div class='col-12'><div class='alert alert-default-success alert-dismissible fade show' role='alert'><i class='fas fa-check'></i>&nbsp; La reserva se realizó de forma exitosa. Para ver todas las reservas pendientes haga click en <a class='text-primary' href='/admin/reservas'>Reservas</a><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></div></div>";
+                                        $('#disponibilidad').html(arr);
+                                    }else{
+                                        obtenerHoras();
+                                    }
                                 },
                                 error: function(error){
                                     console.log(error);

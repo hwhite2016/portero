@@ -69,6 +69,7 @@ class EmpleadoController extends Controller
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
             'personacorreo'=>'required|email',
+            'empleadocorreo'=>'email',
         ]);
 
         $role_id = Cargo::where('id', $request->get('cargo_id'))
@@ -121,6 +122,7 @@ class EmpleadoController extends Controller
                 'role_id'=>$role_id->cargorole,
                 'cargo_id'=>$request->get('cargo_id'),
                 'organo_id'=>$request->get('organo_id'),
+                'empleadocorreo'=>$request->get('empleadocorreo'),
                 'empleadoestado'=>$request->get('empleadoestado'),
             ]);
 
@@ -181,7 +183,7 @@ class EmpleadoController extends Controller
 
         $request->validate([
             'conjuntoid'=>'required',
-            //'role_id'=>'required',
+            'empleadocorreo'=>'email',
             'cargo_id'=>'required'
         ]);
 
@@ -190,6 +192,7 @@ class EmpleadoController extends Controller
             'role_id'=>$role_id->cargorole,
             'cargo_id'=>$request->get('cargo_id'),
             'organo_id'=>$request->get('organo_id'),
+            'empleadocorreo'=>$request->get('empleadocorreo'),
             'empleadoestado'=>$request->get('empleadoestado'),
         ]);
 

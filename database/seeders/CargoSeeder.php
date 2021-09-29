@@ -19,12 +19,12 @@ class CargoSeeder extends Seeder
         Cargo::create(['cargonombre' => 'Consejo de Administración (VicePresidente)','cargonivel' => 1,'cargopqr' => 0]);
         Cargo::create(['cargonombre' => 'Consejo de Administración (Secretario)','cargonivel' => 1,'cargopqr' => 0]);
         Cargo::create(['cargonombre' => 'Consejo de Administración (Delegado)','cargonivel' => 1,'cargopqr' => 0]);
-        Cargo::create(['cargonombre' => 'Comite de Convivencia (Presidente)','cargonivel' => 1,'cargopqr' => 1,'cargorole' => 9]);
+        Cargo::create(['cargonombre' => 'Comite de Convivencia (Presidente)','cargonivel' => 1,'cargopqr' => 2,'cargorole' => 9]);
         Cargo::create(['cargonombre' => 'Comite de Convivencia (Secretario)','cargonivel' => 1,'cargopqr' => 0]);
         Cargo::create(['cargonombre' => 'Comite de Convivencia (Principal)','cargonivel' => 1,'cargopqr' => 0]);
         Cargo::create(['cargonombre' => 'Comite de Convivencia (Suplente)','cargonivel' => 1,'cargopqr' => 0]);
 
-        Cargo::create(['cargonombre' => 'Administrador','cargonivel' => 1,'cargopqr' => 1,'cargorole' => 3]);
+        Cargo::create(['cargonombre' => 'Administrador','cargonivel' => 1,'cargopqr' => 3,'cargorole' => 3]);
 
         Cargo::create(['cargonombre' => 'Contador','cargonivel' => 2,'cargopqr' => 0]);
         Cargo::create(['cargonombre' => 'Asistente','cargonivel' => 2,'cargopqr' => 0,'cargorole' => 6]);

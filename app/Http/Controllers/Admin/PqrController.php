@@ -8,6 +8,7 @@ use App\Models\Asunto;
 use App\Models\Comentario;
 use App\Models\Conjunto;
 use App\Models\DetallePqr;
+use App\Models\Empleado;
 use App\Models\EstadoPqr;
 use App\Models\Motivo;
 use App\Models\Pqr;
@@ -106,8 +107,11 @@ class PqrController extends Controller
         $tipo_pqrs = TipoPqr::all()->pluck('tipopqrnombre', 'id');
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
         $asuntos = Asunto::orderBy('asunto')->pluck('asunto', 'id');
+        $colaboradores = Empleado::join('cargos', 'cargos.id', '=', 'empleados.cargo_id')
+            ->where('cargopqr','>=', 1)
+            ->orderBy('cargonombre')->pluck('cargonombre', 'empleados.id');
 
-        return view('admin.pqr.create', compact('tipo_pqrs', 'conjuntos', 'asuntos'));
+        return view('admin.pqr.create', compact('tipo_pqrs', 'conjuntos', 'asuntos', 'colaboradores'));
     }
 
     public function store(Request $request)
@@ -117,6 +121,7 @@ class PqrController extends Controller
             'conjuntoid'=>'required',
             'tipopqrid'=>'required',
             'asuntoid'=>'required',
+            'empleadoid'=>'required',
             'mensaje'=>'required|min:10|max:3000'
         ]);
 
@@ -126,6 +131,7 @@ class PqrController extends Controller
             'conjuntoid' => $request->get('conjuntoid'),
             'tipopqrid' => $request->get('tipopqrid'),
             'userid' => Auth::user()->id,
+            'agenteid' => $request->get('empleadoid'),
             'asuntoid' => $request->get('asuntoid'),
             'mensaje' => $request->get('mensaje'),
             'radicado' => $radicado,
@@ -260,10 +266,12 @@ class PqrController extends Controller
             ->join('estado_pqrs', 'estado_pqrs.id', 'pqrs.estadoid')
             ->join('tipo_pqrs', 'tipo_pqrs.id', 'pqrs.tipopqrid')
             ->join('users', 'users.id', 'pqrs.userid')
+            ->join('empleados', 'empleados.id', 'pqrs.agenteid')
+            ->join('cargos', 'cargos.id', 'empleados.cargo_id')
             ->leftJoin('residentes', 'residentes.personaid', 'users.personaid')
             ->leftJoin('unidads', 'unidads.id', 'residentes.unidadid')
             ->leftJoin('bloques', 'bloques.id', 'unidads.bloqueid')
-            ->select('pqrs.*', 'estadonombre', 'asunto', 'tipopqrnombre', 'tipopqrtiempo','users.name', 'unidadnombre', 'bloquenombre')
+            ->select('pqrs.*', 'estadonombre', 'asunto', 'tipopqrnombre', 'tipopqrtiempo','users.name', 'empleadocorreo', 'cargonombre', 'unidadnombre', 'bloquenombre')
             ->where('pqrs.id', $id)
             ->first();
 

@@ -25,6 +25,7 @@ class CreateEmpleadosTable extends Migration
             $table->foreign('cargo_id')->references('id')->on('cargos')->onDelete('cascade');
             $table->unsignedBigInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');
+            $table->string('empleadocorreo', 80)->nullable();
             $table->boolean('empleadoestado')->default(0);
             $table->timestamps();
         });

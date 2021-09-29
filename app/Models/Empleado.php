@@ -14,5 +14,5 @@ class Empleado extends Model
         return $this->belongsTo(Conjunto::class, 'conjuntoid');
     }
 
-    protected $fillable = ['conjuntoid', 'personaid', 'organo_id','cargo_id', 'role_id', 'empleadoestado'];
+    protected $fillable = ['conjuntoid', 'personaid', 'organo_id','cargo_id', 'role_id', 'empleadocorreo', 'empleadoestado'];
 }

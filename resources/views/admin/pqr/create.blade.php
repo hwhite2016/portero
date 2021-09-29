@@ -21,7 +21,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%']) !!}
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('tipopqrid', '* Tipo de Ticket') }}&nbsp;
                     <a href="#" data-placement="bottom"  tabindex="0" data-toggle="popover" data-trigger="focus" data-popover-content="#a2">
@@ -71,7 +71,20 @@
 
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <div class="form-group">
+                    {{ Form::label('empleadoid', '* Dirigido a') }}
+                    {!! Form::select('empleadoid', $colaboradores, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('empleadoid')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="form-group">
                     {{ Form::label('asuntoid', '* Asunto') }}
                     {!! Form::select('asuntoid', $asuntos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el asunto']) !!}

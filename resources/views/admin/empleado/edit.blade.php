@@ -21,7 +21,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2', 'style'=>'width: 100%']) !!}
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Estructura -->
                     {{ Form::label('organo_id', 'Estructura') }}
                     {!! Form::select('organo_id', $organos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione la estructura']) !!}
@@ -58,19 +58,25 @@
                 </div>
             </div>
 
-            {{-- <div class="col-md-3">
-                <div class="form-group"> <!-- Tipo -->
-                    {{ Form::label('role_id', 'Rol') }}
-                    {!! Form::select('role_id', $roles, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione un rol']) !!}
-                    @error('role_id')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div> --}}
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Correo -->
+                    {{ Form::label('empleadocorreo', 'Correo Laboral') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-at"></i></span>
+                        </div>
+                        {{ Form::email('empleadocorreo', null, array('placeholder' => 'Ej: comite_convivencia@gmail.com', 'class' => 'form-control')) }}
 
-            <div class="col-md-2">
+                    </div>
+                    @error('empleadocorreo')
+                    <small class="text-danger">
+                        {{$message}}
+                    </small>
+                @enderror
+                </div>
+            </div>
+
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Estado -->
                     {{ Form::label('empleadoestado', 'Estado') }}
                     {!! Form::select('empleadoestado', ['0'=>'Inactivo','1'=>'Activo'], null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
