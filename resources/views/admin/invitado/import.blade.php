@@ -62,7 +62,7 @@
                     <div class='col-12 text-justify'>
                         Descargue la plantilla de excel, ingrese la lista de invitados tal como lo indica dicha plantilla y subala haciendo click en el boton <b>importar archivo</b> que se encuentra a la derecha.
                     </div>
-                    <div class='col-12'><hr><a target="_blank" href="/storage/documentos/Lista_de_invitados.xlsx" class="text-success float-right"><i class="fas fa-upload"></i> Descargar Plantilla Excel</a></div>
+                    <div class='col-12'><hr><a target="_blank" href="/storage/plantillas/Lista_de_invitados.xlsx" class="text-success float-right"><i class="fas fa-upload"></i> Descargar Plantilla Excel</a></div>
                 </div>
              </div>
         </div>

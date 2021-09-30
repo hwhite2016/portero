@@ -21,9 +21,9 @@
 <br>
 <div class="row">
     <div class="col-md-8">
-        <div class="card card-light">
-            <div class="card-header">
-                <h3 class="card-title">Estructura Orgánica | {{$conjunto->conjuntonombre}}</h3>
+        <div class="card">
+            <div class="card-header bg-light">
+                <label class="card-title text-primary">Estructura Orgánica | {{$conjunto->conjuntonombre}}</label>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -40,9 +40,9 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-light">
-            <div class="card-header">
-              <h3 class="card-title">Detalle de la Estructura</h3>
+        <div class="card">
+            <div class="card-header bg-light">
+                <label class="card-title text-primary">Detalle de la Estructura</label>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -52,6 +52,9 @@
                    <p>
                         <i class="fas fa-caret-right mr-2"></i> <label>{{ $colaborador->cargonombre }}:</label> <br>
                         <span class="ml-3">{{ $colaborador->personanombre }}</span>
+                        @if($colaborador->unidadnombre)
+                            <small class="font-italic text-primary ml-1">({{ $colaborador->unidadnombre }})</small>
+                        @endif
                    </p>
 
                 @endforeach
@@ -150,7 +153,7 @@
                 ['Consejo', 'Administrador'],
                 ['Administrador', 'Contador'],
                 ['Administrador', 'Empleados'],
-                ['Administrador', 'Contratistas'],
+                ['Administrador', 'Contratistas']
             ],
             levels: [{
                 level: 0,

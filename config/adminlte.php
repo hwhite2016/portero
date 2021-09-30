@@ -295,7 +295,7 @@ return [
         [
             'text' => 'Correspondencia',
             'route'  => 'admin.seguimiento.index',
-            'icon' => 'fas fa-inbox',
+            'icon' => 'fas fa-shipping-fast',
             'can'  => 'admin.seguimiento.index',
         ],
         // [

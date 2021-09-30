@@ -20,10 +20,13 @@ class OrganoController extends Controller
 
         $colaboradores = Empleado::join('cargos','cargos.id','=','empleados.cargo_id')
              ->join('personas','personas.id','=','empleados.personaid')
-             ->select('empleados.id', 'personanombre', 'cargonombre', 'cargonivel','empleadoestado')
+             ->leftJoin('residentes','residentes.personaid','=','empleados.personaid')
+             ->leftJoin('unidads','unidads.id','=','residentes.unidadid')
+             ->select('empleados.id', 'personanombre', 'unidadnombre', 'cargonombre', 'cargonivel','empleadoestado')
              ->whereIn('empleados.conjuntoid', session('dependencias'))
              ->orderBy('cargos.id', 'ASC')
              ->get();
+
         return view('admin.organo.index', compact('conjunto','colaboradores'));
     }
 

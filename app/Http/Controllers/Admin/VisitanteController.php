@@ -230,6 +230,7 @@ class VisitanteController extends Controller
             ->select(
             DB::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
             ->whereIn('conjuntoid', session('dependencias'))
+            ->where('unidads.id', $visitante->unidadid)
             ->orderBy('unidad','ASC')
             ->pluck('unidad', 'unidads.id');
 

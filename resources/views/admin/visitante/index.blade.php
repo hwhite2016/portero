@@ -51,7 +51,11 @@
                         <td> {{ $visitante->conjuntonombre }} </td>
                         <td> {{ $visitante->parqueadero}} {{$visitante->parqueadero?' / ':''}} {{$visitante->visitanteplaca}} </td>
                         <td> {{ $visitante->documento }} </td>
-                        <td> {{ $visitante->personanombre }} ({{ $visitante->visitantenumero }}) </td>
+                        <td> {{ $visitante->personanombre }}
+                            @if($visitante->visitantenumero > 1)
+                            [ <b>{{ $visitante->visitantenumero }}</b> <i class="fas fa-user-friends text-secondary"></i> ]
+                            @endif
+                        </td>
                         <td> {{ $visitante->personacelular }} </td>
                         <td>
                             @if(date('Y-m-d H:i:s', time()) < $visitante->visitanteingreso)

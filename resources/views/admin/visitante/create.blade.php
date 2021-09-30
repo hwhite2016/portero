@@ -25,7 +25,7 @@
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', 'Copropiedad') }}
-                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control']) !!}
+                    {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%']) !!}
                     @error('conjuntoid')
                         <small class="text-danger">
                             {{$message}}
@@ -67,7 +67,7 @@
             </div>
             @endcan
 
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Documento ID -->
                     {{ Form::label('personadocumento', '* Documento ID') }}
                     <div class="input-group">
@@ -120,14 +120,15 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Acompañantes -->
-                    {!! Form::label('visitantenumero', 'Nro. de personas que ingresan') !!}
-                    {!! Form::number('visitantenumero', 1, ['class' => 'form-control','data-placeholder'=>'Nro. de personas que ingresan']) !!}
+                    {!! Form::label('visitantenumero', 'Nro. de acompañantes que ingresan') !!}
+                    {!! Form::number('visitantenumero', 1, ['class' => 'form-control','data-placeholder'=>'Nro. de acompañantes que ingresan']) !!}
                 </div>
             </div>
 
-            <div class="col-8">
+            @can('admin.visitantes.edit')
+            <div class="col-5">
                 <div class="form-group"> <!-- Parqueadero -->
                     {{ Form::label('parqueaderoid', 'Asignar parqueadero') }}
                     {!! Form::select('parqueaderoid', $parqueaderos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un parqueadero disponible']) !!}
@@ -149,6 +150,7 @@
                     @enderror
                 </div>
             </div>
+            @endcan
 
             <div class="col-12">
                 <div class="form-group"> <!-- Observacion -->
@@ -193,10 +195,21 @@
 
       $(":input").inputmask();
 
+    //   $('#ingreso').datetimepicker({
+    //     icons: {time: "fa fa-clock"},
+    //     format: 'YYYY-MM-DD H:mm:ss'
+    //   });
+
       $('#ingreso').datetimepicker({
-        icons: {time: "fa fa-clock"},
-        format: 'YYYY-MM-DD H:mm:ss'
-      });
+            icons: {time: "fa fa-clock"},
+            format: 'YYYY-MM-DD H:mm:ss',
+            //minDate: moment().subtract(1, 'days'),
+            minDate: moment().add(30, 'm'),
+            disabledDates: [
+                moment().subtract(1, 'days')
+            ],
+            maxDate: moment().add(15, 'days')
+      })
 
       $('#personadocumento').focus();
 

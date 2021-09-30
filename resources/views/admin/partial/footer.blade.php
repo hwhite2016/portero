@@ -19,7 +19,7 @@ All rights reserved.
 </a>
 @endcan
 
-@can('admin.entregas.seguimiento')
+@can('admin.seguimiento.index')
 <a href="{{route('admin.seguimiento.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Correspondencia">
     <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-shipping-fast"></i>
@@ -30,12 +30,6 @@ All rights reserved.
 <a href="{{route('admin.pqrs.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Pqr">
     <span style="font-size: 1.5em; color: #7F8C8D;">
         <i class="fas fa-envelope"></i>
-    </span>
-</a>
-
-<a href="{{route('admin.organos.index')}}" class="btn btn-default  float-right mr-2" data-toggle="tooltip" title="Organigrama">
-    <span style="font-size: 1.5em; color: #7F8C8D;">
-        <i class="fas fa-sitemap"></i>
     </span>
 </a>
 
