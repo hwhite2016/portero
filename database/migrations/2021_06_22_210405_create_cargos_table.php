@@ -18,7 +18,6 @@ class CreateCargosTable extends Migration
             $table->string('cargonombre', 50);
             $table->tinyInteger('cargonivel');
             $table->tinyInteger('cargorole')->nullable();
-            $table->boolean('cargopqr')->default(0);
             $table->timestamps();
         });
     }

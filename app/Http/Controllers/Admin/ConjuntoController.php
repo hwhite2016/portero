@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Conjunto;
 use App\Models\Barrio;
+use App\Models\Organo;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -40,16 +41,18 @@ class ConjuntoController extends Controller
                 //session(['dependencias'=>$dep]);
             }
 
+            $organos = Organo::whereOrganoestado(1)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre', 'ASC')->get();
+
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocorreoconsejo, conjuntocorreocomite, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->whereIn('conjuntos.id', session('dependencias'))
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo','conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
-             return view('admin.conjunto.index')->with('conjuntos', $conjuntos);
+             return view('admin.conjunto.index', compact('conjuntos','organos'));
 
     }
 
@@ -81,26 +84,28 @@ class ConjuntoController extends Controller
                 //session(['dependencias'=>$dep]);
             }
 
+            $organos = Organo::whereOrganoestado(1)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre', 'ASC')->get();
+
             $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocorreoconsejo, conjuntocorreocomite, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->where('conjuntos.barrioid', '=', $id)
             ->whereIn('conjuntos.id', session('dependencias'))
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo','conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
-        return view('admin.conjunto.index')->with('conjuntos', $conjuntos);
+        return view('admin.conjunto.index', compact('conjuntos','organos'));
     }
 
     public function edit(Conjunto $conjunto)
     {
         $this->authorize('administrador', $conjunto);
 
-        //$conjunto = Conjunto::find($id);
+        $organos = Organo::whereIn('conjuntoid', session('dependencias'))->get();
         $barrios = Barrio::all()->pluck('barrionombre', 'id');
-        return view('admin.conjunto.edit')->with('conjunto',$conjunto)->with('barrios',$barrios);
+        return view('admin.conjunto.edit', compact('conjunto','barrios','organos'));
     }
 
    public function update(Request $request, Conjunto $conjunto)
@@ -110,8 +115,6 @@ class ConjuntoController extends Controller
         //$conjunto = Conjunto::find($id);
         $request->validate([
             'conjuntonit'=>'required',
-            'conjuntocorreo'=>'required|email',
-            'conjuntocelular'=>'required|min:10'
          ]);
 
         if ($request->hasfile('conjuntologo')){
@@ -132,9 +135,6 @@ class ConjuntoController extends Controller
         }
 
         $conjunto->conjuntonit = $request->get('conjuntonit');
-        $conjunto->conjuntocorreo = $request->get('conjuntocorreo');
-        $conjunto->conjuntocorreoconsejo = $request->get('conjuntocorreoconsejo');
-        $conjunto->conjuntocorreocomite = $request->get('conjuntocorreocomite');
         $conjunto->conjuntocelular = $request->get('conjuntocelular');
         $conjunto->conjuntotelefono = $request->get('conjuntotelefono');
 

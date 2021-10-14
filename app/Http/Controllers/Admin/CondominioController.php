@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Conjunto;
 use App\Models\Barrio;
 use App\Http\Requests\ValidarFormularioRequest;
+use App\Models\Organo;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
@@ -28,8 +29,8 @@ class CondominioController extends Controller
         $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
              ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
              ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-             ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocelular, conjuntotelefono, conjuntoestado'))
-             ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+             ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocelular, conjuntotelefono, conjuntoestado'))
+             ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
              ->orderBy('bloque_count', 'DESC')
              ->get();
              return view('admin.condominio.index')->with('conjuntos', $conjuntos);
@@ -64,17 +65,16 @@ class CondominioController extends Controller
             'conjuntonit' => $request->get('conjuntonit'),
             'conjuntonombre' => $request->get('conjuntonombre'),
             'conjuntodireccion' => $request->get('conjuntodireccion'),
-            'conjuntocorreo' => $request->get('conjuntocorreo'),
-            'conjuntocorreoconsejo' => $request->get('conjuntocorreoconsejo'),
-            'conjuntocorreocomite' => $request->get('conjuntocorreocomite'),
             'conjuntocelular' => $request->get('conjuntocelular'),
             'conjuntotelefono' => $request->get('conjuntotelefono'),
             'conjuntoestado' => $request->get('conjuntoestado'),
             'conjuntologo' => $filename
         ]);
 
-        //$dep = $conjuntos->id;
-        //$request->session()->push('dependencias', $dep);
+        Organo::create(['conjuntoid' => $conjuntos->id,'organonombre' => 'Revisoria Fiscal']);
+        Organo::create(['conjuntoid' => $conjuntos->id,'organonombre' => 'Consejo de Administración','organopqr' => 1]);
+        Organo::create(['conjuntoid' => $conjuntos->id,'organonombre' => 'Comite de Convivencia','organopqr' => 1]);
+        Organo::create(['conjuntoid' => $conjuntos->id,'organonombre' => 'Administración', 'organonivel' => 2,'organopqr' => 1]);
 
         return redirect()->route('admin.condominios.show', $conjuntos->barrioid)->with('info','El conjunto fue agregado de forma exitosa');
     }
@@ -85,9 +85,9 @@ class CondominioController extends Controller
         $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->where('conjuntos.barrioid', '=', $id)
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
@@ -126,9 +126,6 @@ class CondominioController extends Controller
          $conjunto->conjuntonit = $request->get('conjuntonit');
          $conjunto->conjuntonombre = $request->get('conjuntonombre');
          $conjunto->conjuntodireccion = $request->get('conjuntodireccion');
-         $conjunto->conjuntocorreo = $request->get('conjuntocorreo');
-         $conjunto->conjuntocorreoconsejo = $request->get('conjuntocorreoconsejo');
-         $conjunto->conjuntocorreocomite = $request->get('conjuntocorreocomite');
          $conjunto->conjuntocelular = $request->get('conjuntocelular');
          $conjunto->conjuntotelefono = $request->get('conjuntotelefono');
          $conjunto->conjuntoestado = $request->get('conjuntoestado');

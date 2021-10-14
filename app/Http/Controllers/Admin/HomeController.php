@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Conjunto;
+use App\Models\Organo;
 
 class HomeController extends Controller
 {
@@ -33,15 +34,17 @@ class HomeController extends Controller
         //         session(['dependencias'=>$dep]);
         //     }
 
-            $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
+        $organos = Organo::whereOrganoestado(1)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre', 'ASC')->get();
+
+        $conjuntos = Conjunto::leftjoin("bloques","bloques.conjuntoid", "=", "conjuntos.id")
             ->join("barrios","barrios.id", "=", "conjuntos.barrioid")
             ->join("ciudads","ciudads.id", "=", "barrios.ciudadid")
-            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocorreo, conjuntocorreoconsejo, conjuntocorreocomite, conjuntocelular, conjuntotelefono, conjuntoestado'))
+            ->select(conjunto::raw('count(bloques.id) as bloque_count, conjuntos.id, conjuntos.barrioid, ciudadnombre, barrionombre, conjuntonombre, conjuntologo, conjuntodireccion, conjuntocelular, conjuntotelefono, conjuntoestado'))
             ->whereIn('conjuntos.id', session('dependencias'))
-            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion','conjuntocorreo','conjuntocorreoconsejo', 'conjuntocorreocomite', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
+            ->groupBy('conjuntos.id', 'conjuntos.barrioid', 'ciudadnombre', 'barrios.barrionombre', 'conjuntonombre', 'conjuntologo', 'conjuntodireccion', 'conjuntocelular', 'conjuntotelefono', 'conjuntoestado')
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
-             return view('admin.conjunto.index')->with('conjuntos', $conjuntos);
+             return view('admin.conjunto.index', compact('conjuntos','organos'));
     }
 }

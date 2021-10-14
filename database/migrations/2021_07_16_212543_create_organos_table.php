@@ -15,9 +15,15 @@ class CreateOrganosTable extends Migration
     {
         Schema::create('organos', function (Blueprint $table) {
             $table->id();
-            $table->string('organonombre', 60);
-            $table->string('organonombrecorto', 30)->nullable();
-            $table->tinyInteger('organonivel')->default(2);
+            $table->unsignedBigInteger('conjuntoid');
+            $table->foreign('conjuntoid')->references('id')->on('conjuntos')->onDelete('cascade');
+            $table->string('organonombre', 100);
+            $table->string('organocorreo', 80)->nullable();
+            $table->string('organocelular', 30)->nullable();
+            $table->string('organotelefono', 30)->nullable();
+            $table->tinyInteger('organonivel')->default(1)->nullable();
+            $table->boolean('organopqr')->default(0);
+            $table->boolean('organoestado')->default(1);
             $table->timestamps();
         });
     }

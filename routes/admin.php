@@ -87,7 +87,8 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/motivo', [PqrController::class, 'getMotivo'])->name('admin.pqrs.motivo');
     Route::post('/estado/{id?}', [PqrController::class, 'changeEstado'])->name('admin.pqrs.estado');
 
-    Route::resource('/organigrama', OrganoController::class)->names('admin.organos');
+    Route::resource('/organos', OrganoController::class)->names('admin.organos');
+    Route::get('/estructura', [OrganoController::class, 'estructura'])->name('admin.organos.estructura');
     Route::resource('/documentos', NormaController::class)->names('admin.normas');
 
     Route::get('/markAsRead', function(){

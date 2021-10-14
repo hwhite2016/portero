@@ -10,18 +10,18 @@
 @stop
 
 @section('content')
-
-<div class="card card-primary">
-    {!! Form::open(['route'=>'admin.pqrs.store', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
+<br>
+<div class="card">
+    {!! Form::open(['route'=>'admin.pqrs.store', 'method'=>'post', 'id'=>'pqr', 'enctype'=>'multipart/form-data']) !!}
     @csrf
     {{-- @method('POST') --}}
-    <div class="card-header bg-primary">
-        <h1 class="card-title">CREAR NUEVO TICKET</h1>
+    <div class="card-header bg-light">
+        <h1 class="card-title text-primary"><label>Crear Nuevo Ticket</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%']) !!}
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::label('tipopqrid', '* Tipo de Ticket') }}&nbsp;
                     <a href="#" data-placement="bottom"  tabindex="0" data-toggle="popover" data-trigger="focus" data-popover-content="#a2">
@@ -71,11 +71,11 @@
 
             </div>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ Form::label('empleadoid', '* Dirigido a') }}
-                    {!! Form::select('empleadoid', $colaboradores, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
-                    @error('empleadoid')
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Asunto -->
+                    {{ Form::label('asuntoid', '* Asunto') }}
+                    {!! Form::select('asuntoid', $asuntos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el asunto']) !!}
+                    @error('asuntoid')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -84,11 +84,26 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    {{ Form::label('asuntoid', '* Asunto') }}
-                    {!! Form::select('asuntoid', $asuntos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el asunto']) !!}
-                    @error('asuntoid')
+            <div class="col-md-4">
+                <div class="form-group"> <!-- Asignado a -->
+                    {{ Form::label('organo_id', '* Asignado a') }}
+                    {!! Form::select('organo_id', $organos, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('organo_id')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="form-group"> <!-- Destinatarios -->
+                    {{ Form::label('organos', 'Copiar a') }}
+                    {{-- {!! Form::select('organo_id', $colaboradores, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!} --}}
+                    {!! Form::select('organos[]', $organos, old('organos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los destinatarios', 'data-width'=>'100%']) !!}
+                    {{-- <br>{!! Form::checkbox('consejo', 1, true, ['class'=>'mr-1 consejo']) !!}<small class="font-italic">Copiar al Consejo de Administración</small> --}}
+                    @error('organos')
                         <small class="text-danger">
                             {{$message}}
                         </small>
@@ -112,7 +127,7 @@
 
 
             <div class="col-12">
-                <div class="form-group"> <!-- Logo del conjunto -->
+                <div class="form-group"> <!-- Evidencia -->
                     {{ Form::label('adjunto', 'Adjuntar Evidencia') }} <small class="font-italic"> (Opcional)</small><br>
                     {{ Form::file('adjunto', array('accept' => 'application/pdf,image/jpg,image/jpeg,image/png,image/svg')) }}
                     <br>
@@ -135,7 +150,7 @@
     <div class="card-footer">
         <a class="btn btn-warning" href="{{route('admin.pqrs.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
         {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
-        {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarUnidad']) !!}
+        {!! Form::submit('Enviar', ['class'=>'btn btn-primary', 'id'=>'guardarPqr']) !!}
     </div>
     <!-- /.card-footer -->
     {!! Form::close() !!}
@@ -176,7 +191,13 @@
 <script>
     $(function () {
       //Initialize Select2 Elements
-      $('.select2').select2();
+        $('.select2').select2();
+
+        $('#guardarPqr').on('click', function() {
+            $(this).prop('disabled',true);
+            $(this).val('Enviando..');
+            $('#pqr').submit();
+        });
 
         $("[data-toggle=popover]").popover({
             html : true,
@@ -190,7 +211,7 @@
                 return $(title).children(".popover-heading").html();
             }
         });
-     })
+    })
 
 </script>
 @stop

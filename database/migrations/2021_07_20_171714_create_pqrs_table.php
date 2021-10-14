@@ -21,10 +21,10 @@ class CreatePqrsTable extends Migration
             $table->foreign('tipopqrid')->references('id')->on('tipo_pqrs')->onDelete('cascade');
             $table->unsignedBigInteger('userid');
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('agenteid');
-            $table->foreign('agenteid')->references('id')->on('empleados')->onDelete('cascade');
             $table->unsignedBigInteger('asuntoid');
             $table->foreign('asuntoid')->references('id')->on('asuntos')->onDelete('cascade');
+            $table->unsignedBigInteger('organo_id');
+            $table->foreign('organo_id')->references('id')->on('organos')->onDelete('cascade');
             $table->string('mensaje', 3000);
             $table->string('radicado', 20);
             $table->unsignedBigInteger('estadoid');

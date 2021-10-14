@@ -35,9 +35,9 @@
             </div>
 
             <div class="col-md-4">
-                <div class="form-group"> <!-- Estructura -->
-                    {{ Form::label('organo_id', 'Estructura') }}
-                    {!! Form::select('organo_id', $organos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione la estructura']) !!}
+                <div class="form-group"> <!-- Organo -->
+                    {{ Form::label('organo_id', 'Organo al que pertenece') }}
+                    {!! Form::select('organo_id', $organos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el organo']) !!}
                     @error('organo_id')
                         <small class="text-danger">
                             {{$message}}
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Cargo -->
                     {{ Form::label('cargo_id', 'Cargo') }}
                     {!! Form::select('cargo_id', $cargos, null, ['class' => 'form-control  select2', 'style'=>'width: 100%','data-placeholder'=>'Seleccione el cargo']) !!}
@@ -58,25 +58,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Correo -->
-                    {{ Form::label('empleadocorreo', 'Correo Laboral') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                        </div>
-                        {{ Form::email('empleadocorreo', null, array('placeholder' => 'Ej: comite_convivencia@gmail.com', 'class' => 'form-control')) }}
-
-                    </div>
-                    @error('empleadocorreo')
-                    <small class="text-danger">
-                        {{$message}}
-                    </small>
-                @enderror
-                </div>
-            </div>
-
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="form-group"> <!-- Estado -->
                     {{ Form::label('empleadoestado', 'Estado') }}
                     {!! Form::select('empleadoestado', ['0'=>'Inactivo','1'=>'Activo'], null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}

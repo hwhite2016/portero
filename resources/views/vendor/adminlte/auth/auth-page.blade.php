@@ -54,7 +54,7 @@
             @hasSection('auth_header')
                 <div class="card-header {{ config('adminlte.classes_auth_header', '') }}">
                     <div class="{{ $auth_type ?? 'login' }}-logo">
-                        <a href="{{ $dashboard_url }}" class="h1">
+                        <a href="{{ $dashboard_url }}" class="h2">
                             <img class="mb-2" src="{{ asset(config('adminlte.logo_img')) }}" height="40">
                             {!! config('adminlte.logo', '<b>Admin</b>LTE') !!}
                         </a>

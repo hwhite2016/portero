@@ -7,14 +7,14 @@
 @section('plugins.Toastr', 'true')
 
 @section('content_header')
-    <h1 class="ml-3">Ticket # {{ str_pad($pqr->radicado,5,"0", STR_PAD_LEFT) }}</h1>
+    <h1 class="ml-3">Ticket # {{ str_pad($pqr->radicado,6,"0", STR_PAD_LEFT) }}</h1>
 @stop
 
 @section('content')
 
 <div class="container-fluid">
     <div class="card card-outline card-primary">
-        {!! Form::model($pqr, ['route'=>['admin.pqrs.update', $pqr], 'method'=>'put', 'enctype'=>'multipart/form-data']) !!}
+        {!! Form::model($pqr, ['route'=>['admin.pqrs.update', $pqr], 'method'=>'put', 'id'=>'pqr', 'enctype'=>'multipart/form-data']) !!}
         {!! Form::hidden('conjuntoid', $pqr->conjuntoid) !!}
         <div class="card-header">
 
@@ -63,17 +63,29 @@
                                                     <span class="font-weight-bold">Asignado a:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
-                                                    {{$pqr->cargonombre}}<br>
-                                                    <span class="text-primary font-italic">{{$pqr->empleadocorreo}} </span>
+                                                    {{ $pqr->organonombre }}
                                                 </div>
                                             </div>
+                                            @if(count($organos))
+                                                <div class="row">
+                                                    <div class="col-3 p-2 border">
+                                                        <span class="font-weight-bold">Seguidores:</span>
+                                                    </div>
+                                                    <div class="col-9 p-2 border">
+                                                        @foreach($organos as $organo)
+                                                            <div class="badge badge-secondary">{{ $organo->organonombre }}</div>
+                                                        @endforeach
+                                                        {{-- <span class="text-primary font-italic">{{$pqr->empleadocorreo}} </span> --}}
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="row">
                                                 <div class="col-3 p-2 border">
                                                     <span class="font-weight-bold">Tipo:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
                                                     {{$pqr->tipopqrnombre}}
-                                                    <br><small>Tiempo de respuesta: {{$pqr->tipopqrtiempo}} dia(s)</small>
+                                                    <br><small>Tiempo de respuesta: {{$pqr->tipopqrtiempo}} día(s) hábil(es)</small>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -89,7 +101,7 @@
                                                     <span class="font-weight-bold">Fecha creación:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
-                                                    {{$pqr->created_at}}
+                                                    {{strftime("%d de %B  %Y a la(s) %H:%M ", strtotime($pqr->created_at))}}
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -97,7 +109,7 @@
                                                     <span class="font-weight-bold">Fecha Max. respuesta:</span>
                                                 </div>
                                                 <div class="col-9 p-2 border">
-                                                    {{ date("Y-m-d",strtotime($pqr->created_at."+ 15 days")) }}
+                                                    {{$fecha_plazo}}
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -117,14 +129,14 @@
                                                         }
                                                     @endphp
                                                     <span class="text-{{$color}}"><i class="fas fa-square"></i></span>&nbsp;
-                                                    @if (Auth::check() && Auth::user()->hasRole('_administrador'))
+                                                    @if (Auth::check() && Auth::user()->hasRole('Residente'))
+                                                        {{$pqr->estadonombre}}
+                                                    @else
                                                         @if($pqr->estadoid != 4)
                                                             {!! Form::select('estadoid', $estados, null, ['class' => 'form-control select2', 'style'=>'width: 90%', 'data-placeholder'=>'Seleccione el estado']) !!}
                                                         @else
                                                             {{$pqr->estadonombre}}
                                                         @endif
-                                                    @else
-                                                        {{$pqr->estadonombre}}
                                                     @endif
                                                 </div>
                                             </div>
@@ -144,7 +156,7 @@
 
                                                 <p><i class="fas fa-caret-right"></i> <b>{{$flujo->name}}</b> colocó el ticket en estado <span class="badge badge-{{in_array($flujo->estadoid, [1,2,3])?'secondary':'success'}}">{{$flujo->estadonombre}}</span> el {{$flujo->created_at}}
                                                     @if($flujo->motivoid)
-                                                        <span class="text-danger font-italic"> --> ({{$flujo->motivo}})</span>
+                                                        <span class="text-danger font-italic ml-2"> [{{$flujo->motivo}}]</span>
                                                     @endif
                                                 </p>
                                             @endforeach
@@ -243,7 +255,7 @@
             <a class="btn btn-warning" href="{{route('admin.pqrs.index')}}"><i class="fas fa-arrow-left"></i> Volver</a>
             @if($pqr->estadoid != 4)
                 {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
-                {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarUnidad']) !!}
+                {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarPqr']) !!}
             @endif
         </div>
         <!-- /.card-footer -->
@@ -299,6 +311,12 @@
       $('.select2').select2();
 
       $(":input").inputmask();
+
+      $('#guardarPqr').on('click', function() {
+            $(this).prop('disabled',true);
+            $(this).val('Enviando..');
+            $('#pqr').submit();
+      });
 
     })
  </script>

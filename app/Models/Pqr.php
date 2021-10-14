@@ -14,5 +14,10 @@ class Pqr extends Model
         return $this->belongsTo(TipoPqr::class, 'tipopqrid');
     }
 
+    //Relacion muchos a muchos
+    public function organos(){
+    	return $this->belongsToMany(Organo::class, 'pqr_organos');
+    }
+
     protected $guarded = [];
 }

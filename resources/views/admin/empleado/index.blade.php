@@ -29,7 +29,7 @@
                   <thead class="bg-light">
                     <tr>
                       <th># Documento</th>
-                      <th>Conjunto</th>
+                      <th>Organo</th>
                       <th>Nombre</th>
                       <th>Cargo</th>
                       <th>Celular</th>
@@ -44,7 +44,7 @@
                       <tr>
                         <td> {{ $empleado->personadocumento }} </td>
                         <td>
-                          <label class="text-uppercase fw-bold"> {{ $empleado->conjuntonombre }} </label>
+                          <label class="text-uppercase fw-bold"> {{ $empleado->organonombre }} </label>
                         </td>
                         <td> {{ $empleado->personanombre }} </td>
                         <td> {{ $empleado->cargonombre }}

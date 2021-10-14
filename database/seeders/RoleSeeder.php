@@ -28,12 +28,12 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'admin.index', 'description' => 'Ver el dashboard'])->syncRoles([$role1, $role2, $role3, $role4, $role5, $role6, $role7, $role8]);
 
-        Permission::create(['name' => 'admin.organos.index', 'description' => 'Ver el Organigrama'])->syncRoles([$role1, $role2, $role3, $role4, $role5, $role6, $role7, $role8]);
+        Permission::create(['name' => 'admin.organos.estructura', 'description' => 'Ver el organigrama'])->syncRoles([$role1, $role2, $role3, $role4, $role5, $role6, $role7, $role8]);
 
         Permission::create(['name' => 'admin.normas.index', 'description' => 'Ver los documentos'])->syncRoles([$role1, $role2, $role3, $role4, $role5, $role6, $role7, $role8]);
-        Permission::create(['name' => 'admin.normas.create', 'description' => 'Ver los documentos'])->syncRoles([$role1, $role2, $role6]);
-        Permission::create(['name' => 'admin.normas.edit', 'description' => 'Ver los documentos'])->syncRoles([$role1, $role2, $role6]);
-        Permission::create(['name' => 'admin.normas.destroy', 'description' => 'Ver los documentos'])->syncRoles([$role1, $role2, $role6]);
+        Permission::create(['name' => 'admin.normas.create', 'description' => 'Crear un documento'])->syncRoles([$role1, $role2, $role6]);
+        Permission::create(['name' => 'admin.normas.edit', 'description' => 'Editar un documento'])->syncRoles([$role1, $role2, $role6]);
+        Permission::create(['name' => 'admin.normas.destroy', 'description' => 'Eliminar un documento'])->syncRoles([$role1, $role2, $role6]);
 
         Permission::create(['name' => 'admin.personas.index', 'description' => 'Ver lista de personas'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.personas.create', 'description' => 'Crear personas'])->syncRoles([$role1]);
@@ -75,7 +75,12 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.condominios.edit', 'description' => 'Editar un condominio'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.condominios.destroy', 'description' => 'Eliminar un condominio'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'admin.conjuntos.index', 'description' => 'Ver lista de conjuntos'])->syncRoles([$role1,$role2,$role3,$role4,$role5]);
+        Permission::create(['name' => 'admin.organos.index', 'description' => 'Ver lista de organos'])->syncRoles([$role1, $role6]);
+        Permission::create(['name' => 'admin.organos.create', 'description' => 'Crear un organo'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.organos.edit', 'description' => 'Editar un organo'])->syncRoles([$role1, $role6]);
+        Permission::create(['name' => 'admin.organos.destroy', 'description' => 'Eliminar un organo'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'admin.conjuntos.index', 'description' => 'Ver lista de conjuntos'])->syncRoles([$role1,$role2,$role3,$role4,$role5,$role6,$role8]);
         //Permission::create(['name' => 'admin.conjuntos.create', 'description' => 'Crear un conjunto'])->syncRoles([$role2]);
         Permission::create(['name' => 'admin.conjuntos.edit', 'description' => 'Editar un conjunto'])->syncRoles([$role1, $role2]);
         //Permission::create(['name' => 'admin.conjuntos.destroy', 'description' => 'Eliminar un conjunto'])->syncRoles([$role2]);

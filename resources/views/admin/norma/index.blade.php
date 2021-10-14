@@ -37,7 +37,7 @@
                 <div class="card card-light">
                     <div class="card-header">
                         <h1 class="card-title">
-                            <label>{{ $norma->tiponormanombre }}</label> ( <small class="font-italic">{{ strftime("%d de %B de %Y") }}</small> )
+                            <label>{{ $norma->tiponormanombre }}</label> ( <small class="font-italic">{{ strftime("%d de %B de %Y", strtotime($norma->created_at)) }}</small> )
                         </h1>
                     </div>
                     <!-- /.card-header -->

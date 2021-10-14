@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'Portero',
-    'title_prefix' => 'Portero',
+    'title' => 'Portero en linea',
+    'title_prefix' => 'Portero en linea | ',
     'title_postfix' => '',
     'enviar_credenciales' => 'Enviar al correo las credenciales de acceso.',
 
@@ -46,7 +46,7 @@ return [
     |
     */
 
-    'logo' => '<b>Portero</b>',
+    'logo' => '<label>Portero en linea</label>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img2' => 'vendor/adminlte/dist/img/AdminLTELogo2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
@@ -253,8 +253,8 @@ return [
                     'can'  => 'admin.conjuntos.index',
                 ],
                 [
-                    'text' => 'Organigrama',
-                    'route'  => 'admin.organos.index',
+                    'text' => 'Estructura',
+                    'route'  => 'admin.organos.estructura',
                     'can'  => 'admin.conjuntos.index',
                 ],
                 [
@@ -397,6 +397,12 @@ return [
             'route'  => 'admin.barrios.index',
             'icon' => 'fas fa-image',
             'can'  => 'admin.barrios.index',
+        ],
+        [
+            'text'   => 'Organos',
+            'route'  => 'admin.organos.index',
+            'icon'   => 'fas fa-sitemap fa-fw',
+            'can'    => 'admin.organos.index',
         ],
         [
             'text'   => 'Colaboradores',

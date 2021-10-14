@@ -102,7 +102,7 @@
                   <tbody>
                     @foreach ($pqrs as $pqr)
                       <tr>
-                        <td> <a class="fw-bold" href="{{route('admin.pqrs.edit', $pqr->id)}}">TK-{{ str_pad($pqr->radicado,5,"0", STR_PAD_LEFT) }}</a>
+                        <td> <a class="fw-bold" href="{{route('admin.pqrs.edit', $pqr->id)}}">TK-{{ str_pad($pqr->radicado,6,"0", STR_PAD_LEFT) }}</a>
                             <br><small class="font-italic">{{ $pqr->tipopqrnombre }}</small>
                         </td>
                         <td>
@@ -112,9 +112,7 @@
 
                         <td class="text-center">
                             @can('admin.pqrs.edit')
-                                @if (Auth::check() && Auth::user()->hasRole('_administrador'))
-                                    <a class="btn btn-sm btn-info" href="{{route('admin.pqrs.edit', $pqr->id)}}">Ver Ticket </a>
-                                @else
+                                @if (Auth::check() && Auth::user()->hasRole('Residente')   )
                                     @if($pqr->estadoid != 4)
 
                                         {!! Form::model($pqr, ['route'=>['admin.pqrs.estado', $pqr], 'method'=>'post', 'class'=>'estado']) !!}
@@ -128,6 +126,9 @@
                                     @else
                                         <span class="text-success"><i class="fas fa-check-square"></i></span>
                                     @endif
+
+                                @else
+                                    <a class="btn btn-sm btn-info" href="{{route('admin.pqrs.edit', $pqr->id)}}">Ver Ticket </a>
                                 @endif
                             @endcan
                         </td>

@@ -40,8 +40,11 @@ class PqrSeeder extends Seeder
         Asunto::create(['asunto' => 'Vehiculos']);
         Asunto::create(['asunto' => 'Zonas Comunes']);
 
+        Motivo::create(['motivo' => 'Cierre automático / Ticket abandonado']);
         Motivo::create(['motivo' => 'Se creo el ticket por error']);
         Motivo::create(['motivo' => 'Solucionado']);
-        Motivo::create(['motivo' => 'Ticket no valido']);
+        Motivo::create(['motivo' => 'Respuesta NO satisfactoria']);
+        Motivo::create(['motivo' => 'No se obtuvo respuesta']);
+        Motivo::create(['motivo' => 'Ticket no válido']);
     }
 }

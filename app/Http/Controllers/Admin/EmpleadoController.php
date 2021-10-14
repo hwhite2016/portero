@@ -29,10 +29,11 @@ class EmpleadoController extends Controller
     public function index()
     {
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
+             ->join('organos','organos.id','empleados.organo_id')
              ->join('personas','personas.id','=','empleados.personaid')
              ->leftJoin('roles','roles.id','=','empleados.role_id')
              ->join('cargos','cargos.id','=','empleados.cargo_id')
-             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel','empleadoestado')
+             ->select('empleados.id', 'conjuntonombre', 'organonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel','empleadoestado')
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
              ->get();
@@ -49,14 +50,13 @@ class EmpleadoController extends Controller
         if ($user->hasRole('_consejero')) $cargos = Cargo::where('cargonivel',1)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
         if ($user->hasRole('_administrador')) $cargos = Cargo::where('cargonivel',2)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
 
-        if ($user->hasRole('_superadministrador')) $organos = Organo::orderBy('organonombre','ASC')->pluck('organonombre', 'id');
-        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>=',1)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
-        if ($user->hasRole('_administrador')) $organos = Organo::where('organonivel','>=',2)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
-
+        if ($user->hasRole('_superadministrador')) $organos = Organo::whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>',0)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_administrador')) $organos = Organo::whereOrganonivel(2)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
 
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
-        return view('admin.empleado.create', compact('tipo_documentos', 'cargos', 'organos', 'conjuntos'));
+        return view('admin.empleado.create', compact('tipo_documentos', 'cargos', 'conjuntos', 'organos'));
     }
 
     public function store(Request $request)
@@ -65,11 +65,11 @@ class EmpleadoController extends Controller
         $request->validate([
             'conjuntoid'=>'required',
             'cargo_id'=>'required',
+            'organo_id'=>'required',
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
             'personacorreo'=>'required|email',
-            'empleadocorreo'=>'email',
         ]);
 
         $role_id = Cargo::where('id', $request->get('cargo_id'))
@@ -122,7 +122,6 @@ class EmpleadoController extends Controller
                 'role_id'=>$role_id->cargorole,
                 'cargo_id'=>$request->get('cargo_id'),
                 'organo_id'=>$request->get('organo_id'),
-                'empleadocorreo'=>$request->get('empleadocorreo'),
                 'empleadoestado'=>$request->get('empleadoestado'),
             ]);
 
@@ -142,11 +141,12 @@ class EmpleadoController extends Controller
     public function show($id)
     {
         $empleados = Empleado::join('conjuntos','conjuntos.id','=','empleados.conjuntoid')
+             ->join('organos','organos.id','empleados.organo_id')
              ->join('personas','personas.id','=','empleados.personaid')
              ->join('roles','roles.id','=','empleados.role_id')
              ->join('cargos','cargos.id','=','empleados.cargo_id')
-             ->select('empleados.id', 'conjuntonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel', 'empleadoestado')
-             ->where('conjuntos.id', $id)
+             ->select('empleados.id', 'conjuntonombre', 'organonombre', 'personadocumento', 'personanombre', 'personacorreo', 'personacelular', 'roles.name', 'cargonombre', 'cargonivel', 'empleadoestado')
+             ->where('organo_id', $id)
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
              ->get();
@@ -163,16 +163,16 @@ class EmpleadoController extends Controller
         if ($user->hasRole('_consejero')) $cargos = Cargo::where('cargonivel','>',0)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
         if ($user->hasRole('_administrador')) $cargos = Cargo::where('cargonivel',2)->orderBy('cargonombre','ASC')->pluck('cargonombre', 'id');
 
-        if ($user->hasRole('_superadministrador')) $organos = Organo::orderBy('organonombre','ASC')->pluck('organonombre', 'id');
-        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>=',1)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
-        if ($user->hasRole('_administrador')) $organos = Organo::where('organonivel','>=',2)->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_superadministrador')) $organos = Organo::whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_consejero')) $organos = Organo::where('organonivel','>',0)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
+        if ($user->hasRole('_administrador')) $organos = Organo::whereOrganonivel(2)->whereIn('conjuntoid', session('dependencias'))->orderBy('organonombre','ASC')->pluck('organonombre', 'id');
 
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
         //$unidads->prepend('Seleccione la unidad', '');
         $persona = Persona::where('id', $empleado->personaid)->get();
 
-        return view('admin.empleado.edit', compact('empleado', 'persona', 'organos','cargos','conjuntos'));
+        return view('admin.empleado.edit', compact('empleado', 'persona','cargos','conjuntos', 'organos'));
 
     }
 
@@ -184,7 +184,8 @@ class EmpleadoController extends Controller
         $request->validate([
             'conjuntoid'=>'required',
             'empleadocorreo'=>'email',
-            'cargo_id'=>'required'
+            'cargo_id'=>'required',
+            'organo_id'=>'required'
         ]);
 
         $empleado->update([
@@ -192,22 +193,18 @@ class EmpleadoController extends Controller
             'role_id'=>$role_id->cargorole,
             'cargo_id'=>$request->get('cargo_id'),
             'organo_id'=>$request->get('organo_id'),
-            'empleadocorreo'=>$request->get('empleadocorreo'),
             'empleadoestado'=>$request->get('empleadoestado'),
         ]);
 
         $persona = Persona::whereId($empleado->personaid)->first();
         $user = User::wherePersonaid($empleado->personaid)->first();
 
-        //$user = User::wherePersonaid($residente->personaid)->first();
-        //$user->assignRole($request->rol);
-
         //$persona->conjuntos()->detach($request->conjuntoid);
         //$persona->conjuntos()->attach($request->conjuntoid);
         if($request->get('empleadoestado') == 1){
-            if(!$user->hasRole($role_id->cargorole))  $user->syncRoles($role_id->cargorole);
+            $user->assignRole($role_id->cargorole);
         }else{
-            $user->syncRoles($role_id->cargorole);
+            //$user->syncRoles($role_id->cargorole);
             $user->removeRole($role_id->cargorole);
         }
 
@@ -253,7 +250,8 @@ class EmpleadoController extends Controller
 
         //return $user;
 
-        return redirect()->route('admin.empleados.show', $empleado->conjuntoid)->with('info','El empleado fue eliminado exitosamente');
+        //return redirect()->route('admin.empleados.show', $empleado->conjuntoid)->with('info','El empleado fue eliminado exitosamente');
+        return redirect()->route('admin.empleados.index')->with('info','El empleado fue eliminado exitosamente');
 
     }
 }

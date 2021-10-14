@@ -16,7 +16,7 @@
     @csrf
     {{-- @method('PUT') --}}
     <div class="card-header bg-light">
-        <h1 class="card-title">EDITAR CONJUNTO</h1>
+        <h1 class="card-title text-primary"><label>Editar Conjunto</label></h1>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -41,7 +41,7 @@
 
             <div class="col-md-4">
                 <div class="form-group"> <!-- Numero celular -->
-                    {{ Form::label('conjuntocelular', '* Numero Celular') }}
+                    {{ Form::label('conjuntocelular', '* Numero Celular Porteria') }}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
@@ -57,7 +57,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group"> <!-- Telefono -->
-                    {{ Form::label('conjuntotelefono', 'Telefono') }}
+                    {{ Form::label('conjuntotelefono', 'Telefono Porteria') }}
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
@@ -72,56 +72,6 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Correo -->
-                    {{ Form::label('conjuntocorreo', '* Correo Administración') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                        </div>
-                        {{ Form::text('conjuntocorreo', $conjunto->conjuntocorreo, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
-                        @error('conjuntocorreo')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Correo -->
-                    {{ Form::label('conjuntocorreoconsejo', 'Correo Consejo de Administración') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                        </div>
-                        {{ Form::text('conjuntocorreoconsejo', $conjunto->conjuntocorreoconsejo, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
-                        @error('conjuntocorreoconsejo')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="form-group"> <!-- Correo -->
-                    {{ Form::label('conjuntocorreocomite', 'Correo Comite de Convivencia') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-at"></i></span>
-                        </div>
-                        {{ Form::text('conjuntocorreocomite', $conjunto->conjuntocorreocomite, array('placeholder' => 'Ej: email@dominio.com', 'class' => 'form-control')) }}
-                        @error('conjuntocorreocomite')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
 
             <div class="col-12">
                 <div class="form-group"> <!-- Logo del conjunto -->
@@ -170,6 +120,7 @@
       $( "#conjuntotelefono" ).focus(function() {
         if (!$("#conjuntotelefono").val()) $("#conjuntotelefono").val("+57 ");
       });
+
     })
 </script>
 @stop

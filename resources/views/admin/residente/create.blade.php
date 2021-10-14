@@ -239,7 +239,7 @@
                 dataType: "json",
                 url: url,
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
                     //var json = $.parseJSON(data);
                     // $('#personanombre').prop('disabled', true);
                     // $('#personacelular').prop('disabled', true);
@@ -252,7 +252,7 @@
 
                 },
                 error: function(error){
-                    console.log(error);
+                    //console.log(error);
                     $('#tipodocumentoid').val(1).change();
                     $('#personanombre').val('');
                     $('#personafechanacimiento').val('');
