@@ -129,6 +129,9 @@
       //$(":input").inputmask();
 
       $("#unidadid").on('change', function(e) {
+            $('#entregadestinatario option').each(function() {
+                $(this).remove();
+            });
             var id = $( "#unidadid" ).val();
             var url = "{{ route('admin.entregas.persona', ":id") }}";
             url = url.replace(':id', id);

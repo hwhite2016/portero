@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonaConjuntoSeeder::class);
     	$this->call(BloqueSeeder::class);
         $this->call(ParqueaderoSeeder::class);
+        $this->call(EstadoSeeder::class);
         $this->call(UnidadSeeder::class);
         $this->call(UnidadParqueaderoSeeder::class);
         $this->call(ResidenteSeeder::class);
@@ -36,6 +37,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PqrSeeder::class);
         $this->call(CargoSeeder::class);
         $this->call(NormaSeeder::class);
+
 
     }
 }

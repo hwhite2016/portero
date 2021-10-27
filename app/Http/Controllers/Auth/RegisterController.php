@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ValidaCorreo;
+use App\Models\Conjunto;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -27,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/registro/create';
 
     /**
      * Create a new controller instance.
@@ -62,10 +66,34 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        if (Conjunto::whereConjuntokey($data['conjuntokey'])->exists()){
+            $conjuntos = Conjunto::whereConjuntokey($data['conjuntokey'])->first();
+            $conjunto = $conjuntos->conjuntonombre;
+            $key = $data['conjuntokey'];
+        }else{
+            $conjunto = 'su conjunto residencial';
+            $key = null;
+        }
+        $seed = substr( md5(microtime()), 1, 32);
+
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        $correo = [
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'conjunto' => $conjunto,
+            'key' => $key,
+            'profile_photo_path' => $seed,
+        ];
+
+
+        Mail::to($data['email'])->send(new ValidaCorreo($correo));
+
+        return  $user;
     }
 }

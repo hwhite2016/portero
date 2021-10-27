@@ -7,15 +7,17 @@
 @section('plugins.Step', 'true')
 
 @section('content_header')
-    <h1>Registro</h1>
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp; Estimado residente, a continuación encontrara un formulario donde ingresara los datos de las personas que conviven en su casa o apartamento y asi actualizar el censo de la copropiedad.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')
-
 <div class="card card-default">
-    {!! Form::open(['route'=>'admin.entregas.store', 'method'=>'post']) !!}
-    <div class="card-header">
-      <h3 class="card-title">bs-stepper</h3>
+    {!! Form::open(['route'=>'admin.tresidentes.store', 'method'=>'post']) !!}
+    <div class="card-header bg-light">
+        <h1 class="card-title"><i class="far fa-file-alt"></i> <label>Formulario de registro</label></h1>
     </div>
     <div class="card-body p-0">
       <div class="bs-stepper">
@@ -24,14 +26,14 @@
           <div class="step" data-target="#logins-part">
             <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
               <span class="bs-stepper-circle">1</span>
-              <span class="bs-stepper-label">Copropiedad</span>
+              <span class="bs-stepper-label">Unidad Residencial</span>
             </button>
           </div>
           <div class="line"></div>
           <div class="step" data-target="#information-part">
             <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
               <span class="bs-stepper-circle">2</span>
-              <span class="bs-stepper-label">Datos del Propietario / Residente</span>
+              <span class="bs-stepper-label">Residentes</span>
             </button>
           </div>
         </div>
@@ -44,26 +46,48 @@
                         <div class="col-md-4">
                             <div class="form-group"> <!-- Pais -->
                                 {{ Form::label('paisid', 'Pais') }}
-                                {!! Form::select('paisid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un pais']) !!}
+                                {!! Form::select('paisid', $pais, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un pais']) !!}
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group"> <!-- Ciudad -->
                                 {{ Form::label('ciudadid', 'Ciudad') }}
-                                {!! Form::select('ciudadid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione una ciudad']) !!}
+                                {!! Form::select('ciudadid', $ciudads, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione una ciudad']) !!}
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group"> <!-- Barrio -->
                                 {{ Form::label('barrioid', 'Barrio') }}
-                                {!! Form::select('barrioid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un barrio']) !!}
+                                {!! Form::select('barrioid', $barrios, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un barrio']) !!}
                             </div>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-5">
                             <div class="form-group"> <!-- Conjunto -->
                                 {{ Form::label('conjuntoid', 'Copropiedad') }}
-                                {!! Form::select('conjuntoid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la copropiedad']) !!}
+                                {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la copropiedad']) !!}
                                 @error('conjuntoid')
+                                    <small class="text-danger">
+                                        {{$message}}
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group"> <!-- Bloque -->
+                                {{ Form::label('bloqueid', 'Bloque / Torre') }}
+                                {!! Form::select('bloqueid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el bloque']) !!}
+                                @error('bloqueid')
+                                    <small class="text-danger">
+                                        {{$message}}
+                                    </small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group"> <!-- Unidad -->
+                                {{ Form::label('unidadid', 'Unidad') }}
+                                {!! Form::select('unidadid', [], null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la unidad']) !!}
+                                @error('unidadid')
                                     <small class="text-danger">
                                         {{$message}}
                                     </small>
@@ -107,10 +131,6 @@
 
 @stop
 
-@section('footer')
-    @include('admin.partial.footer')
-@stop
-
 @section('css')
 
 @stop
@@ -128,10 +148,12 @@
                 $('.select2').select2();
                 // var stepper = new Stepper($('.bs-stepper')[0])
 
-
-                $("#paisid").on('change', function(e) {
-                    var id = $( "#paisid" ).val();
-                    var url = "{{ route('admin.entregas.persona', ":id") }}";
+                $("#conjuntoid").on('change', function(e) {
+                    $('#bloqueid option').each(function() {
+                        $(this).remove();
+                    });
+                    var id = $( "#conjuntoid" ).val();
+                    var url = "{{ route('admin.tresidentes.bloque', ":id") }}";
                     url = url.replace(':id', id);
 
                     $.ajax({
@@ -140,21 +162,50 @@
                         url: url,
                         success: function(data) {
 
-                            $('#ciudadid').append('<option value="">Seleccione una ciudad</option>');
+                            $('#bloqueid').append('<option value="">Seleccione un bloque</option>');
                             $.each(data, function(i, res){
                                 $.each(res, function(index, res1){
                                     //console.log(res);
-                                    $('#ciudadid').append('<option value="'+ res1.id +'">'+ res1.personanombre +'</option>');
+                                    $('#bloqueid').append('<option value="'+ res1.id +'">'+ res1.bloquenombre +'</option>');
                                 })
                             })
                         },
                         error: function(error){
                             console.log(error);
-                            //$('#tipodocumentoid').val(1).change();
-                            $('#ciudadid').val('');
+                            $('#bloqueid').val('');
                         }
                     });
                 })
+
+                $("#bloqueid").on('change', function(e) {
+                    $('#unidadid option').each(function() {
+                        $(this).remove();
+                    });
+                    var id = $( "#bloqueid" ).val();
+                    var url = "{{ route('admin.tresidentes.unidad', ":id") }}";
+                    url = url.replace(':id', id);
+
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: url,
+                        success: function(data) {
+
+                            $('#unidadid').append('<option value="">Seleccione una unidad</option>');
+                            $.each(data, function(i, res){
+                                $.each(res, function(index, res1){
+                                    //console.log(res);
+                                    $('#unidadid').append('<option value="'+ res1.id +'">'+ res1.unidadnombre +'</option>');
+                                })
+                            })
+                        },
+                        error: function(error){
+                            console.log(error);
+                            $('#unidadid').val('');
+                        }
+                    });
+                })
+
 
             })
 

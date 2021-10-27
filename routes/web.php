@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\RegistroController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\ContactanosController;
+use App\Http\Controllers\CuentaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -23,6 +25,21 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/registro', RegistroController::class)->names('registros');
+Route::get('/registro/estado/{id}', [RegistroController::class, 'estado'])->name('registros.estado');
+Route::get('/getBlock/{id}', [RegistroController::class, 'getBlock'])->name('registros.bloque');
+Route::get('/getHome/{id}', [RegistroController::class, 'getHome'])->name('registros.unidad');
+Route::get('/registro/verify/{id}/{seed}', [CuentaController::class, 'verify'])->name('cuentas.verify');
+Route::get('/registro/residenteModal/{id}', [RegistroController::class, 'createResidente'])->name('registros.createResidente');
+Route::post('/registro/residenteStore', [RegistroController::class, 'storeResidente'])->name('registros.storeResidente');
+Route::delete('/registro/residenteDestroy/{id}', [RegistroController::class, 'destroyResidente'])->name('registros.destroyResidente');
+Route::get('/registro/vehiculoModal/{id}', [RegistroController::class, 'createVehiculo'])->name('registros.createVehiculo');
+Route::post('/registro/vehiculoStore', [RegistroController::class, 'storeVehiculo'])->name('registros.storeVehiculo');
+Route::delete('/registro/vehiculoDestroy/{id}', [RegistroController::class, 'destroyVehiculo'])->name('registros.destroyVehiculo');
+Route::get('/registro/mascotaModal/{id}', [RegistroController::class, 'createMascota'])->name('registros.createMascota');
+Route::post('/registro/mascotaStore', [RegistroController::class, 'storeMascota'])->name('registros.storeMascota');
+Route::delete('/registro/mascotaDestroy/{id}', [RegistroController::class, 'destroyMascota'])->name('registros.destroyMascota');
 
 Route::get('/terminos', function () {
     return view('terminos');

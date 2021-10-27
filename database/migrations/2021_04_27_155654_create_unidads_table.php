@@ -20,10 +20,12 @@ class CreateUnidadsTable extends Migration
             $table->unsignedBigInteger('claseunidadid')->nullable();
             $table->foreign('claseunidadid')->references('id')->on('clase_unidads')->onDelete('set null');
             $table->string('unidadnombre', 50);
-            $table->foreign('tipopropietarioid')->references('id')->on('tipo_propietarios')->onDelete('cascade');
             $table->unsignedBigInteger('tipopropietarioid')->nullable();
+            $table->foreign('tipopropietarioid')->references('id')->on('tipo_propietarios')->onDelete('set null');
             $table->unsignedBigInteger('propietarioid')->nullable();
-            $table->foreign('propietarioid')->references('id')->on('personas')->onDelete('cascade');
+            $table->foreign('propietarioid')->references('id')->on('personas')->onDelete('set null');
+            $table->unsignedBigInteger('estado_id')->default(1);
+            $table->foreign('estado_id')->references('id')->on('estado_registros');
             $table->timestamps();
             $table->unique(['bloqueid', 'unidadnombre'], 'indice_bloque_unidad');
         });

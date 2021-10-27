@@ -165,7 +165,7 @@
 
             <div class="col-md-4">
                 <div class="form-group"> <!-- Relacion -->
-                    {{ Form::label('relationid', 'Relacion con el titular') }}
+                    {{ Form::label('relationid', 'Posición / Vínculo') }}
                     {!! Form::select('relationid', $relations, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
                     @error('relationid')
                         <small class="text-danger">

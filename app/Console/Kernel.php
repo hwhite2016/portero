@@ -31,6 +31,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         //$schedule->command('evento:calendario')->dailyAt('23:30');
+        $schedule->command('registro:expira')->everyMinute();
         $schedule->command('reserva:expira')->everyMinute();
         $schedule->command('evento:calendario')->everyMinute();
     }

@@ -31,7 +31,6 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntonit' => 'required|min:4|max:20',
             'conjuntonombre' => 'required|min:3|max:30',
             'conjuntodireccion' => 'required|min:4|max:30',
-            'conjuntocorreo' => 'required|email',
             //Bloques
         ];
     }
@@ -53,8 +52,6 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntodireccion.required'   => ':attribute es obligatorio.',
             'conjuntodireccion.min'        => ':attribute debe contener mas de una letra.',
             'conjuntodireccion.max'        => ':attribute debe contener max 30 letras.',
-            'conjuntocorreo.required'   => ':attribute es obligatorio.',
-            'conjuntocorreo.email'        => ':attribute debe ser un correo válido.',
             //Bloques
         ];
     }
@@ -69,7 +66,6 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntonit'        => 'El NIT del conjunto',
             'conjuntonombre'        => 'El nombre del conjunto',
             'conjuntodireccion'    => 'La direccion del conjunto',
-            'conjuntocorreo'    => 'El email',
             //Bloques
         ];
     }

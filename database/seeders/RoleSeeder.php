@@ -25,6 +25,7 @@ class RoleSeeder extends Seeder
         $role7 = Role::create(['name' => 'Piscinero']);
         $role8 = Role::create(['name' => '_comiteconvivencia']);
 
+        Permission::create(['name' => 'registros.edit', 'description' => 'Editar Registro'])->syncRoles([$role0]);
 
         Permission::create(['name' => 'admin.index', 'description' => 'Ver el dashboard'])->syncRoles([$role1, $role2, $role3, $role4, $role5, $role6, $role7, $role8]);
 
@@ -116,9 +117,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.mascotas.destroy', 'description' => 'Eliminar una mascota'])->syncRoles([$role1, $role2]);
 
         Permission::create(['name' => 'admin.parqueaderos.index', 'description' => 'Ver listado de parqueaderos'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.parqueaderos.create', 'description' => 'Crear un residente'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.parqueaderos.edit', 'description' => 'Editar un residente'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.parqueaderos.destroy', 'description' => 'Eliminar un residente'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.parqueaderos.create', 'description' => 'Crear un parqueadero'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.parqueaderos.edit', 'description' => 'Editar un parqueadero'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.parqueaderos.destroy', 'description' => 'Eliminar un parqueadero'])->syncRoles([$role1, $role2]);
 
         Permission::create(['name' => 'admin.zonas.index', 'description' => 'Ver listado de zonas'])->syncRoles([$role1, $role2, $role5]);
         Permission::create(['name' => 'admin.zonas.create', 'description' => 'Crear un zona comun'])->syncRoles([$role1, $role2]);

@@ -60,6 +60,7 @@ class CondominioController extends Controller
             $filename = 'images/yourlogo.png';
         }
 
+        $key = substr( md5(microtime()), 1, 16);
         $conjuntos = Conjunto::create([
             'barrioid' => $request->get('barrioid'),
             'conjuntonit' => $request->get('conjuntonit'),
@@ -68,6 +69,7 @@ class CondominioController extends Controller
             'conjuntocelular' => $request->get('conjuntocelular'),
             'conjuntotelefono' => $request->get('conjuntotelefono'),
             'conjuntoestado' => $request->get('conjuntoestado'),
+            'conjuntokey' => $key,
             'conjuntologo' => $filename
         ]);
 
@@ -129,6 +131,8 @@ class CondominioController extends Controller
          $conjunto->conjuntocelular = $request->get('conjuntocelular');
          $conjunto->conjuntotelefono = $request->get('conjuntotelefono');
          $conjunto->conjuntoestado = $request->get('conjuntoestado');
+         $conjunto->conjuntokey = $request->get('conjuntokey');
+
 
          $conjunto->save();
 

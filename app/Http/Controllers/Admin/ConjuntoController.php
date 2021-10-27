@@ -5,12 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Conjunto;
 use App\Models\Barrio;
+use App\Models\Ciudad;
 use App\Models\Organo;
+use App\Models\Pais;
+use App\Models\Registro;
+use App\Models\TipoDocumento;
+use App\Models\TipoPropietario;
+use App\Models\User;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConjuntoController extends Controller
 {
@@ -25,8 +32,10 @@ class ConjuntoController extends Controller
 
     public function index()
     {
+
         $personaid = Auth::user()->personaid;
-            $dependencias = Conjunto::select(['conjuntos.id'])
+
+        $dependencias = Conjunto::select(['conjuntos.id'])
             ->join('persona_conjuntos', 'conjuntos.id', '=', 'persona_conjuntos.conjunto_id')
             ->whereRaw('persona_conjuntos.persona_id = ' . $personaid)
             ->get();
@@ -52,7 +61,19 @@ class ConjuntoController extends Controller
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
-             return view('admin.conjunto.index', compact('conjuntos','organos'));
+            $colaboradores = Organo::join('empleados','organos.id','=','empleados.organo_id')
+             ->join('cargos','cargos.id','=','empleados.cargo_id')
+             ->join('personas','personas.id','=','empleados.personaid')
+             ->leftJoin('residentes','residentes.personaid','=','empleados.personaid')
+             ->leftJoin('unidads','unidads.id','=','residentes.unidadid')
+             ->select('organos.id','organonombre','organocorreo', 'organocelular', 'organotelefono', 'organopqr', 'organonivel',
+                DB::raw("JSON_OBJECTAGG(coalesce(concat(cargonombre,' | ',personanombre),0), coalesce(unidadnombre,'') ) AS miembros"))
+             ->whereIn('empleados.conjuntoid', session('dependencias'))
+             ->GroupByRaw('organos.id,organonombre,organocorreo,organocelular,organotelefono,organopqr,organonivel')
+             ->orderBy('organonombre', 'ASC')
+             ->get();
+
+             return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores'));
 
     }
 
@@ -69,7 +90,8 @@ class ConjuntoController extends Controller
     public function show($id)
     {
         $personaid = Auth::user()->personaid;
-            $dependencias = Conjunto::select(['conjuntos.id'])
+
+        $dependencias = Conjunto::select(['conjuntos.id'])
             ->join('persona_conjuntos', 'conjuntos.id', '=', 'persona_conjuntos.conjunto_id')
             ->whereRaw('persona_conjuntos.persona_id = ' . $personaid)
             ->get();
@@ -96,7 +118,19 @@ class ConjuntoController extends Controller
             ->orderBy('bloque_count', 'DESC')
             ->get();
 
-        return view('admin.conjunto.index', compact('conjuntos','organos'));
+            $colaboradores = Organo::join('empleados','organos.id','=','empleados.organo_id')
+             ->join('cargos','cargos.id','=','empleados.cargo_id')
+             ->join('personas','personas.id','=','empleados.personaid')
+             ->leftJoin('residentes','residentes.personaid','=','empleados.personaid')
+             ->leftJoin('unidads','unidads.id','=','residentes.unidadid')
+             ->select('organos.id','organonombre','organocorreo', 'organocelular', 'organotelefono', 'organopqr', 'organonivel',
+                DB::raw("JSON_OBJECTAGG(coalesce(concat(cargonombre,' | ',personanombre),0), coalesce(unidadnombre,'') ) AS miembros"))
+             ->whereIn('empleados.conjuntoid', session('dependencias'))
+             ->GroupByRaw('organos.id,organonombre,organocorreo,organocelular,organotelefono,organopqr,organonivel')
+             ->orderBy('organonombre', 'ASC')
+             ->get();
+
+        return view('admin.conjunto.index', compact('conjuntos','organos','colaboradores'));
     }
 
     public function edit(Conjunto $conjunto)

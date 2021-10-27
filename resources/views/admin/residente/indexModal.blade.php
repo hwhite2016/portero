@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12">
         <a href="#" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#residentesModal" data-whatever="{{$unidad->id}}">
-            <i class="fas fa-plus-circle"></i> &nbsp Agregar
+            <i class="fas fa-plus-circle"></i> &nbsp Agregar residente
         </a>
     </div>
     <div class="col-12 mt-2">

@@ -24,7 +24,10 @@ class OrganoController extends Controller
     public function index()
     {
 
-        $organos = Organo::leftJoin('empleados','organos.id','=','empleados.organo_id')
+        $organos = Organo::leftJoin('empleados', function ($join) {
+                $join->on('empleados.organo_id', '=', 'organos.id')
+                ->where('empleadoestado', '>', -1);
+            })
             ->select('organos.id','organonombre','organocorreo', 'organocelular', 'organotelefono', 'organopqr', 'organoestado',
                     DB::raw('count(empleados.id) as emp_count'))
             ->whereIn('organos.conjuntoid', session('dependencias'))
@@ -43,10 +46,10 @@ class OrganoController extends Controller
              ->join('personas','personas.id','=','empleados.personaid')
              ->leftJoin('residentes','residentes.personaid','=','empleados.personaid')
              ->leftJoin('unidads','unidads.id','=','residentes.unidadid')
-             ->select('organonombre','organocorreo', 'organocelular', 'organotelefono', 'organopqr',
+             ->select('organos.id','organonombre','organocorreo', 'organocelular', 'organotelefono', 'organopqr', 'organonivel',
                 DB::raw("JSON_OBJECTAGG(coalesce(concat(cargonombre,' | ',personanombre),0), coalesce(unidadnombre,'') ) AS miembros"))
              ->whereIn('empleados.conjuntoid', session('dependencias'))
-             ->GroupByRaw('organonombre,organocorreo,organocelular,organotelefono,organopqr')
+             ->GroupByRaw('organos.id,organonombre,organocorreo,organocelular,organotelefono,organopqr,organonivel')
              ->orderBy('organonombre', 'ASC')
              ->get();
 

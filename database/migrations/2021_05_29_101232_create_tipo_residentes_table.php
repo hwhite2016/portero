@@ -15,7 +15,7 @@ class CreateTipoResidentesTable extends Migration
     {
         Schema::create('tipo_residentes', function (Blueprint $table) {
             $table->id();
-            $table->string('tiporesidentenombre', 20);
+            $table->string('tiporesidentenombre', 30);
             $table->timestamps();
         });
     }

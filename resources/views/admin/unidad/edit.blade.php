@@ -31,14 +31,14 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo inmueble -->
                     {{ Form::label('unidadnombre', '* Tipo de Inmueble / Numero') }}
                     {{ Form::text('unidadnombre', old('unidadnombre'), array('placeholder' => 'Ej: 106, 920, 1103 ... 2A, 4B, 5C ...', 'class' => 'form-control')) }}
                 </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo de Unidad -->
                     {{ Form::label('claseunidadid', '* Tipo de Unidad') }}
                     <div class="input-group">
@@ -57,6 +57,28 @@
                 </div>
             </div>
 
+            <div class="col-md-2">
+                <div class="form-group"> <!-- Estado -->
+
+                    @if($unidad->estado_id == 1) {{-- PENDIENTE --}}
+                        <span class="text-danger mr-1"><i class="fas fa-exclamation-triangle"></i></span>
+                    @elseif($unidad->estado_id == 2) {{-- EN PROCESO --}}
+                        <span class="text-secondary mr-1"><i class="fas fa-cog"></i></span>
+                    @elseif($unidad->estado_id == 3) {{-- POR VALIDAR --}}
+                        <span class="text-warning mr-1"><i class="fas fa-spell-check"></i></span>
+                    @else
+                        <span class="text-success mr-1"><i class="fas fa-check"></i></span>
+                    @endif
+                    {!! Form::label('estado_id', 'Estado la Unidad') !!}
+                    {!! Form::select('estado_id', $estados, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
+                    @error('estado_id')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
             <div class="col-md-3">
                 <div class="form-group"> <!-- Tipo Propietario -->
                     {{ Form::label('tipopropietarioid', '* Tenedor') }}
@@ -64,7 +86,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Propietario -->
                     {{ Form::label('propietarioid', '* Nombre del Tenedor') }}
                     <div class="input-group">
@@ -88,13 +110,14 @@
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="form-group">
                     {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
                     {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'100%']) !!}
                 </div>
             </div>
-        </div>
+
+         </div>
         <!-- /.row-->
     </div>
     <!-- /.card-body -->

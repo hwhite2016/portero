@@ -52,7 +52,7 @@ return [
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Portero.com.co',
+    'logo_img_alt' => 'Porteroenlinea.com',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +108,7 @@ return [
     'classes_auth_card' => 'card-outline card-info',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
-    'classes_auth_footer' => '',
+    'classes_auth_footer' => 'text-info',
     'classes_auth_icon' => '',
     'classes_auth_btn' => 'btn-block btn-info',
 

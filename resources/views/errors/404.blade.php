@@ -1,7 +1,7 @@
 
 {{-- @extends('errors::minimal') --}}
 @extends('adminlte::page_error')
-@section('title', __('No Encontrada'))
+@section('title', __('Restringido'))
 @section('code', '404')
 @section('content_header')
 
@@ -10,7 +10,7 @@
       <div class="col-sm-12">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item text-primary"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">404 Error Page</li>
+          <li class="breadcrumb-item active">Página restringida</li>
         </ol>
       </div>
     </div>
@@ -27,12 +27,17 @@
     <div class="mt-4 max-w-xl mx-auto sm:px-6 lg:px-8">
         <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
             <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
-                404
+                <i class="fas fa-ban"></i>
             </div>
 
             <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                Pagina no Encontrada
+                Acceso no permitido
             </div>
+        </div>
+
+        <p class="p-1 mt-1"></p>
+        <div class="alert alert-default" role="alert">
+            <p>Estimado usuario, esta tratando de ingresar a un espacio restringido o no disponible. Para mayor informacion coloquese en contacto con la administración de su conjunto.</p>
         </div>
     </div>
 

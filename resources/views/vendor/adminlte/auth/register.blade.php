@@ -14,8 +14,14 @@
 @section('auth_header', __('adminlte::adminlte.register_message'))
 
 @section('auth_body')
-    <form action="{{ $register_url }}" method="post">
+    <form action="{{ $register_url }}" method="post" id="reg">
         {{ csrf_field() }}
+
+        @if(isset($_GET['_item']))
+        {!! Form::hidden('conjuntokey', $_GET['_item']) !!}
+        @else
+        {!! Form::hidden('conjuntokey', null) !!}
+        @endif
 
         {{-- Name field --}}
         <div class="input-group mb-3">
@@ -85,17 +91,29 @@
 
         {{-- Register button --}}
         <button type="submit" class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
-            <span class="fas fa-user-plus"></span>
+            <span class="fas fa-user-plus mr-1"></span>
             {{ __('adminlte::adminlte.register') }}
         </button>
 
     </form>
+
 @stop
 
 @section('auth_footer')
     <p class="my-0">
-        <a href="{{ $login_url }}">
+        <a href="{{ $login_url }}" class="{{ config('adminlte.classes_auth_footer') }}">
             {{ __('adminlte::adminlte.i_already_have_a_membership') }}
+
         </a>
     </p>
+@stop
+
+@section('js')
+    <script>
+        $('.btn-block').on('click', function() {
+            $(this).prop('disabled',true);
+            $(this).html('Enviando..');
+            $('#reg').submit();
+        });
+    </script>
 @stop

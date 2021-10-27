@@ -37,6 +37,7 @@
                       <th>Unidad</th>
                       <th>Bloque</th>
                       <th>Tipo</th>
+                      <th width="10%">Estado</th>
                       <th width="5%">...</th>
 
                     </tr>
@@ -53,11 +54,23 @@
                              <small> ({{ $unidad->claseunidaddescripcion }})</small>
                         </td>
                         <td>
+                            @if($unidad->estado_id == 1)
+                                <span class="badge bg-light">Sin Registro</span>
+                            @elseif($unidad->estado_id == 2)
+                                <span class="badge bg-secondary"><i class="fas fa-cog"></i> En Proceso</span>
+                            @elseif($unidad->estado_id == 3)
+                                <span class="badge bg-warning"><i class="fas fa-spell-check"></i> Por Verificar</span>
+                            @elseif($unidad->estado_id == 4)
+                                <span class="badge bg-success"><i class="fas fa-check"></i> Verificado</span>
+                            @endif
+
+                        </td>
+                        <td>
                             @can('admin.unidads.destroy')
                               {!! Form::model($unidad, ['route'=>['admin.unidads.destroy', $unidad], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @endcan
 
-                              <a href="{{ route ('admin.residentes.show', $unidad->id) }}" class="btn btn-warning btn-sm"  id="btn-unidad" data-toggle="tooltip" title="Ver Residentes"><i class="fas fa-user"></i> ({{ $unidad->residente_count }})</a>
+                              <a href="{{ route ('admin.residentes.show', $unidad->id) }}" class="btn btn-default btn-sm"  id="btn-unidad" data-toggle="tooltip" title="Ver Residentes"><i class="fas fa-user"></i> ({{ $unidad->residente_count }})</a>
 
                               @can('admin.unidads.edit')
                               <a href="{{route('admin.unidads.edit', $unidad->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Unidad">

@@ -118,6 +118,18 @@
                 </div>
             </div>
 
+            <div class="col-md-5">
+                <div class="form-group"> <!-- Key -->
+                    {{ Form::label('conjuntokey', 'Llave') }}
+                    {{ Form::text('conjuntokey', $conjunto->conjuntokey, array('placeholder' => '', 'class' => 'form-control')) }}
+                    @error('conjuntokey')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
 
 
         </div>

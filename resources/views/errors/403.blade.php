@@ -1,6 +1,7 @@
+
 {{-- @extends('errors::minimal') --}}
 @extends('adminlte::page_error')
-@section('title', __('No Autorizada'))
+@section('title', __('Restringido'))
 @section('code', '403')
 @section('content_header')
 
@@ -9,7 +10,7 @@
       <div class="col-sm-12">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item text-primary"><a href="{{route('admin.index')}}">Home</a></li>
-          <li class="breadcrumb-item active">Acceso Restringido</li>
+          <li class="breadcrumb-item active">Página restringida</li>
         </ol>
       </div>
     </div>
@@ -30,23 +31,20 @@
             </div>
 
             <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
-                Acceso Restringido
+                Acceso no permitido
             </div>
         </div>
+
         <p class="p-1 mt-1"></p>
         <div class="alert alert-default" role="alert">
-            <h4 class="alert-heading text-gray-500">Versión <div class="badge badge-warning">PRO</div></h4>
-            <p>Estimado usuario, usted ha ingresado a un módulo que no hace parte del plan gratuito. Si anteriormente tenia acceso, seguramente ya vencio el plazo de los 15 dias de prueba.</p>
-            <hr>
-            <p class="mb-0 ">Para acceder a este módulo contacte al administrador del conjunto y solicite que habiliten su usuario.</p>
+            <p>Estimado usuario, esta tratando de ingresar a un espacio restringido o no disponible. Para mayor informacion coloquese en contacto con la administración de su conjunto.</p>
         </div>
-
     </div>
 
 
 
 @stop
-@section('message', __('Pagina no Autorizada'))
+@section('message', __('Pagina no Encontrada'))
 
 @section('css')
 
@@ -65,4 +63,3 @@
 </style>
 
 @stop
-

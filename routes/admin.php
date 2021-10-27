@@ -108,10 +108,6 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
         return view('admin.orders.invoice-print');
     });
 
-    // Route::get('/registro', function(){
-    //     return view('registro');
-    // });
-
 
 });
 

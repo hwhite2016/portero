@@ -10,12 +10,15 @@ use App\Models\Bloque;
 use App\Models\Parqueadero;
 use App\Models\TipoUnidad;
 use App\Models\ClaseUnidad;
+use App\Models\EstadoRegistro;
 use App\Models\Residente;
 use App\Models\Vehiculo;
 use App\Models\Mascota;
 use App\Models\Persona;
+use App\Models\Registro;
 use App\Models\TipoDocumento;
 use App\Models\TipoPropietario;
+use App\Models\User;
 
 class UnidadController extends Controller
 {
@@ -33,9 +36,9 @@ class UnidadController extends Controller
         ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
         ->join("bloques","bloques.id", "=", "unidads.bloqueid")
         ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
-        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre'))
+        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
         ->whereIn('bloques.conjuntoid', session('dependencias'))
-        ->groupBy('unidads.id', 'unidads.bloqueid', 'conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre')
+        ->groupBy('unidads.id', 'unidads.bloqueid', 'conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
         ->orderBy('unidadnombre', 'DESC')
         ->get();
         return view('admin.unidad.index')->with('unidads', $unidads);
@@ -112,10 +115,10 @@ class UnidadController extends Controller
         ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
         ->join("bloques","bloques.id", "=", "unidads.bloqueid")
         ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
-        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre'))
+        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
         ->where('unidads.bloqueid', '=', $id)
         ->whereIn('bloques.conjuntoid', session('dependencias'))
-        ->groupBy('unidads.id', 'unidads.bloqueid','conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre')
+        ->groupBy('unidads.id', 'unidads.bloqueid','conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
         ->orderBy('unidadnombre', 'DESC')
         ->get();
 
@@ -132,6 +135,7 @@ class UnidadController extends Controller
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
         $tipo_unidads = TipoUnidad::all()->pluck('tipounidadnombre', 'tipounidadnombre');
         $tipo_propietarios = TipoPropietario::all()->pluck('tipopropietarionombre', 'id');
+        $estados = EstadoRegistro::all()->pluck('estadonombre', 'id');
         $clase_unidads = ClaseUnidad::select(
             DB::raw("CONCAT(claseunidadnombre,' (',claseunidaddescripcion,')') AS clasenombre"),'id')
             ->whereIn('conjuntoid', session('dependencias'))
@@ -158,7 +162,7 @@ class UnidadController extends Controller
         ->get();
 
         $act_residentes = 'active'; $act_vehiculos = ''; $act_mascotas = '';
-        return view('admin.unidad.edit', compact('unidad', 'propietario', 'bloques', 'bloqueid', 'tipo_unidads','clase_unidads','tipo_propietarios','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
+        return view('admin.unidad.edit', compact('unidad', 'estados','propietario', 'bloques', 'bloqueid', 'tipo_unidads','clase_unidads','tipo_propietarios','parqueaderos','residentes','vehiculos','mascotas', 'act_residentes', 'act_vehiculos', 'act_mascotas'));
 
     }
 
@@ -174,6 +178,7 @@ class UnidadController extends Controller
             'bloqueid'=>'required',
             'unidadnombre'=>'required',
             'claseunidadid'=>'required',
+            'estado_id' => 'required',
             'unidadnombre' => 'unique:unidads,unidadnombre,'.$validar_update.',id,bloqueid,' . $request->get('bloqueid')
         ]);
         //$unidad->update($request->all());
@@ -184,7 +189,25 @@ class UnidadController extends Controller
             'propietarioid'=>$request->get('propietarioid'),
             'unidadnombre'=>$request->get('unidadnombre'),
             'claseunidadid'=>$request->get('claseunidadid'),
+            'estado_id'=>$request->get('estado_id'),
         ]);
+
+        $registro = Registro::whereUnidadid($unidad->id);
+        $registro->update([
+            'estado_id' => $request->get('estado_id'),
+        ]);
+
+        $user = User::join('residentes','residentes.personaid','users.personaid')
+                ->join('registros','registros.unidadid','residentes.unidadid')
+                ->where('residentes.unidadid','=',$unidad->id)
+                ->select('users.id','registros.personaid')
+                ->first();
+        if($request->get('estado_id') == 4){
+            $user->roles()->sync(5);
+            //$user->assignRole($request->rol);
+        }else{
+            $user->roles()->sync(1);
+        }
 
         $unidad->parqueaderos()->sync($request->parqueaderos);
         return redirect()->route('admin.unidads.edit', $unidad->id )->with('info','La unidad fue actualizada de forma exitosa');

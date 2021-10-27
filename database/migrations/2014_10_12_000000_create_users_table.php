@@ -15,8 +15,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('personaid');
-            $table->foreign('personaid')->references('id')->on('personas')->onDelete('cascade');
+            $table->unsignedBigInteger('personaid')->nullable();
+            $table->foreign('personaid')->references('id')->on('personas')->onDelete('set null');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();

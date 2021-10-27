@@ -17,4 +17,6 @@ class UnidadsParqueadero extends Model
     public function unidad(){
         return $this->belongsTo(Unidad::class, 'unidad_id');
     }
+
+
 }
