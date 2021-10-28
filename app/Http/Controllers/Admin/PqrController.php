@@ -494,7 +494,7 @@ class PqrController extends Controller
                 }
              }else{
                 $data['usuario'] = 'Residente';
-                Mail::to('victorlopez23@hotmail.com')->send(new PqrMailable($data));
+                Mail::to($pqr_correo->personacorreo)->send(new PqrMailable($data));
             }
 
             return redirect()->route('admin.pqrs.edit', $pqrs->id)->with('info', $txt);

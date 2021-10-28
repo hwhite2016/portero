@@ -316,7 +316,6 @@ class RegistroController extends Controller
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
-            'personacorreo'=>'required|email',
             'unidadid' => 'unique:residentes,unidadid,NULL,id,personaid,' . $request->get('personaid')
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {

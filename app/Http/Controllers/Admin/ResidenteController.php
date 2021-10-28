@@ -132,7 +132,6 @@ class ResidenteController extends Controller
             'tipodocumentoid'=>'required',
             'personadocumento'=>'required|min:3|alpha_num',
             'personanombre'=>'required|min:3',
-            'personacorreo'=>'required|email',
             'unidadid' => 'unique:residentes,unidadid,NULL,id,personaid,' . $request->get('personaid')
         ]);
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
@@ -155,23 +154,25 @@ class ResidenteController extends Controller
             $user = User::where('personaid','=',$persona->id)->first();
         }else{
 
-            $psswd = substr( md5(microtime()), 1, 8);
-            $user = User::create([
-                'personaid' => $persona->id,
-                'name' => $request->get('personanombre'),
-                'email' => $request->get('personacorreo'),
-                'password' => bcrypt($psswd)
-            ]);
-
-            if ($request->get('bienvenida') == 1){
-                $data = [
-                    'role_id' => $request->get('role_id'),
+            if($request->get('personacorreo')){
+                $psswd = substr( md5(microtime()), 1, 8);
+                $user = User::create([
+                    'personaid' => $persona->id,
                     'name' => $request->get('personanombre'),
                     'email' => $request->get('personacorreo'),
-                    'password' => $psswd
-                ];
-                $correo = new WelcomeMailable($data);
-                Mail::to('kimita0627@gmail.com')->send($correo);
+                    'password' => bcrypt($psswd)
+                ]);
+
+                if ($request->get('bienvenida') == 1){
+                    $data = [
+                        'role_id' => $request->get('role_id'),
+                        'name' => $request->get('personanombre'),
+                        'email' => $request->get('personacorreo'),
+                        'password' => $psswd
+                    ];
+                    $correo = new WelcomeMailable($data);
+                    Mail::to($request->get('personacorreo'))->send($correo);
+                }
             }
         }
 

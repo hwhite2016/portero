@@ -109,6 +109,7 @@
     @endif
 </div>
 <!-- /.card -->
+<a id="ancla"></a>
 
         @if($registro->estado_id != 3)
         <br>
@@ -168,6 +169,8 @@
         //Initialize Select2 Elements
         $('.select2').select2()
         $(":input").inputmask();
+        destino = $('a[id="ancla"]');
+        $('html, body').animate({ scrollTop: destino.offset().top }, 500);
 
         $('#residentesModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget)
