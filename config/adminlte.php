@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'Portero en linea',
-    'title_prefix' => 'Portero en linea | ',
+    'title' => 'Portero',
+    'title_prefix' => 'Portero | ',
     'title_postfix' => '',
     'enviar_credenciales' => 'Enviar al correo las credenciales de acceso.',
 
@@ -46,13 +46,13 @@ return [
     |
     */
 
-    'logo' => '<label>Portero en linea</label>',
+    'logo' => '<label>Portero</label>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img2' => 'vendor/adminlte/dist/img/AdminLTELogo2.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'Porteroenlinea.com',
+    'logo_img_alt' => 'Portero.com.co',
 
     /*
     |--------------------------------------------------------------------------
@@ -90,7 +90,7 @@ return [
     'layout_boxed' => null,
     'layout_fixed_sidebar' => null,
     'layout_fixed_navbar' => true,
-    'layout_fixed_footer' => true,
+    'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
     /*

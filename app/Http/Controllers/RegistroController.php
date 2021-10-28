@@ -78,7 +78,6 @@ class RegistroController extends Controller
     }
 
     public function estado($id){
-
         $registro = Registro::find($id);
         $unidad = Unidad::find($registro->unidadid);
         $registro->update([
@@ -350,7 +349,7 @@ class RegistroController extends Controller
         }
         $registro= Registro::where('unidadid','=',$request->get('unidadid'))->first();
 
-        return redirect()->route('registros.edit', $registro->unidadid)->with('info', $msj);
+        return redirect()->route('registros.edit', $registro->id)->with('info', $msj);
 
     }
 
@@ -359,7 +358,9 @@ class RegistroController extends Controller
         $residente = Residente::find($id);
         $residente->delete();
 
-        return redirect()->route('registros.edit', $residente->unidadid)->with('info', 'El residente fue eliminado exitosamente');
+        $registro= Registro::where('unidadid','=',$residente->unidadid)->first();
+
+        return redirect()->route('registros.edit', $registro->id)->with('info', 'El residente fue eliminado exitosamente');
     }
 
     public function createVehiculo(Request $request, $id)
@@ -400,7 +401,8 @@ class RegistroController extends Controller
             'vehiculomarca'=>$request->get('vehiculomarca')
         ]);
 
-        return redirect()->route('registros.edit', $request->get('unidadid'))->with('info', 'El vehiculo fue agregado de forma exitosa');
+        $registro= Registro::where('unidadid','=',$request->get('unidadid'))->first();
+        return redirect()->route('registros.edit', $registro->id)->with('info', 'El vehiculo fue agregado de forma exitosa');
 
     }
 
@@ -409,7 +411,8 @@ class RegistroController extends Controller
         $vehiculo = Vehiculo::find($id);
         $vehiculo->delete();
 
-        return redirect()->route('registros.edit', $vehiculo->unidadid)->with('info', 'El vehiculo fue eliminado exitosamente');
+        $registro= Registro::where('unidadid','=',$vehiculo->unidadid)->first();
+        return redirect()->route('registros.edit', $registro->id)->with('info', 'El vehiculo fue eliminado exitosamente');
     }
 
     public function createMascota(Request $request, $id)
@@ -451,7 +454,8 @@ class RegistroController extends Controller
             'mascotaedad'=>$request->get('mascotaedad')
         ]);
 
-        return redirect()->route('registros.edit', $request->get('unidadid'))->with('info', 'La mascota fue agregada de forma exitosa');
+        $registro= Registro::where('unidadid','=',$request->get('unidadid'))->first();
+        return redirect()->route('registros.edit', $registro->id)->with('info', 'La mascota fue agregada de forma exitosa');
 
     }
 
@@ -460,7 +464,8 @@ class RegistroController extends Controller
         $mascota = Mascota::find($id);
         $mascota->delete();
 
-        return redirect()->route('registros.edit', $mascota->unidadid)->with('info', 'El mascota fue eliminado exitosamente');
+        $registro= Registro::where('unidadid','=',$mascota->unidadid)->first();
+        return redirect()->route('registros.edit', $registro->id)->with('info', 'El mascota fue eliminado exitosamente');
     }
 
 }

@@ -39,7 +39,8 @@ class UnidadController extends Controller
         ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
         ->whereIn('bloques.conjuntoid', session('dependencias'))
         ->groupBy('unidads.id', 'unidads.bloqueid', 'conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
-        ->orderBy('unidadnombre', 'DESC')
+        ->orderBy('bloquenombre', 'ASC')
+        ->orderBy('unidadnombre', 'ASC')
         ->get();
         return view('admin.unidad.index')->with('unidads', $unidads);
     }
@@ -119,17 +120,19 @@ class UnidadController extends Controller
         ->where('unidads.bloqueid', '=', $id)
         ->whereIn('bloques.conjuntoid', session('dependencias'))
         ->groupBy('unidads.id', 'unidads.bloqueid','conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
-        ->orderBy('unidadnombre', 'DESC')
+        ->orderBy('bloquenombre', 'ASC')
+        ->orderBy('unidadnombre', 'ASC')
         ->get();
 
         return view('admin.unidad.index', compact('unidads','id'));
 
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $unidad = Unidad::find($id);
-        $bloqueid = $unidad->bloqueid;
+        $bloqueid = NULL;
+        if($request->get('bloqueid')) $bloqueid = $unidad->bloqueid;
 
         $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
         $parqueaderos = Parqueadero::whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');

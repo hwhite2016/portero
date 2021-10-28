@@ -19,6 +19,7 @@ class ResidenteSeeder extends Seeder
         TipoPropietario::create(['tipopropietarionombre' => 'Propietario']);
         TipoPropietario::create(['tipopropietarionombre' => 'Locatario']);
         TipoPropietario::create(['tipopropietarionombre' => 'Inmobiliaria']);
+        TipoPropietario::create(['tipopropietarionombre' => 'Arrendatario']);
 
         TipoResidente::create(['tiporesidentenombre' => 'Propietario / Locatario']);
         TipoResidente::create(['tiporesidentenombre' => 'Arrendatario']);

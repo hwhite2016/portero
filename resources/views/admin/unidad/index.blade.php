@@ -69,13 +69,18 @@
                             @can('admin.unidads.destroy')
                               {!! Form::model($unidad, ['route'=>['admin.unidads.destroy', $unidad], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @endcan
-
                               <a href="{{ route ('admin.residentes.show', $unidad->id) }}" class="btn btn-default btn-sm"  id="btn-unidad" data-toggle="tooltip" title="Ver Residentes"><i class="fas fa-user"></i> ({{ $unidad->residente_count }})</a>
 
                               @can('admin.unidads.edit')
-                              <a href="{{route('admin.unidads.edit', $unidad->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Unidad">
-                                <i class="fas fa-pencil-alt"></i>
-                              </a>
+                              @if (isset($id))
+                                <a href="{{route('admin.unidads.edit', $unidad->id)}}?bloqueid={{$id}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Unidad">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                              @else
+                                <a href="{{route('admin.unidads.edit', $unidad->id)}}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Editar Unidad">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                              @endif
                               @endcan
 
                               @can('admin.unidads.destroy')
@@ -127,6 +132,7 @@
         $(document).ready(function() {
             var groupColumn = 1;
             var table = $('#unidads').DataTable({
+
                 lengthChange: false,
                 buttons: [
                     {
