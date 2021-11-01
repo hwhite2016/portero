@@ -37,8 +37,8 @@
                       <th>Unidad</th>
                       <th>Bloque</th>
                       <th>Tipo</th>
-                      <th width="10%">Estado</th>
-                      <th width="5%">...</th>
+                      <th width="15%">Estado</th>
+                      <th width="10%">...</th>
 
                     </tr>
                   </thead>
@@ -48,7 +48,7 @@
                         <td> {{ $unidad->unidadnombre }} </td>
                         <td>
                           <label class="text-uppercase fw-bold"> {{ $unidad->bloquenombre }} </label>
-                          <small> ({{ $unidad->conjuntonombre }}) </small>
+                          {{-- <small> ({{ $unidad->conjuntonombre }}) </small> --}}
                         </td>
                         <td> {{ $unidad->claseunidadnombre }}
                              <small> ({{ $unidad->claseunidaddescripcion }})</small>
@@ -59,7 +59,7 @@
                             @elseif($unidad->estado_id == 2)
                                 <span class="badge bg-secondary"><i class="fas fa-cog"></i> En Proceso</span>
                             @elseif($unidad->estado_id == 3)
-                                <span class="badge bg-warning"><i class="fas fa-spell-check"></i> Por Verificar</span>
+                                <span class="badge bg-info"><i class="fas fa-spell-check"></i> Por Verificar</span>
                             @elseif($unidad->estado_id == 4)
                                 <span class="badge bg-success"><i class="fas fa-check"></i> Verificado</span>
                             @endif
@@ -130,9 +130,7 @@
      <script type="text/javascript">
 
         $(document).ready(function() {
-            var groupColumn = 1;
-            var table = $('#unidads').DataTable({
-
+            var table = $('#unidads').DataTable( {
                 lengthChange: false,
                 buttons: [
                     {
@@ -142,44 +140,65 @@
                     }
                 ],
                 responsive: true,
-                "columnDefs": [
-                    { "visible": false, "targets": groupColumn }
-                ],
-                "order": [[ groupColumn, 'asc' ]],
                 "displayLength": 25,
-                "drawCallback": function ( settings ) {
-                    var api = this.api();
-                    var rows = api.rows( {page:'current'} ).nodes();
-                    var last=null;
-
-                    api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                        if ( last !== group ) {
-                            $(rows).eq( i ).before(
-                                '<tr class="group"><td colspan="5">'+group+'</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    } );
-                }
             } );
-
             table.buttons().container()
                 .appendTo( '#unidads_wrapper .col-md-6:eq(0)' );
-
-            // Order by the grouping
-            $('#unidads tbody').on( 'click', 'tr.group', function () {
-                var currentOrder = table.order()[0];
-                if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
-                    table.order( [ groupColumn, 'desc' ] ).draw();
-                }
-                else {
-                    table.order( [ groupColumn, 'asc' ] ).draw();
-                }
-            } );
-
             new $.fn.dataTable.FixedHeader( table );
             $('[data-toggle="tooltip"]').tooltip();
+
+
+
+            // var groupColumn = 1;
+            // var table = $('#unidads').DataTable({
+
+            //     lengthChange: false,
+            //     buttons: [
+            //         {
+            //             text: '<i class="far fa-file-excel"></i> Excel',
+            //             extend: 'excel',
+            //             title: 'Unidades'
+            //         }
+            //     ],
+            //     responsive: true,
+            //     "columnDefs": [
+            //         { "visible": false, "targets": groupColumn }
+            //     ],
+            //     "order": [[ groupColumn, 'asc' ]],
+            //     "displayLength": 25,
+            //     "drawCallback": function ( settings ) {
+            //         var api = this.api();
+            //         var rows = api.rows( {page:'current'} ).nodes();
+            //         var last=null;
+
+            //         api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+            //             if ( last !== group ) {
+            //                 $(rows).eq( i ).before(
+            //                     '<tr class="group"><td colspan="5">'+group+'</td></tr>'
+            //                 );
+
+            //                 last = group;
+            //             }
+            //         } );
+            //     }
+            // } );
+
+            // table.buttons().container()
+            //     .appendTo( '#unidads_wrapper .col-md-6:eq(0)' );
+
+            // // Order by the grouping
+            // $('#unidads tbody').on( 'click', 'tr.group', function () {
+            //     var currentOrder = table.order()[0];
+            //     if ( currentOrder[0] === groupColumn && currentOrder[1] === 'asc' ) {
+            //         table.order( [ groupColumn, 'desc' ] ).draw();
+            //     }
+            //     else {
+            //         table.order( [ groupColumn, 'asc' ] ).draw();
+            //     }
+            // } );
+
+            // new $.fn.dataTable.FixedHeader( table );
+            // $('[data-toggle="tooltip"]').tooltip();
         } );
 
      </script>

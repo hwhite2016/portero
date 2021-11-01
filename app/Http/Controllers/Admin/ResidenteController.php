@@ -137,9 +137,9 @@ class ResidenteController extends Controller
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
         }else{
-            $request->validate([
-                'personacorreo'=>'unique:personas',
-            ]);
+            // $request->validate([
+            //     'personacorreo'=>'unique:personas',
+            // ]);
             $persona = Persona::create([
                 'tipodocumentoid'=>$request->get('tipodocumentoid'),
                 'personadocumento'=>$request->get('personadocumento'),
@@ -150,30 +150,33 @@ class ResidenteController extends Controller
              ]);
         }
 
-        if (User::where('personaid', '=', $persona->id)->exists()) {
-            $user = User::where('personaid','=',$persona->id)->first();
-        }else{
+        if($request->get('personacorreo')){
+            if (User::where('personaid', '=', $persona->id)->exists()) {
+                $user = User::where('personaid','=',$persona->id)->first();
+            }else{
 
-            if($request->get('personacorreo')){
-                $psswd = substr( md5(microtime()), 1, 8);
-                $user = User::create([
-                    'personaid' => $persona->id,
-                    'name' => $request->get('personanombre'),
-                    'email' => $request->get('personacorreo'),
-                    'password' => bcrypt($psswd)
-                ]);
-
-                if ($request->get('bienvenida') == 1){
-                    $data = [
-                        'role_id' => $request->get('role_id'),
+                if($request->get('personacorreo')){
+                    $psswd = substr( md5(microtime()), 1, 8);
+                    $user = User::create([
+                        'personaid' => $persona->id,
                         'name' => $request->get('personanombre'),
                         'email' => $request->get('personacorreo'),
-                        'password' => $psswd
-                    ];
-                    $correo = new WelcomeMailable($data);
-                    Mail::to($request->get('personacorreo'))->send($correo);
+                        'password' => bcrypt($psswd)
+                    ]);
+
+                    if ($request->get('bienvenida') == 1){
+                        $data = [
+                            'role_id' => $request->get('role_id'),
+                            'name' => $request->get('personanombre'),
+                            'email' => $request->get('personacorreo'),
+                            'password' => $psswd
+                        ];
+                        $correo = new WelcomeMailable($data);
+                        Mail::to($request->get('personacorreo'))->send($correo);
+                    }
                 }
             }
+            $user->assignRole($request->rol);
         }
 
         if (Unidad::where('id', '=', $request->get('unidadid'))->exists()) {
@@ -198,8 +201,8 @@ class ResidenteController extends Controller
 
         $persona->conjuntos()->detach($request->conjuntoid);
         $persona->conjuntos()->attach($request->conjuntoid);
-        $user->assignRole($request->rol);
-        //$user->roles()->sync($request->rol);
+
+
 
         if(!$request->get('residentes')){
             if($request->get('hilo_unidadid')){
@@ -280,11 +283,14 @@ class ResidenteController extends Controller
 
         $residente = Residente::find($id);
         $residente->delete();
-
-        $user_rol = User::where('users.personaid', $residente->personaid)
-            ->select('residentes.id as residente_id', 'users.id as user_id', 'users.personaid as persona id', 'users.name', 'residentes.unidadid')
-            ->join('residentes', 'residentes.personaid', 'users.personaid')
-            ->get();
+        if (User::where('users.personaid', $residente->personaid)->exists()){
+            $user_rol = User::where('users.personaid', $residente->personaid)
+                ->select('residentes.id as residente_id', 'users.id as user_id', 'users.personaid as persona id', 'users.name', 'residentes.unidadid')
+                ->join('residentes', 'residentes.personaid', 'users.personaid')
+                ->get();
+        }else{
+            $user_rol = null;
+        }
 
         $user_conjunto = User::where('users.personaid', $residente->personaid)
             ->select('residentes.id as residente_id', 'users.id as user_id', 'users.personaid as persona id', 'users.name', 'residentes.unidadid','conjuntoid')
@@ -294,12 +300,22 @@ class ResidenteController extends Controller
             ->where('bloques.conjuntoid', '=', $conjunto->conjuntoid)
             ->get();
 
-        if($user_rol->count() <= 0) $remover_rol = true;
+        if($user_rol != null){
+            if($user_rol->count() <= 0){
+                $remover_rol = true;
+            }else{
+                $remover_rol = false;
+            }
+        }else{
+            $remover_rol = false;
+        }
         if($user_conjunto->count() <= 0) $remover_conjunto = true;
 
         if ($remover_rol){
             $user = User::where('users.personaid', $residente->personaid)->first();
             $user->removeRole('Residente');
+            $user->removeRole('_pendiente');
+
         }
 
         if ($remover_conjunto){

@@ -65,11 +65,11 @@
                     @elseif($unidad->estado_id == 2) {{-- EN PROCESO --}}
                         <span class="text-secondary mr-1"><i class="fas fa-cog"></i></span>
                     @elseif($unidad->estado_id == 3) {{-- POR VALIDAR --}}
-                        <span class="text-warning mr-1"><i class="fas fa-spell-check"></i></span>
+                        <span class="text-info mr-1"><i class="fas fa-spell-check"></i></span>
                     @else
                         <span class="text-success mr-1"><i class="fas fa-check"></i></span>
                     @endif
-                    {!! Form::label('estado_id', 'Estado la Unidad') !!}
+                    {!! Form::label('estado_id', 'Estado de la Unidad') !!}
                     {!! Form::select('estado_id', $estados, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'']) !!}
                     @error('estado_id')
                         <small class="text-danger">

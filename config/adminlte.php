@@ -17,7 +17,7 @@ return [
     'title' => 'Portero',
     'title_prefix' => 'Portero | ',
     'title_postfix' => '',
-    'enviar_credenciales' => 'Enviar al correo las credenciales de acceso.',
+    'enviar_credenciales' => 'Crear usuario y enviar al correo las credenciales de acceso.',
 
     /*
     |--------------------------------------------------------------------------
