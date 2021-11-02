@@ -57,6 +57,7 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::resource('/clase_unidads', ClaseUnidadController::class)->names('admin.clase_unidads');
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
     Route::resource('/unidads', UnidadController::class)->names('admin.unidads');
+    Route::get('/unidads/carga', [UnidadController::class, 'carga'])->name('admin.unidads.carga');
     Route::get('/propietarioModal/{id}', [UnidadController::class, 'getModal'])->name('admin.unidads.getModal');
     Route::resource('/personas', PersonaController::class)->names('admin.personas');
     Route::resource('/empleados', EmpleadoController::class)->names('admin.empleados');

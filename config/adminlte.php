@@ -591,6 +591,11 @@ return [
                     'asset' => false,
                     'location' => '//cdn.datatables.net/responsive/2.2.7/js/responsive.bootstrap.min.js',
                 ],
+                // [
+                //     'type' => 'css',
+                //     'asset' => false,
+                //     'location' => '//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css',
+                // ],
                 [
                     'type' => 'css',
                     'asset' => false,

@@ -19,6 +19,8 @@ use App\Models\Registro;
 use App\Models\TipoDocumento;
 use App\Models\TipoPropietario;
 use App\Models\User;
+use Yajra\Datatables\Datatables;
+//use Yajra\Datatables\Facades\Datatables;
 
 class UnidadController extends Controller
 {
@@ -30,19 +32,9 @@ class UnidadController extends Controller
         $this->middleware('can:admin.unidads.destroy')->only('destroy');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $unidads = Unidad::leftjoin("residentes","residentes.unidadid", "=", "unidads.id")
-        ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
-        ->join("bloques","bloques.id", "=", "unidads.bloqueid")
-        ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
-        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
-        ->whereIn('bloques.conjuntoid', session('dependencias'))
-        ->groupBy('unidads.id', 'unidads.bloqueid', 'conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
-        ->orderBy('bloquenombre', 'ASC')
-        ->orderBy('unidadnombre', 'ASC')
-        ->get();
-        return view('admin.unidad.index')->with('unidads', $unidads);
+       return view('admin.unidad.index');
     }
 
     public function create(Request $request)
@@ -112,19 +104,20 @@ class UnidadController extends Controller
 
     public function show($id)
     {
-        $unidads = Unidad::leftjoin("residentes","residentes.unidadid", "=", "unidads.id")
-        ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
-        ->join("bloques","bloques.id", "=", "unidads.bloqueid")
-        ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
-        ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
-        ->where('unidads.bloqueid', '=', $id)
-        ->whereIn('bloques.conjuntoid', session('dependencias'))
-        ->groupBy('unidads.id', 'unidads.bloqueid','conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
-        ->orderBy('bloquenombre', 'ASC')
-        ->orderBy('unidadnombre', 'ASC')
-        ->get();
+        // $unidads = Unidad::leftjoin("residentes","residentes.unidadid", "=", "unidads.id")
+        // ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
+        // ->join("bloques","bloques.id", "=", "unidads.bloqueid")
+        // ->join("conjuntos","conjuntos.id", "=", "bloques.conjuntoid")
+        // ->select(Unidad::raw('count(residentes.id) as residente_count, unidads.id, unidads.bloqueid, conjuntonombre, bloques.bloquenombre, unidads.claseunidadid, clase_unidads.claseunidadnombre, clase_unidads.claseunidaddescripcion, unidadnombre, estado_id'))
+        // ->where('unidads.bloqueid', '=', $id)
+        // ->whereIn('bloques.conjuntoid', session('dependencias'))
+        // ->groupBy('unidads.id', 'unidads.bloqueid','conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
+        // ->orderBy('bloquenombre', 'ASC')
+        // ->orderBy('unidadnombre', 'ASC')
+        // ->get();
 
-        return view('admin.unidad.index', compact('unidads','id'));
+        //return view('admin.unidad.index', compact('unidads','bloqueid'));
+        return view('admin.unidad.index', compact('id'));
 
     }
 
