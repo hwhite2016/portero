@@ -65,7 +65,7 @@
             <div class="col-md-4">
                 <div class="form-group"> <!-- Placa -->
                     {{ Form::label('vehiculoplaca', 'Placa') }}
-                    {!! Form::text('vehiculoplaca', null, array('placeholder' => 'Ej: XYZ-999', 'class' => 'form-control', 'data-inputmask'=>'"mask": "AAA-999"')) !!}
+                    {!! Form::text('vehiculoplaca', null, array('placeholder' => 'Ej: XYZ-999', 'class' => 'form-control', 'data-inputmask'=>'"mask": "AAA-999"', 'required')) !!}
                     @error('vehiculoplaca')
                         <small class="text-danger">
                             {{$message}}

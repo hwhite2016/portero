@@ -26,7 +26,7 @@
     <div class="col-12 col-md-3">
         <div class="form-group"> <!-- Documento ID -->
             {{ Form::label('personadocumento', '* Documento ID') }}
-            {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control')) !!}
+            {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control', 'required')) !!}
             @error('personadocumento')
                 <small class="text-danger">
                     {{$message}}
@@ -38,7 +38,7 @@
     <div class="col-md-4">
         <div class="form-group"> <!-- Nombres -->
             {{ Form::label('personanombre', '* Nombres y Apellidos') }}
-            {!! Form::text('personanombre', Auth::user()->name, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
+            {!! Form::text('personanombre', Auth::user()->name, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control', 'required')) !!}
             @error('personanombre')
                 <small class="text-danger">
                     {{$message}}
@@ -71,7 +71,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-at"></i></span>
                 </div>
-                {{ Form::email('personacorreo', Auth::user()->email, array('placeholder' => 'Ej: pedro@gmail.com', 'class' => 'form-control')) }}
+                {{ Form::email('personacorreo', Auth::user()->email, array('placeholder' => 'Ej: pedro@gmail.com', 'class' => 'form-control', 'required')) }}
             </div>
             @error('personacorreo')
                 <small class="text-danger">

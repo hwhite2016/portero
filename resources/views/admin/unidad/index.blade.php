@@ -2,7 +2,7 @@
 
 @section('title', 'Unidades')
 
-@section('plugins.Datatables', 'true')
+@section('plugins.Select2', 'true')
 @section('plugins.Toastr', 'true')
 @section('plugins.Sweetalert2', 'true')
 
@@ -29,6 +29,9 @@
       tr.group:hover {
           background-color: #ddd !important;
       }
+      .c-pointer {
+            cursor: pointer;
+      }
     </style>
 @stop
 
@@ -46,6 +49,10 @@
    @endif
 
    <script>
+      $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+      });
+
       $('.frm_delete').submit(function(e){
           e.preventDefault();
 

@@ -41,7 +41,7 @@
                 <div class="form-group"> <!-- Documento ID -->
                     {{ Form::label('personadocumento', '* Documento ID') }}
                     <div class="input-group">
-                        {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control')) !!}
+                        {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control', 'required')) !!}
                         <div class="input-group-prepend">
                             <a href="#" id="getDocumento" class="input-group-text"><i class="fas fa-search"></i></a>
                         </div>
@@ -64,7 +64,7 @@
             <div class="col-md-4">
                 <div class="form-group"> <!-- Nombres -->
                     {{ Form::label('personanombre', '* Nombres y Apellidos') }}
-                    {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
+                    {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control', 'required')) !!}
                     @error('personanombre')
                         <small class="text-danger">
                             {{$message}}
@@ -178,7 +178,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>
-                        {!! Form::checkbox('bienvenida', 1, true, ['class'=>'mr-1']) !!}
+                        {!! Form::checkbox('bienvenida', 1, false, ['class'=>'mr-1']) !!}
                         {{ config('adminlte.enviar_credenciales')}}
                     </label>
                 </div>

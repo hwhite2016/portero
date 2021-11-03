@@ -16,6 +16,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    {{-- <link href="{{asset('vendor/fontawesome-free2/css/all.min.css')}}" rel="stylesheet"> --}}
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <!-- Scripts -->

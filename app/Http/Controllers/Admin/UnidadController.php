@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UnidadsExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,8 +20,7 @@ use App\Models\Registro;
 use App\Models\TipoDocumento;
 use App\Models\TipoPropietario;
 use App\Models\User;
-use Yajra\Datatables\Datatables;
-//use Yajra\Datatables\Facades\Datatables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UnidadController extends Controller
 {
@@ -78,6 +78,12 @@ class UnidadController extends Controller
         $unidad->parqueaderos()->sync($request->parqueaderos);
         return redirect()->route('admin.unidads.edit', $unidad->id)->with('info','La unidad fue agregada de forma exitosa');
 
+    }
+
+    public function export($texto)
+    {
+         $export = new UnidadsExport(['texto' => $texto]);
+        return Excel::download($export, 'unidades.xlsx');
     }
 
     public function getModal($id)

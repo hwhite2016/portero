@@ -67,7 +67,7 @@
                             @endcan
 
                             <span class="badge {{$organo->organopqr == 1 ? 'bg-secondary' : ''}}">{{$organo->organopqr == 1 ? 'Agente PQR' : ''}}</span>
-                            <span class="badge {{$organo->organoestado == 1 ? 'bg-success' : 'bg-danger'}}">{{$organo->organoestado == 1 ? 'Visible' : 'No visible'}}</span>
+                            <span class="badge {{$organo->organoestado == 1 ? 'bg-success' : 'bg-danger'}}">{{$organo->organoestado == 1 ? 'Visible' : 'Oculto'}}</span>
                         </div>
                         <!-- /.card-footer -->
 

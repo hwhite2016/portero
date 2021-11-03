@@ -41,7 +41,7 @@
              <div class="col-12 col-md-4">
                  <div class="form-group"> <!-- Documento ID -->
                      {{ Form::label('personadocumento', '* Documento ID') }}
-                     {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control')) !!}
+                     {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control' , 'required')) !!}
                      @error('personadocumento')
                          <small class="text-danger">
                              {{$message}}
@@ -60,7 +60,7 @@
              <div class="col-md-4">
                  <div class="form-group"> <!-- Nombres -->
                      {{ Form::label('personanombre', '* Nombres y Apellidos') }}
-                     {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
+                     {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control', 'required')) !!}
                      @error('personanombre')
                          <small class="text-danger">
                              {{$message}}
