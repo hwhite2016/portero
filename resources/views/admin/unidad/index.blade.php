@@ -32,6 +32,14 @@
       .c-pointer {
             cursor: pointer;
       }
+      .pagination {
+            display: -ms-flexbox;
+            flex-wrap: wrap;
+            display: flex;
+            padding-left: 20;
+            list-style: none;
+            border-radius: 0.25rem;
+        }
     </style>
 @stop
 
