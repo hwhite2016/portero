@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Conjunto;
 use App\Models\Unidad;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -24,6 +25,13 @@ class UnidadIndex extends Component
     public function render()
     {
         $bloqueid = $this->bloqueid;
+        $total_unidades = Conjunto::leftJoin('bloques','bloques.conjuntoid','conjuntos.id')
+            ->leftJoin('unidads','unidads.bloqueid','bloques.id')
+            ->select(DB::raw('count(unidads.id) as numunidades'), 'conjuntounidades as maxunidades')
+            ->whereIn('conjuntos.id', session('dependencias'))
+            ->GroupByRaw('conjuntounidades')
+            ->first();
+
         $unidads = Unidad::leftjoin("residentes","residentes.unidadid", "=", "unidads.id")
                 ->leftjoin("clase_unidads", "clase_unidads.id", "=", "unidads.claseunidadid")
                 ->join("bloques","bloques.id", "=", "unidads.bloqueid")
@@ -48,9 +56,9 @@ class UnidadIndex extends Component
                 ->paginate($this->cant);
 
         if ($bloqueid) {
-            return view('livewire.admin.unidad-index', compact('unidads', 'bloqueid'));
+            return view('livewire.admin.unidad-index', compact('unidads', 'bloqueid', 'total_unidades'));
         }else{
-            return view('livewire.admin.unidad-index', compact('unidads'));
+            return view('livewire.admin.unidad-index', compact('unidads', 'total_unidades'));
         }
 
     }

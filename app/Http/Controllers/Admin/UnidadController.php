@@ -11,6 +11,7 @@ use App\Models\Bloque;
 use App\Models\Parqueadero;
 use App\Models\TipoUnidad;
 use App\Models\ClaseUnidad;
+use App\Models\Conjunto;
 use App\Models\EstadoRegistro;
 use App\Models\Residente;
 use App\Models\Vehiculo;
@@ -62,21 +63,35 @@ class UnidadController extends Controller
 
     public function store(Request $request)
     {
-         $request->validate([
+        $msj = "Error: Llegó al numero máximo de unidades, si desea adicionar una unidad coloquese en contacto con el área de soporte.";
+        $request->validate([
             'bloqueid'=>'required',
             'unidadnombre'=>'required',
             'claseunidadid'=>'required',
             'unidadnombre' => 'unique:unidads,unidadnombre,NULL,id,bloqueid,' . $request->get('bloqueid')
         ]);
-        $unidad = Unidad::create([
-            'bloqueid'=>$request->get('bloqueid'),
-            'unidadnombre'=>$request->get('tipounidadid').' '.$request->get('unidadnombre'),
-            'claseunidadid'=>$request->get('claseunidadid'),
-            'tipopropietarioid'=>$request->get('tipopropietarioid')
-        ]);
+        $num_unidades_max = Conjunto::leftJoin('bloques','bloques.conjuntoid','conjuntos.id')
+            ->leftJoin('unidads','unidads.bloqueid','bloques.id')
+            ->select(DB::raw('count(unidads.id) as numunidades'), 'conjuntounidades as maxunidades')
+            ->whereIn('conjuntos.id', session('dependencias'))
+            ->GroupByRaw('conjuntounidades')
+            ->first();
 
-        $unidad->parqueaderos()->sync($request->parqueaderos);
-        return redirect()->route('admin.unidads.edit', $unidad->id)->with('info','La unidad fue agregada de forma exitosa');
+        if($num_unidades_max->numunidades < $num_unidades_max->maxunidades){
+            $unidad = Unidad::create([
+                'bloqueid'=>$request->get('bloqueid'),
+                'unidadnombre'=>$request->get('tipounidadid').' '.$request->get('unidadnombre'),
+                'claseunidadid'=>$request->get('claseunidadid'),
+                'tipopropietarioid'=>$request->get('tipopropietarioid')
+            ]);
+            $unidad->parqueaderos()->sync($request->parqueaderos);
+            $msj = "La unidad fue agregada de forma exitosa";
+            return redirect()->route('admin.unidads.edit', $unidad->id)->with('info', $msj);
+        }else{
+            return redirect()->route('admin.unidads.create')->with('info', $msj);
+        }
+
+
 
     }
 
@@ -171,10 +186,6 @@ class UnidadController extends Controller
     public function update(Request $request, Unidad $unidad)
     {
 
-        $unidad->update([
-            'propietarioid'=>null,
-        ]);
-
         $validar_update = $unidad->id > 0 ? $unidad->id : "NULL";
         $request->validate([
             'bloqueid'=>'required',
@@ -183,8 +194,10 @@ class UnidadController extends Controller
             'estado_id' => 'required',
             'unidadnombre' => 'unique:unidads,unidadnombre,'.$validar_update.',id,bloqueid,' . $request->get('bloqueid')
         ]);
-        //$unidad->update($request->all());
 
+        $unidad->update([
+            'propietarioid'=>null,
+        ]);
         $unidad->update([
             'bloqueid'=>$request->get('bloqueid'),
             'tipopropietarioid'=>$request->get('tipopropietarioid'),
@@ -195,20 +208,22 @@ class UnidadController extends Controller
         ]);
 
         $registro = Registro::whereUnidadid($unidad->id);
-        $registro->update([
-            'estado_id' => $request->get('estado_id'),
-        ]);
+        if($registro->exists()){
+            $registro->update([
+                'estado_id' => $request->get('estado_id'),
+            ]);
 
-        $user = User::join('residentes','residentes.personaid','users.personaid')
-                ->join('registros','registros.unidadid','residentes.unidadid')
-                ->where('residentes.unidadid','=',$unidad->id)
-                ->select('users.id','registros.personaid')
-                ->first();
-        if($request->get('estado_id') == 4){
-            $user->roles()->sync(5);
-            //$user->assignRole($request->rol);
-        }else{
-            $user->roles()->sync(1);
+            $user = User::join('residentes','residentes.personaid','users.personaid')
+                    ->join('registros','registros.unidadid','residentes.unidadid')
+                    ->where('residentes.unidadid','=',$unidad->id)
+                    ->select('users.id','registros.personaid')
+                    ->first();
+            if($request->get('estado_id') == 4){
+                $user->roles()->sync(5);
+                //$user->assignRole($request->rol);
+            }else{
+                $user->roles()->sync(1);
+            }
         }
 
         $unidad->parqueaderos()->sync($request->parqueaderos);

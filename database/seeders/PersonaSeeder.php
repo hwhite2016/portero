@@ -87,5 +87,15 @@ class PersonaSeeder extends Seeder
             'personacelular' => '3007424455'
         ]);
 
+        Persona::create([
+            'tipodocumentoid' => 1,
+            'personadocumento' => '123456',
+            'personanombre' => 'Edith Genoveva Criales',
+            'personafechanacimiento' => '19650726',
+            'personacorreo' => 'edith@wikisoft.co',
+            'personacelular' => '3204526989'
+        ]);
+
+
     }
 }

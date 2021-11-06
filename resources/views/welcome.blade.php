@@ -264,8 +264,8 @@
           <div class="col-12 col-lg-8 text-center" data-aos="fade-down" data-aos-duration="800" data-aos-once="true">
             <div class="content section-heading-11">
               <h2>Seleccione un plan para comenzar</h2>
-              <p>Wireframes are generally created by business analysts, user experience designers, developers, visual
-                designers, and by those with expertise</p>
+              {{-- <p>Wireframes are generally created by business analysts, user experience designers, developers, visual
+                designers, and by those with expertise</p> --}}
             </div>
           </div>
         </div>
@@ -293,24 +293,19 @@
               <p>Administración</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Bloques, Unidades y Residentes</li>
-                  <li> <i class="icon icon-check-2-2"></i> Vehiculos y Mascotas</li>
+                  <li> <i class="icon icon-check-2-2"></i> Bloques, Unidades y Propietarios</li>
+                  <li> <i class="icon icon-check-2-2"></i> Residentes, Vehiculos y Mascotas</li>
                   <li> <i class="icon icon-check-2-2"></i> Parqueaderos</li>
+                  <li> <i class="icon icon-check-2-2"></i> Estructura Orgánica</li>
+                  <li> <i class="icon icon-check-2-2"></i> Documentos en Linea</li>
                 </ul>
               </div>
               <p>Recepción</p>
               <div class="price-body pt-8">
                 <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Gestion de Visitantes</li>
-                  <li> <i class="icon icon-check-2-2"></i> Entrada y salida de personas</li>
+                  <li> <i class="icon icon-check-2-2"></i> Entrada y salida de personas<br><small class="mx-4">(Control de Visitantes)</small></li>
                   <li> <i class="icon icon-check-2-2"></i> Entrada y salida de vehículos</li>
                   <li> <i class="icon icon-check-2-2"></i> Asignación de parqueaderos</li>
-                </ul>
-              </div>
-              <p>Residentes</p>
-              <div class="price-body pt-8">
-                <ul class="pricing-list list-unstyled">
-                  <li> <i class="icon icon-check-2-2"></i> Programación de Visitantes</li>
                 </ul>
               </div>
               <div class="price-btn">
@@ -352,6 +347,7 @@
                 <ul class="pricing-list list-unstyled">
                   <li> <i class="icon icon-check-2-2"></i> Noticias y Anuncios</li>
                   <li> <i class="icon icon-check-2-2"></i> Reserva de zonas comunes</li>
+                  <li> <i class="icon icon-check-2-2"></i> Programación de Visitantes</li>
                   <li> <i class="icon icon-check-2-2"></i> Gestión de Tickets (PQRS)</li>
                   <li> <i class="icon icon-check-2-2"></i> Notificación de correspondencia</li>
                 </ul>

@@ -24,6 +24,7 @@ class CreateConjuntosTable extends Migration
             $table->string('conjuntocelular', 15)->nullable();
             $table->string('conjuntotelefono', 15)->nullable();
             $table->string('conjuntokey', 16);
+            $table->smallInteger('conjuntounidades')->default(0);
             $table->boolean('conjuntoestado')->default(0);
             $table->timestamps();
         });

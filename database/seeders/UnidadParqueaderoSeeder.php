@@ -14,7 +14,7 @@ class UnidadParqueaderoSeeder extends Seeder
      */
     public function run()
     {
-        unidadsParqueadero::create(['unidad_id' => '7', 'parqueadero_id'=>'5']);
-        unidadsParqueadero::create(['unidad_id' => '10', 'parqueadero_id'=>'6']);
+        // unidadsParqueadero::create(['unidad_id' => '7', 'parqueadero_id'=>'5']);
+        // unidadsParqueadero::create(['unidad_id' => '10', 'parqueadero_id'=>'6']);
     }
 }

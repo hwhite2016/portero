@@ -42,10 +42,21 @@
 	    	<div class="card-body">
 				<div class="table-responsive">
                     <a class="btn btn-sm btn-default mb-2 mt-1" href="{{ route('admin.unidads.export', $texto) }}"><i class="far fa-file-excel"></i> Exportar a Excel</a>
+                    <small class="ml-3">
+                        @if($total_unidades->numunidades >= $total_unidades->maxunidades)
+                            <i class="fas fa-exclamation-triangle text-danger" data-toggle="tooltip" title="Llegó al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
+                            [ <u class="text-danger">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                        @elseif($total_unidades->numunidades >= ($total_unidades->maxunidades -5))
+                            <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" title="Esta a punto de llegar al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
+                            [ <u class="text-warning">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                        @else
+                            [ <u class="text-success">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                        @endif
+                    </small>
                     <table class="table table-sm table-bordered table-hover">
                         <thead>
                             <tr class="bg-light">
-                                <th scope="col" class="c-pointer" wire:click="order('bloquenombre')">
+                                <th scope="col" width="19%" class="c-pointer" wire:click="order('bloquenombre')">
                                     Bloque
                                     {{-- Sort --}}
                                     @if ($sort == "bloquenombre")
@@ -74,20 +85,6 @@
                                     @endif
 
                                 </th>
-                                <th scope="col" class="c-pointer" wire:click="order('claseunidadnombre')">
-                                    Tipo
-                                    {{-- Sort --}}
-                                    @if ($sort == "claseunidadnombre")
-                                        @if ($direction == "ASC")
-                                            <i class="fas fa-sort-up float-right mt-1"></i>
-                                        @else
-                                            <i class="fas fa-sort-down float-right mt-1"></i>
-                                        @endif
-
-                                    @else
-                                        <i class="fas fa-sort float-right mt-1"></i>
-                                    @endif
-                                </th>
                                 <th scope="col" class="c-pointer" wire:click="order('estadonombre')" width="15%">
                                     Estado
                                     {{-- Sort --}}
@@ -111,12 +108,10 @@
                                     <td class="c-pointer" wire:click="edit({{$unidad->id}})">
                                         {{ $unidad->bloquenombre }}
                                     </td>
-                                    <td class="c-pointer" wire:click="edit({{$unidad->id}})"> {{ $unidad->unidadnombre }} </td>
-                                    <td class="c-pointer" wire:click="edit({{$unidad->id}})">
-                                        {{ $unidad->claseunidadnombre }}
-                                        <small> ({{ $unidad->claseunidaddescripcion }})</small>
+                                    <td class="c-pointer" wire:click="edit({{$unidad->id}})"> {{ $unidad->unidadnombre }} <br>
+                                        <small> ({{ $unidad->claseunidadnombre }} - {{ $unidad->claseunidaddescripcion }})</small>
                                     </td>
-                                    <td class="c-pointer" wire:click="edit({{$unidad->id}})">
+                                    <td class="c-pointer text-center" wire:click="edit({{$unidad->id}})">
                                         @if($unidad->estado_id == 1)
                                             <span class="badge bg-light">Sin Registro</span>
                                         @elseif($unidad->estado_id == 2)
@@ -128,7 +123,7 @@
                                         @endif
                                     </td>
 
-                                    <td>
+                                    <td class="text-center">
                                         @can('admin.unidads.destroy')
                                         {!! Form::model($unidad, ['route'=>['admin.unidads.destroy', $unidad], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                                         @endcan

@@ -48,7 +48,7 @@
                         <td><label class="text-uppercase fw-bold"> {{ $conjunto->barrionombre }} </label>
                             <small> ({{ $conjunto->ciudadnombre }}) </small>
                         </td>
-                        <td> {{ $conjunto->conjuntonombre }} </td>
+                        <td> {{ $conjunto->conjuntonombre }} <small class="text-secondary">( {{ $conjunto->conjuntounidades }} Unidades )</small></td>
                         <td> {{ $conjunto->conjuntodireccion }} </td>
                         <td> {{ $conjunto->conjuntocorreo }} </td>
                         <td> {{ $conjunto->conjuntocelular }} </td>

@@ -31,6 +31,7 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntonit' => 'required|min:4|max:20',
             'conjuntonombre' => 'required|min:3|max:30',
             'conjuntodireccion' => 'required|min:4|max:30',
+            'conjuntounidades' => 'required',
             //Bloques
         ];
     }
@@ -50,6 +51,7 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntonombre.min'        => ':attribute debe contener mas de una letra.',
             'conjuntonombre.max'        => ':attribute debe contener max 30 letras.',
             'conjuntodireccion.required'   => ':attribute es obligatorio.',
+            'conjuntounidades.required'   => ':attribute es obligatorio.',
             'conjuntodireccion.min'        => ':attribute debe contener mas de una letra.',
             'conjuntodireccion.max'        => ':attribute debe contener max 30 letras.',
             //Bloques
@@ -66,6 +68,7 @@ class ValidarFormularioRequest extends FormRequest
             'conjuntonit'        => 'El NIT del conjunto',
             'conjuntonombre'        => 'El nombre del conjunto',
             'conjuntodireccion'    => 'La direccion del conjunto',
+            'conjuntounidades'    => 'El numero de unidades del conjunto',
             //Bloques
         ];
     }

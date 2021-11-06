@@ -2,6 +2,7 @@
 
 @section('title', 'Unidades')
 
+@section('plugins.Toastr', 'true')
 @section('plugins.Select2', 'true')
 
 @section('content_header')
@@ -131,6 +132,19 @@
 @stop
 
 @section('js')
+
+@if(session('info'))
+    <script type="text/javascript">
+        var txt = "{{session('info')}}";
+        var msj = txt.toLowerCase().indexOf('error')
+        if (msj >= 0){
+            toastr.error("{{session('info')}}")
+        }else{
+            toastr.success("{{session('info')}}")
+        }
+    </script>
+@endif
+
 <script>
     $(function () {
       //Initialize Select2 Elements

@@ -21,7 +21,7 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Barrio -->
                     {{ Form::label('barrioid', 'Barrio') }}
                     {!! Form::select('barrioid', $barrios, NULL, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un barrio']) !!}
@@ -43,7 +43,7 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group"> <!-- Nit -->
                     {{ Form::label('conjuntonit', '* Nit') }}
                     <div class="input-group">
@@ -59,6 +59,18 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-2">
+                <div class="form-group"> <!-- Numero de unidades -->
+                    {{ Form::label('conjuntounidades', '* Nro. Unidades') }}
+                    {{ Form::number('conjuntounidades', NULL, array('class' => 'form-control')) }}
+                    @error('conjuntounidades')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
             <div class="col-md-4">
                 <div class="form-group"> <!-- Direccion del conjunto -->
                     {{ Form::label('conjuntodireccion', '* Direccion del conjunto') }}
@@ -70,7 +82,6 @@
                     @enderror
                 </div>
             </div>
-
             <div class="col-md-3">
                 <div class="form-group"> <!-- Numero celular -->
                     {{ Form::label('conjuntocelular', 'Numero Celular Porteria') }}

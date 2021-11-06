@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <span class="float-right badge {{$conjunto->conjuntoestado == 1 ? 'bg-success' : 'bg-danger'}}">{{$conjunto->conjuntoestado == 1 ? 'Activo' : 'Inactivo'}}</span>
                     <small class="card-text text-muted">{{ $conjunto->barrionombre }}</small><br>
-                    <label class="card-title">{{ $conjunto->conjuntonombre }}</label><br>
+                    <label class="card-title">{{ $conjunto->conjuntonombre }}</label> <small class="ml-1">( 594 Unidades )</small><br>
                     <div class="card-text">{{ $conjunto->conjuntodireccion }}</div>
                     <div class="row">
                         <div class="col-3">

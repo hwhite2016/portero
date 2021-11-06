@@ -42,5 +42,12 @@ class UserSeeder extends Seeder
         	'password' => bcrypt('eimy12345')
         ])->assignRole('Residente');
 
+        User::create([
+            'personaid' => 5,
+        	'name' => 'Edith Genoveva Criales',
+        	'email' => 'edith@wikisoft.co',
+        	'password' => bcrypt('edith12345')
+        ])->assignRole('_administrador');
+
     }
 }
