@@ -40,23 +40,35 @@
     	@if($unidads->count())
         @php if($search) $texto = $search @endphp
 	    	<div class="card-body">
-				<div class="table-responsive">
-                    <a class="btn btn-sm btn-default mb-2 mt-1" href="{{ route('admin.unidads.export', $texto) }}"><i class="far fa-file-excel"></i> Exportar a Excel</a>
-                    <small class="ml-3">
-                        @if($total_unidades->numunidades >= $total_unidades->maxunidades)
-                            <i class="fas fa-exclamation-triangle text-danger" data-toggle="tooltip" title="Llegó al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
-                            [ <u class="text-danger">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                        @elseif($total_unidades->numunidades >= ($total_unidades->maxunidades -5))
-                            <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" title="Esta a punto de llegar al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
-                            [ <u class="text-warning">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                        @else
-                            [ <u class="text-success">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                        @endif
-                    </small>
+
+                    <div class="row">
+                        <div class="col-4 col-sm-3 col-md-2 col-lg-2">
+                            <a class="btn btn-sm btn-default mb-2 mt-1" href="{{ route('admin.unidads.export', $texto) }}"><i class="far fa-file-excel"></i> Exportar a Excel</a>
+                        </div>
+                        <div class="col-8 col-sm-9 col-md-10 col-lg-10">
+                            <small class="float-right">
+                                @if($total_unidades->numunidades >= $total_unidades->maxunidades)
+                                    <i class="fas fa-check text-success" data-toggle="tooltip" title="Llegó al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
+                                    [ <u class="text-success">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                                    <span class="text-success">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                @elseif($total_unidades->numunidades >= ($total_unidades->maxunidades -5))
+                                    <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" title="Esta a punto de llegar al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
+                                    [ <u class="text-warning">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                                    <span class="text-warning">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                @else
+                                    [ <u class="text-danger">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
+                                    <span class="text-danger">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                @endif
+                            </small>
+                        </div>
+                    </div>
+
+
+                <div class="table-responsive">
                     <table class="table table-sm table-bordered table-hover">
                         <thead>
                             <tr class="bg-light">
-                                <th scope="col" width="19%" class="c-pointer" wire:click="order('bloquenombre')">
+                                <th scope="col"  class="c-pointer" wire:click="order('bloquenombre')">
                                     Bloque
                                     {{-- Sort --}}
                                     @if ($sort == "bloquenombre")

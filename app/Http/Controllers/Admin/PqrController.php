@@ -171,7 +171,7 @@ class PqrController extends Controller
 
             $filename = date('YmdHis').'.'.$file->getClientOriginalExtension();
             //\Storage::disk('public')->put($filename,  \File::get($file));
-            if($file->getClientOriginalExtension() == 'pdf'){
+            if(strtolower($file->getClientOriginalExtension()) == 'pdf'){
                 $ruta = $destinationPath.'/'.$filename;
                 copy($file, $ruta);
             }else{

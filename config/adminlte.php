@@ -271,6 +271,12 @@ return [
             'can'         => 'admin.pqrs.index',
         ],
         [
+            'text'        => 'Comunicados',
+            'route'       => 'admin.anuncios.index',
+            'icon'        => 'fas fa-bullhorn',
+            'can'         => 'admin.anuncios.index',
+        ],
+        [
             'text'        => 'Notificaciones',
             'icon'        => 'fas fa-bell',
             'can'         => 'admin.notificaciones.show',

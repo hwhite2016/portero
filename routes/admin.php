@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AnuncioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
@@ -87,6 +88,9 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::resource('/pqrs', PqrController::class)->names('admin.pqrs');
     Route::get('/motivo', [PqrController::class, 'getMotivo'])->name('admin.pqrs.motivo');
     Route::post('/estado/{id?}', [PqrController::class, 'changeEstado'])->name('admin.pqrs.estado');
+    Route::resource('/anuncios', AnuncioController::class)->names('admin.anuncios');
+    Route::get('/anuncios/enviar/{id}', [AnuncioController::class, 'enviar'])->name('admin.anuncios.enviar');
+    Route::get('/anuncios/del/{id}', [AnuncioController::class, 'delFile'])->name('admin.anuncios.delFile');
 
     Route::resource('/organos', OrganoController::class)->names('admin.organos');
     Route::get('/estructura', [OrganoController::class, 'estructura'])->name('admin.organos.estructura');
