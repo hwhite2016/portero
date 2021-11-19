@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
+use Telegram\Bot\Laravel\Facades\Telegram;
+use Telegram\Bot\FileUpload\InputFile;
 
 class AnuncioController extends Controller
 {
@@ -116,7 +118,58 @@ class AnuncioController extends Controller
         return redirect()->route('admin.anuncios.edit', $id);
     }
 
-    public function enviar($id)
+    public function telegram($id)
+    {
+        $anuncio = Anuncio::join('tipo_anuncios', 'tipo_anuncios.id', 'anuncios.tipoanuncioid')
+            ->join('conjuntos', 'conjuntos.id', 'anuncios.conjuntoid')
+            ->join('empleados', 'empleados.conjuntoid', 'conjuntos.id')
+            ->join('personas', 'personas.id', 'empleados.personaid')
+            ->join('telegrams', 'telegrams.conjuntoid', 'conjuntos.id')
+            ->select('conjuntonombre', 'personanombre', 'anuncionombre', 'tipoanuncionombre', 'anunciodescripcion', 'anuncios.conjuntoid', 'anuncioadjunto','bloqueid','unidadid','chat_id')
+            ->where('empleados.cargo_id', 10)
+            ->where('anuncios.id', $id)->first();
+
+        $text = "<b>".$anuncio->tipoanuncionombre.":</b>\n\n"
+        . "<b>".$anuncio->anuncionombre."</b>\n"
+        . $anuncio->anunciodescripcion. "\n\n"
+        . "Atentamente \n"
+        . "<b>".$anuncio->personanombre."</b>\n"
+        . "Administrador(a) - ". $anuncio->conjuntonombre;
+
+        Telegram::sendMessage([
+            'chat_id' => $anuncio->chat_id,
+            'parse_mode' => 'HTML',
+            'text' => $text
+        ]);
+
+        if($anuncio->anuncioadjunto) {
+            $destinationPath = public_path('storage/'.$anuncio->conjuntoid.'/'.'comunicados');
+            $ruta = $destinationPath.'/'.$anuncio->anuncioadjunto;
+            $ext = explode(".", $anuncio->anuncioadjunto);
+            if(strtolower($ext[1]) == 'pdf'){
+                Telegram::sendDocument([
+                    'chat_id' => $anuncio->chat_id,
+                    'caption' => 'Ver Documento',
+                    'document' => InputFile::create($ruta)
+                ]);
+            }else{
+                Telegram::sendPhoto([
+                    'chat_id' => $anuncio->chat_id,
+                    'photo' => InputFile::create($ruta)
+                ]);
+            }
+
+        }
+
+        $comunicado = Anuncio::find($id);
+        $comunicado->update([
+            'anunciofechaentrega'=> now()
+        ]);
+
+        return redirect()->route('admin.anuncios.index')->with('info','El comunicado fue enviado de forma exitosa');
+    }
+
+    public function email($id)
     {
 
         $ruta = null;

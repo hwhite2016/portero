@@ -89,7 +89,8 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/motivo', [PqrController::class, 'getMotivo'])->name('admin.pqrs.motivo');
     Route::post('/estado/{id?}', [PqrController::class, 'changeEstado'])->name('admin.pqrs.estado');
     Route::resource('/anuncios', AnuncioController::class)->names('admin.anuncios');
-    Route::get('/anuncios/enviar/{id}', [AnuncioController::class, 'enviar'])->name('admin.anuncios.enviar');
+    Route::get('/anuncios/email/{id}', [AnuncioController::class, 'email'])->name('admin.anuncios.email');
+    Route::get('/anuncios/telegram/{id}', [AnuncioController::class, 'telegram'])->name('admin.anuncios.telegram');
     Route::get('/anuncios/del/{id}', [AnuncioController::class, 'delFile'])->name('admin.anuncios.delFile');
 
     Route::resource('/organos', OrganoController::class)->names('admin.organos');

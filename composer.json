@@ -15,6 +15,7 @@
     "fruitcake/laravel-cors": "^2.0",
     "guzzlehttp/guzzle": "^7.0.1",
     "intervention/image": "^2.5",
+    "irazasyed/telegram-bot-sdk": "^3.4",
     "jeroennoten/laravel-adminlte": "^3.6",
     "khanamiryan/qrcode-detector-decoder": "1.0.5.2",
     "laravel-notification-channels/webpush": "^5.1",

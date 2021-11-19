@@ -72,7 +72,7 @@
                                 <th scope="col" class="c-pointer">
                                     Destino
                                 </th>
-                                <th scope="col" class="c-pointer" wire:click="order('anunciofechaentrega')" width="15%">
+                                <th scope="col" class="c-pointer" wire:click="order('anunciofechaentrega')">
                                     Ultimo envío
                                     {{-- Sort --}}
                                     @if ($sort == "anunciofechaentrega")
@@ -86,7 +86,7 @@
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
                                 </th>
-                                <th scope="col" width="12%">...</th>
+                                <th scope="col">...</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,9 +122,14 @@
                                         @endcan
 
                                         @can('admin.anuncios.edit')
-                                            <a href="{{route('admin.anuncios.enviar', $anuncio->id)}}" id="enviar_{{$anuncio->id}}" class="enviar btn btn-sm btn-success">
-                                                Enviar
+                                            <a href="{{route('admin.anuncios.email', $anuncio->id)}}" id="enviar_{{$anuncio->id}}" class="enviar btn btn-sm btn-success">
+                                                <i class="fas fa-envelope"></i> Email
                                             </a>
+                                            @if(!$anuncio->bloqueid)
+                                            <a href="{{route('admin.anuncios.telegram', $anuncio->id)}}" id="enviar_{{$anuncio->id}}" class="enviar btn btn-sm btn-info">
+                                                <i class="fas fa-paper-plane"></i> Telegram
+                                            </a>
+                                            @endif
                                             <a href="{{route('admin.anuncios.edit', $anuncio->id)}}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>

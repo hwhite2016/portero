@@ -7,6 +7,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\ContactanosController;
 use App\Http\Controllers\CuentaController;
+use App\Http\Controllers\TelegramBotController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -40,6 +41,8 @@ Route::delete('/registro/vehiculoDestroy/{id}', [RegistroController::class, 'des
 Route::get('/registro/mascotaModal/{id}', [RegistroController::class, 'createMascota'])->name('registros.createMascota');
 Route::post('/registro/mascotaStore', [RegistroController::class, 'storeMascota'])->name('registros.storeMascota');
 Route::delete('/registro/mascotaDestroy/{id}', [RegistroController::class, 'destroyMascota'])->name('registros.destroyMascota');
+
+Route::get('/updated-activity', [TelegramBotController::class, 'updatedActivity']);
 
 Route::get('/terminos', function () {
     return view('terminos');
