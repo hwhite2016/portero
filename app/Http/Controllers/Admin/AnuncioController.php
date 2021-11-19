@@ -34,7 +34,7 @@ class AnuncioController extends Controller
     {
         $conjuntos = Conjunto::whereIn('id', session('dependencias'))->pluck('conjuntonombre', 'id');
         $bloques = Bloque::whereIn('conjuntoid', session('dependencias'))->pluck('bloquenombre', 'id');
-        $bloques->prepend('Seleccione el bloque', '');
+        $bloques->prepend('Todos', '0');
         $tipo_anuncio = TipoAnuncio::all()->pluck('tipoanuncionombre', 'id');
         return view('admin.anuncio.create', compact('conjuntos','bloques','tipo_anuncio'));
     }
@@ -75,11 +75,24 @@ class AnuncioController extends Controller
             $filename = null;
         }
 
+        if($request->get('bloqueid') != null && $request->get('bloqueid') > 0){
+            $bloqueid = $request->get('bloqueid');
+
+            if($request->get('unidadid')){
+                $unidadid = implode(",", $request->get('unidadid'));
+            }else{
+                $unidadid = null;
+            }
+        }else{
+            $bloqueid = null;
+            $unidadid = null;
+        }
+
         $anuncio = Anuncio::create([
             'conjuntoid' => $request->get('conjuntoid'),
             'tipoanuncioid' => $request->get('tipoanuncioid'),
-            'bloqueid' => $request->get('bloqueid'),
-            'unidadid' => implode(",", $request->get('unidadid')),
+            'bloqueid' => $bloqueid,
+            'unidadid' => $unidadid,
             'anuncionombre' => $request->get('anuncionombre'),
             'anunciodescripcion' => $request->get('anunciodescripcion'),
             'anuncioadjunto' => $filename,
@@ -159,7 +172,7 @@ class AnuncioController extends Controller
 
         foreach($users as $user){
             $data['name'] = $user->name;
-            Mail::to($user->email)->queue(new ComunicadoMailable($data));
+            Mail::to($user->email)->send(new ComunicadoMailable($data));
         }
 
         $comunicado = Anuncio::find($id);

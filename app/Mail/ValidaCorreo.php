@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ValidaCorreo extends Mailable
+class ValidaCorreo extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 

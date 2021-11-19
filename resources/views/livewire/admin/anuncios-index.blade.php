@@ -101,7 +101,7 @@
                                         @endif
                                         {{ $anuncio->anuncionombre }}
                                     </td>
-                                    <td>
+                                    <td class="c-pointer">
                                         @if($anuncio->bloqueid)
                                             @if($anuncio->unidadid)
                                                 Unidad(es) de {{$anuncio->bloquenombre}}
