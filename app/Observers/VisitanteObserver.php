@@ -29,7 +29,7 @@ class VisitanteObserver
          if($visitante->parqueaderoid){
             $parqueadero = Parqueadero::find($visitante->parqueaderoid);
             $parqueadero->update([
-                'parqueaderoestado'=>1,
+                'estadoparqueaderoid'=>2,
             ]);
          }
     }
@@ -45,7 +45,7 @@ class VisitanteObserver
         if($visitante->parqueaderoid){
             $parqueadero = Parqueadero::find($visitante->parqueaderoid);
             $parqueadero->update([
-                'parqueaderoestado'=>0,
+                'estadoparqueaderoid'=>1,
             ]);
         }
     }

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Zonas Comunes')
+@section('title', 'Reservas')
 
 @section('plugins.Toastr', 'true')
 @section('plugins.Sweetalert2', 'true')
@@ -46,7 +46,7 @@
             @endif
             @foreach ($reservas as $reserva)
                 @php
-                    if($cont <= 3){
+                    if($cont <= 6){
                         $collapsed = "";
                         $icon = "minus";
                     }else{
@@ -57,7 +57,7 @@
                 <div class="col-12 col-md-4">
                     <div class="card shadow-lg {{$collapsed}}">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafecha))] }}, {{date('j', strtotime($reserva->reservafecha))}} de {{ $meses[date('n', strtotime($reserva->reservafecha)) - 1] }} | {{ date('g:i', strtotime($reserva->reservahora)) }} - {{ date('g:i a', strtotime($reserva->reservahorafin)) }}  </h3>
+                            <h3 class="card-title"><i class="far fa-calendar-check"></i>&nbsp; {{ $dias[date('w', strtotime($reserva->reservafechaini))] }}, {{date('j', strtotime($reserva->reservafechaini))}} de {{ $meses[date('n', strtotime($reserva->reservafechaini)) - 1] }} | {{ date('g:i', strtotime($reserva->reservafechaini)) }} - {{ date('g:i a', strtotime($reserva->reservafechafin)) }}  </h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{$icon}}"></i>
                                 </button>
@@ -83,7 +83,7 @@
                                 </div>
                                 {{-- <div class="col-3">
                                     <div class="title m-b-md">
-                                        {!!QrCode::size(70)->color(170, 170, 170)->generate($reserva->reservacodigo) !!}
+                                        {!! QrCode::size(70)->color(170, 170, 170)->generate($reserva->reservacodigo) !!}
                                     </div>
                                 </div> --}}
                             </div>
@@ -97,7 +97,7 @@
                               {!! Form::model($reserva, ['route'=>['admin.reservas.destroy', $reserva], 'method'=>'delete', 'class'=>'frm_delete']) !!}
                               @csrf
                               {!! Form::hidden('zonaid', $reserva->zonaid) !!}
-                              {!! Form::hidden('reservafecha', $reserva->reservafecha) !!}
+                              {!! Form::hidden('reservafechaini', $reserva->reservafechaini) !!}
                               {!! Form::hidden('reservahora', $reserva->reservahora) !!}
                               {{-- @method('DELETE') --}}
 

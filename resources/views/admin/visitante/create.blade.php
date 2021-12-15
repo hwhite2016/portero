@@ -22,9 +22,9 @@
     <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group">
-                    {{ Form::label('conjuntoid', 'Copropiedad') }}
+                    {{ Form::label('conjuntoid', '* Copropiedad') }}
                     {!! Form::select('conjuntoid', $conjuntos, null, ['class' => 'form-control select2','style'=>'width: 100%']) !!}
                     @error('conjuntoid')
                         <small class="text-danger">
@@ -35,9 +35,9 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group">
-                    {{ Form::label('unidadid', 'Unidad') }}
+                    {{ Form::label('unidadid', '* Unidad') }}
                     {!! Form::select('unidadid', $unidads, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la vivienda']) !!}
                     @error('unidadid')
                         <small class="text-danger">
@@ -48,8 +48,61 @@
                 </div>
             </div>
 
+            <div class="col-12 col-md-3">
+                <div class="form-group"> <!-- Documento ID -->
+                    {{ Form::label('personadocumento', '* Documento ID') }}
+                    <div class="input-group">
+                        {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control')) !!}
+                        <div class="input-group-prepend">
+                            <a href="#" id="getDocumento" class="input-group-text"><i class="fas fa-search"></i></a>
+                        </div>
+                    </div>
+                    @error('personadocumento')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <div class="form-group"> <!-- Tipo Documento -->
+                    {{ Form::label('tipodocumentoid', '* Tipo Documento') }}
+                    {!! Form::select('tipodocumentoid', $tipo_documentos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo de documento']) !!}
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <div class="form-group"> <!-- Nombres -->
+                    {{ Form::label('personanombre', '* Nombres y Apellidos') }}
+                    {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
+                    @error('personanombre')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <div class="form-group"> <!-- Numero celular -->
+                    {{ Form::label('personacelular', 'Numero Celular') }}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
+                        </div>
+                        {{ Form::text('personacelular', null, array('placeholder' => '', 'class' => 'form-control', 'data-inputmask'=>'"mask": "(999) 999-9999"')) }}
+                        @error('personacelular')
+                            <small class="text-danger">
+                                {{$message}}
+                            </small>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
             @can('admin.seguimiento.index')
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Fecha de ingreso programado -->
                     {{ Form::label('visitanteingreso', 'Fecha y Hora de ingreso') }}
                     <div class="input-group date" id="ingreso" data-target-input="nearest">
@@ -67,59 +120,6 @@
             </div>
             @endcan
 
-            <div class="col-12 col-md-4">
-                <div class="form-group"> <!-- Documento ID -->
-                    {{ Form::label('personadocumento', '* Documento ID') }}
-                    <div class="input-group">
-                        {!! Form::text('personadocumento', null, array('placeholder' => 'Ingrese el No. de documento', 'class' => 'form-control')) !!}
-                        <div class="input-group-prepend">
-                            <a href="#" id="getDocumento" class="input-group-text"><i class="fas fa-search"></i></a>
-                        </div>
-                    </div>
-                    @error('personadocumento')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="form-group"> <!-- Tipo Documento -->
-                    {{ Form::label('tipodocumentoid', 'Tipo Documento') }}
-                    {!! Form::select('tipodocumentoid', $tipo_documentos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un tipo de documento']) !!}
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="form-group"> <!-- Nombres -->
-                    {{ Form::label('personanombre', '* Nombres y Apellidos') }}
-                    {!! Form::text('personanombre', null, array('placeholder' => 'Ej: Jose Perez Marquez', 'class' => 'form-control')) !!}
-                    @error('personanombre')
-                        <small class="text-danger">
-                            {{$message}}
-                        </small>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="form-group"> <!-- Numero celular -->
-                    {{ Form::label('personacelular', 'Numero Celular') }}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-mobile-alt"></i></span>
-                        </div>
-                        {{ Form::text('personacelular', null, array('placeholder' => '', 'class' => 'form-control', 'data-inputmask'=>'"mask": "(999) 999-9999"')) }}
-                        @error('personacelular')
-                            <small class="text-danger">
-                                {{$message}}
-                            </small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
             <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Acompañantes -->
                     {!! Form::label('visitantenumero', 'Nro. de acompañantes que ingresan') !!}
@@ -127,10 +127,10 @@
                 </div>
             </div>
 
-            @can('admin.visitantes.edit')
-            <div class="col-5">
+            @can('admin.visitantes.destroy')
+            <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Parqueadero -->
-                    {{ Form::label('parqueaderoid', 'Asignar parqueadero') }}
+                    {{ Form::label('parqueaderoid', 'Asignar parqueadero') }} <small>(Opcional)</small>
                     {!! Form::select('parqueaderoid', $parqueaderos, null, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione un parqueadero disponible']) !!}
                     @error('parqueaderoid')
                         <small class="text-danger">
@@ -139,9 +139,9 @@
                     @enderror
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-12 col-md-3">
                 <div class="form-group"> <!-- Placa Vehiculo -->
-                    {{ Form::label('visitanteplaca', 'Placa del vehiculo') }}
+                    {{ Form::label('visitanteplaca', 'Placa del vehiculo') }} <small>(Opcional)</small>
                     {!! Form::text('visitanteplaca', null, array('placeholder' => 'Ej: XYZ-999', 'class' => 'form-control', 'data-inputmask'=>'"mask": "AAA-999"')) !!}
                     @error('visitanteplaca')
                         <small class="text-danger">
@@ -202,8 +202,9 @@
 
       $('#ingreso').datetimepicker({
             icons: {time: "fa fa-clock"},
-            format: 'YYYY-MM-DD H:mm:ss',
-            //minDate: moment().subtract(1, 'days'),
+            format: 'YYYY-MM-DD H:mm:00',
+            collapse: false,
+            locale: 'es',
             minDate: moment().add(30, 'm'),
             disabledDates: [
                 moment().subtract(1, 'days')

@@ -14,7 +14,7 @@ Confirme que <u>{{$contacto['email']}}</u> es su dirección de correo electróni
 @endcomponent
 
 <small>
-Usted recibió este correo electrónico porque esta intentando crear una cuenta en la plataforma Porteroenlinea.com.
+Usted recibió este correo electrónico porque esta intentando crear una cuenta en la plataforma Portero.com.co.
 Si no fue usted simplemente ignore este correo, de lo contrario asegúrese de que nuestros mensajes lleguen a su bandeja de entrada
 (y no a sus carpetas masivas o basura).
 </small>

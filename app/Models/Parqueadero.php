@@ -14,5 +14,5 @@ class Parqueadero extends Model
         return $this->belongsTo(Conjunto::class, 'conjunto_id');
     }
 
-    protected $fillable = ['conjuntoid', 'parqueaderonumero', 'parqueaderotipo', 'parqueaderopiso', 'parqueaderoestado'];
+    protected $fillable = ['conjuntoid', 'parqueaderonumero', 'tipoparqueaderoid', 'parqueaderopiso', 'estadoparqueaderoid'];
 }

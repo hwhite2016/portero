@@ -53,8 +53,13 @@
 
             <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Tipo -->
-                    {!! Form::label('parqueaderotipo', 'Tipo de parqueadero') !!}
-                    {!! Form::select('parqueaderotipo', ['Asignado'=>'Asignado', 'Visitante'=>'Visitante', 'Discapacitado'=>'Discapacitado'], $parqueadero->parqueaderotipo, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el tipo']) !!}
+                    {!! Form::label('tipoparqueaderoid', 'Tipo de parqueadero') !!}
+                    {!! Form::select('tipoparqueaderoid', $tipo_parqueaderos, $parqueadero->tipoparqueaderoid, ['class' => 'form-control  select2','style'=>'width: 100%','data-placeholder'=>'Seleccione el tipo']) !!}
+                    @error('tipoparqueaderoid')
+                        <small class="text-danger">
+                            {{$message}}
+                        </small>
+                    @enderror
                 </div>
             </div>
 

@@ -115,11 +115,13 @@ class VisitanteController extends Controller
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
         $user = User::find(Auth::user()->id);
+
         if ($user->hasRole('Residente')){
-            $parqueaderos = Parqueadero::where('parqueaderotipo','=','Visitante')
-            ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', parqueaderotipo) AS parqueaderonumero"),'id')
-            ->where('parqueaderoestado','=',0)
-            ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
+            $parqueaderos = Parqueadero::join('tipo_parqueaderos', 'tipo_parqueaderos.id','parqueaderos.tipoparqueaderoid')
+                ->where('tipoparqueaderoid','<>',1)
+                ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', tipoparqueaderonombre, ' (Piso ', parqueaderopiso,')') AS parqueaderonumero"),'parqueaderos.id')
+                ->where('estadoparqueaderoid','=',1)
+                ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'parqueaderos.id');
 
             $unidads = Residente::join('unidads','unidads.id','=','residentes.unidadid')
                 ->join('bloques','bloques.id','=','unidads.bloqueid')
@@ -130,10 +132,11 @@ class VisitanteController extends Controller
                 ->orderBy('unidad','ASC')
                 ->pluck('unidad', 'unidads.id');
         }else{
-            $parqueaderos = Parqueadero::where('parqueaderotipo','<>','Asignado')
-            ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', parqueaderotipo) AS parqueaderonumero"),'id')
-            ->where('parqueaderoestado','=',0)
-            ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
+            $parqueaderos = Parqueadero::join('tipo_parqueaderos', 'tipo_parqueaderos.id','parqueaderos.tipoparqueaderoid')
+                ->where('tipoparqueaderoid','<>',1)
+                ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', tipoparqueaderonombre, ' (Piso ', parqueaderopiso,')') AS parqueaderonumero"),'parqueaderos.id')
+                ->where('estadoparqueaderoid','=',1)
+                ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'parqueaderos.id');
 
             $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
                 ->select(
@@ -196,7 +199,7 @@ class VisitanteController extends Controller
             ]);
             if($request->get('parqueaderoid')){
                 $parqueadero = Parqueadero::find($request->get('parqueaderoid'));
-                $parqueadero->update(['parqueaderoestado'=>1]);
+                $parqueadero->update(['estadoparqueaderoid'=>2]);
             }
 
             return redirect()->route('admin.visitantes.index')->with('info','El visitante ingresó a la copropiedad de forma exitosa');
@@ -220,9 +223,12 @@ class VisitanteController extends Controller
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $conjuntos = Conjunto::whereIn('conjuntos.id', session('dependencias'))->pluck('conjuntonombre', 'id');
 
-        $parqueaderos = Parqueadero::where('parqueaderotipo','=','Visitante')
-            ->where('parqueaderoestado','=',0)
-            ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'id');
+        $parqueaderos = Parqueadero::join('tipo_parqueaderos', 'tipo_parqueaderos.id','parqueaderos.tipoparqueaderoid')
+                ->where('tipoparqueaderoid','<>',1)
+                ->select(Parqueadero::raw("CONCAT(parqueaderonumero,' - ', tipoparqueaderonombre, ' (Piso ', parqueaderopiso,')') AS parqueaderonumero"),'parqueaderos.id')
+                ->whereIn('estadoparqueaderoid',[1,2])
+                ->whereIn('conjuntoid', session('dependencias'))->pluck('parqueaderonumero', 'parqueaderos.id');
+
 
         $parqueaderos->prepend('Seleccione un parqueadero disponible', '');
 
@@ -241,18 +247,32 @@ class VisitanteController extends Controller
     public function update(Request $request, Visitante $visitante)
     {
 
-        if ($request->get('parqueaderoestado')){
-            Visitante::find($request->get('id'))->update(['parqueaderoestado' => $request->get('parqueaderoestado')]);
+        if ($request->get('parqueaderoid')){
+            $request->validate([
+                'conjuntoid'=>'required',
+                'unidadid'=>'required',
+                'visitanteplaca'=>'required',
+            ]);
+            $visitante->update([
+                'parqueaderoid' => $request->get('parqueaderoid'),
+                'visitanteplaca'=>$request->get('visitanteplaca'),
+                'visitanteingreso'=> $request->get('visitanteingreso'),
+                'visitanteobservacion'=>$request->get('visitanteobservacion'),
+                'visitantenumero'=>$request->get('visitantenumero'),
+            ]);
         }else{
             $request->validate([
                 'conjuntoid'=>'required',
-                'parqueaderonumero'=>'required',
-                'parqueaderotipo'=>'required',
+                'unidadid'=>'required',
             ]);
 
-            $visitante->update($request->all());
-            return redirect()->route('admin.visitantes.show', $visitante->conjuntoid)->with('info','El parqueadero fue actualizado de forma exitosa');
+            $visitante->update([
+                'visitanteingreso'=> $request->get('visitanteingreso'),
+                'visitanteobservacion'=>$request->get('visitanteobservacion'),
+                'visitantenumero'=>$request->get('visitantenumero'),
+            ]);
         }
+        return redirect()->route('admin.visitantes.index')->with('info','El parqueadero fue actualizado de forma exitosa');
     }
 
     public function restaurar($id)

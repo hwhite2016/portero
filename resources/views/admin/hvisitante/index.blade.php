@@ -45,7 +45,12 @@
                         <td> {{ $visitante->conjuntonombre }} </td>
                         <td> {{ $visitante->parqueadero }} {{$visitante->parqueadero?' / ':''}} {{ $visitante->visitanteplaca}} </td>
                         <td> {{ $visitante->documento }} </td>
-                        <td> {{ $visitante->personanombre }} </td>
+                        <td>
+                            {{ $visitante->personanombre }}
+                            @if($visitante->visitantenumero > 1)
+                            [ <b>{{ $visitante->visitantenumero }}</b> <i class="fas fa-user-friends text-secondary"></i> ]
+                            @endif
+                        </td>
                         <td> {{ $visitante->personacelular }} </td>
                         <td> {{ $visitante->visitanteingreso }} </td>
                         <td> {{ $visitante->visitantesalida }} </td>

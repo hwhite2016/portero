@@ -19,8 +19,10 @@ class CreateParqueaderosTable extends Migration
             $table->foreign('conjuntoid')->references('id')->on('conjuntos')->onDelete('cascade');
             $table->string('parqueaderonumero', 10);
             $table->tinyInteger('parqueaderopiso');
-            $table->enum('parqueaderotipo', ['Asignado', 'Visitante', 'Discapacitado']);
-            $table->boolean('parqueaderoestado')->default(0);
+            $table->unsignedBigInteger('tipoparqueaderoid')->nullable();
+            $table->foreign('tipoparqueaderoid')->references('id')->on('tipo_parqueaderos')->onDelete('set null');
+            $table->unsignedBigInteger('estadoparqueaderoid');
+            $table->foreign('estadoparqueaderoid')->references('id')->on('estado_parqueaderos');
             $table->timestamps();
             $table->unique(['conjuntoid', 'parqueaderonumero'], 'indice_conjunto_parqueadero');
         });

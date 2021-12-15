@@ -55,6 +55,9 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::resource('/reservas', ReservaController::class)->names('admin.reservas');
     Route::get('/cupo/{id}', [ReservaController::class, 'getCupoMaximo'])->name('admin.reservas.cupo');
     Route::post('/horas', [ReservaController::class, 'getHoras'])->name('admin.reservas.horas');
+    Route::post('/numhoras', [ReservaController::class, 'getNumHoras'])->name('admin.reservas.numhoras');
+    Route::post('/reservas/carrito', [ReservaController::class, 'carrito'])->name('admin.reservas.carrito');
+    Route::get('/reservas/detalle/{id}', [ReservaController::class, 'detalle'])->name('admin.reservas.detalle');
     Route::resource('/clase_unidads', ClaseUnidadController::class)->names('admin.clase_unidads');
     Route::get('/clase_unidadModal', [ClaseUnidadController::class, 'getModal'])->name('admin.clase_unidads.getModal');
     Route::resource('/unidads', UnidadController::class)->names('admin.unidads');
