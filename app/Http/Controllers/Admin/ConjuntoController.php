@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Anuncio;
 use App\Models\Conjunto;
 use App\Models\Barrio;
 use App\Models\Ciudad;
@@ -73,7 +74,11 @@ class ConjuntoController extends Controller
              ->orderBy('organonombre', 'ASC')
              ->get();
 
-             return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores'));
+             $comunicados = Anuncio::join('tipo_anuncios', 'tipo_anuncios.id', 'anuncios.tipoanuncioid')
+             ->select('tipoanuncionombre','anuncionombre','anuncios.created_at')
+             ->latest()->take(5)->get();
+
+            return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores', 'comunicados'));
 
     }
 

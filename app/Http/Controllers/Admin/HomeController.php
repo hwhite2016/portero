@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Anuncio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Conjunto;
@@ -60,6 +61,10 @@ class HomeController extends Controller
             ->orderBy('organonombre', 'ASC')
             ->get();
 
-             return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores'));
+            $comunicados = Anuncio::join('tipo_anuncios', 'tipo_anuncios.id', 'anuncios.tipoanuncioid')
+            ->select('tipoanuncionombre','anuncionombre','anuncios.created_at')
+            ->latest()->take(5)->get();
+
+             return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores', 'comunicados'));
     }
 }

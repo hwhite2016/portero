@@ -93,7 +93,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                         </div>
-                        {{ Form::text('organotelefono', null, array('placeholder' => '', 'class' => 'form-control')) }}
+                        {{ Form::text('organotelefono', null, array('placeholder' => '', 'class' => 'form-control', 'data-inputmask'=>'"mask": "(999) 999-9999"')) }}
 
                     </div>
                     @error('organotelefono')

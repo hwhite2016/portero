@@ -133,7 +133,7 @@
             <div class="content text-center">
               <h1>Sistema integral para el control de acceso para edificios y condominios.</h1>
               <p>Integra un software que permite gestionar los servicios prestados a los residentes.</p>
-              <a href="#" class="btn">Comience la prueba gratuita de 15 días</a>
+              <a href="{{ route('contactanos.index') }}" class="btn">Solicitar una demostración</a>
               <span>No requiere tarjeta de crédito</span>
             </div>
           </div>
@@ -203,7 +203,7 @@
                       de la copropiedad y así gestionar de manera efectiva y segura toda la información de sus clientes.
 
                   </p>
-                  <a href="#" class="btn focus-reset">Comience la prueba gratuita de 15 días</a>
+                  <a href="{{ route('contactanos.index') }}" class="btn focus-reset">Solicitar una demostración</a>
                 </div>
               </div>
             </div>
@@ -222,7 +222,7 @@
                   <h2> Reserva de zonas comunes.</h2>
                   <p>Si eres administrador, ya no volveras a gestionar el calendario de reservaciones en papel, ya que todas seran automáticas o que usted puede rechazar en un instante.</p>
                   <p>Si eres residente, haz las reservaciones desde tu telefono movil en la comodidad de tu hogar sin filas ni esperas.</p>
-                  <a href="#" class="btn focus-reset">Comience la prueba gratuita de 15 días</a>
+                  <a href="{{ route('contactanos.index') }}" class="btn focus-reset">Solicitar una demostración</a>
                 </div>
               </div>
               <div class="offset-xxl-1 col-xxl-6 col-xl-6 col-lg-6 col-md-8 order-lg-1 order-0" data-aos="fade-right" data-aos-duration="800" data-aos-once="true">
@@ -241,7 +241,7 @@
       </div>
     </div>
     <!--Video Area-->
-    <div class="video-area-l-17">
+    {{-- <div class="video-area-l-17">
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-xxl-7 col-xl-8 col-lg-9 col-md-12">
@@ -256,7 +256,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     <!--Pricing Area-->
     <div id="pricing" class="pricing-area-l-17 position-relative overflow-hidden">
       <div class="container">
@@ -485,8 +485,8 @@
         <div class="row justify-content-center">
           <div class="col-lg-10">
             <div class="d-md-flex justify-content-between text-align-lg-start text-center align-items-center">
-              <h2>Manage your team in one place</h2>
-              <a href="#" class="btn">Start free 14 days trial</a>
+              <h2>Gestiona la copropiedad desde un solo lugar</h2>
+              <a href="{{ route('contactanos.index') }}" class="btn">Solicitar una demostración</a>
             </div>
           </div>
         </div>
@@ -498,7 +498,7 @@
         <img src="image/l8/footer-shape.svg" alt="">
       </div>
       <div class="container pt-lg-23 pt-15 pb-12">
-        <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+        {{-- <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
           <div class="col">
             <div class="footer-widget widget2">
               <p class="widget-title">Store</p>
@@ -544,7 +544,7 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
       <!-- footer-bottom start -->
       <div class="copyright-area-l-17 text-center text-md-start">

@@ -42,7 +42,7 @@
                       <tr>
                         <td> {{ $ciudad->ciudadnombre }} </td>
                         <td>
-                            <img width="40px" src="/storage/banderas/{{ $ciudad->paisbandera }}">
+                            <img width="40px" src="/storage/{{ $ciudad->paisbandera }}">
                             <label class="text-uppercase fw-bold"> {{ $ciudad->paisnombre }}</label>
                         </td>
                         <td> {{ $ciudad->ciudadcodigo }} </td>

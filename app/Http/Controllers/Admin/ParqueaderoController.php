@@ -76,7 +76,7 @@ class ParqueaderoController extends Controller
 
             $parqueadero->update($request->all());
 
-            return redirect()->route('admin.parqueaderos.show', $parqueadero->conjuntoid)->with('info','El parqueadero fue actualizado de forma exitosa');
+            return redirect()->route('admin.parqueaderos.index')->with('info','El parqueadero fue actualizado de forma exitosa');
 
     }
 

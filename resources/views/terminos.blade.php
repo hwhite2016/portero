@@ -288,7 +288,7 @@
         <img src="image/l8/footer-shape.svg" alt="">
       </div>
       <div class="container pt-lg-23 pt-15 pb-12">
-        <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
+        {{-- <div class="row footer-area-l-17-items justify-content-between" data-aos="fade-left" data-aos-duration="800" data-aos-once="true">
           <div class="col">
             <div class="footer-widget widget2">
               <p class="widget-title">Store</p>
@@ -340,7 +340,7 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div> --}}
       </div>
       <!-- footer-bottom start -->
       <div class="copyright-area-l-17 text-center text-md-start">
@@ -354,8 +354,8 @@
             <div class="col-lg-5 col-md-6">
               <div class="footer-menu">
                 <ul class="list-unstyled d-flex flex-wrap justify-content-center">
-                  <li><a href="#">Politica de privacidad</a></li>
-                  <li> <a href="#features">Terminos & Condiciones</a> </li>
+                    <li><a href="/privacidad">Politica de privacidad</a></li>
+                    <li> <a href="/terminos">Terminos & Condiciones</a> </li>
                   {{-- <li><a href="#features"> Mapa del sitio</a></li> --}}
                 </ul>
               </div>

@@ -65,9 +65,9 @@
 
             <div class="col-12 col-md-4">
                 <div class="form-group"> <!-- Estado -->
-                    {{ Form::label('parqueaderoestado', 'Estado') }}
-                    {!! Form::select('parqueaderoestado', ['0'=>'Disponible','1'=>'Ocupado'], null, ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
-                    @error('parqueaderoestado')
+                    {{ Form::label('estadoparqueaderoid', 'Estado') }}
+                    {!! Form::select('estadoparqueaderoid', $estado_parqueaderos, null, ['class' => 'form-control  select2','style'=>'width: 100%']) !!}
+                    @error('estadoparqueaderoid')
                         <small class="text-danger">
                             {{$message}}
                         </small>

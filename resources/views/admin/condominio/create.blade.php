@@ -96,7 +96,7 @@
             <div class="col-md-3">
                 <div class="form-group"> <!-- Telefono -->
                     {{ Form::label('conjuntotelefono', 'Telefono Porteria') }}
-                    {{ Form::text('conjuntotelefono', NULL, array('placeholder' => '', 'class' => 'form-control')) }}
+                    {{ Form::text('conjuntotelefono', NULL, array('placeholder' => '', 'class' => 'form-control', 'data-inputmask'=>'"mask": "(999) 999-9999"')) }}
                     @error('conjuntotelefono')
                         <small class="text-danger">
                             {{$message}}

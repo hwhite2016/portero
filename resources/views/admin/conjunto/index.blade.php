@@ -23,34 +23,34 @@
                     <small class="card-text text-muted">{{ $conjunto->barrionombre }}</small><br>
                     <label class="card-title">{{ $conjunto->conjuntonombre }}</label> <small class="ml-1">( 594 Unidades )</small><br>
                     <div class="card-text">{{ $conjunto->conjuntodireccion }}</div>
-                    <div class="row">
-                        <div class="col-3">
-                            <small class="text-muted"><i class="fas fa-phone-volume"></i> Portería:</small>
-                        </div>
-                        <div class="col-8">
-                            <small class="text-muted">
-                                {{ $conjunto->conjuntocelular }} - {{ $conjunto->conjuntotelefono }}
-                            </small>
-                        </div>
-                    </div>
+                    <div class="card-text"><i class="fas fa-phone-volume"></i> Portería: {{ $conjunto->conjuntocelular }} - {{ $conjunto->conjuntotelefono }}</div>
 
-                    {{-- @foreach ($organos as $organo)
+                    @foreach ($organos as $organo)
                         <div class="border-bottom" style="height: 0.5em"></div>
                         <small class="text-muted"><b><u>{{ $organo->organonombre }}:</u></b></small>
                         <div class="row">
+                            @if($organo->organocorreo)
                             <div class="col-12">
                                 <small class="text-muted"><i class="far fa-envelope"></i>
-                                    <a href="{{route('admin.pqrs.create')}}">{{ $organo->organocorreo }}</a>
+                                    <span class="text-primary">
+                                        {{ $organo->organocorreo }}
+                                        @if($organo->organopqr)
+                                            <a class="text-primary float-right" href="{{route('admin.pqrs.create')}}"><u>Enviar PQR</u></a>
+                                        @endif
+                                    </span>
                                 </small>
                             </div>
-                            <div class="col-6">
-                                <small class="text-muted"><i class="fas fa-mobile-alt"></i> {{ $organo->organocelular }}</small>
-                            </div>
-                            <div class="col-6">
-                                <small class="text-muted"><i class="fas fa-phone-volume"></i> {{ $organo->organotelefono }}</small>
+                            @endif
+                            <div class="col-12">
+                                @if($organo->organocelular)
+                                    <small class="text-muted"><i class="fas fa-mobile-alt"></i> {{ $organo->organocelular }}</small>
+                                @endif
+                                @if($organo->organotelefono)
+                                    <small class="text-muted ml-3"><i class="fas fa-phone-volume"></i> {{ $organo->organotelefono }}</small>
+                                @endif
                             </div>
                         </div>
-                    @endforeach --}}
+                    @endforeach
 
                 </div>
                 <!-- /.card-body -->
@@ -84,88 +84,31 @@
         </div>
     @endforeach
 
-    {{-- <div class="col-md-4">
+    <div class="col-md-4">
         <div class="card card-outline card-primary">
             <div class="card-header bg-light">
-                <i class="fas fa-shopping-basket"></i> MarketPlace
+                <i class="fas fa-bullhorn"></i> <b>Comunicados</b>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                Proximamente
-            </div>
-            <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-    </div> --}}
+                @forelse ($comunicados as $comunicado)
+                <span class="text-secondary"><i class="fas fa-caret-right"></i> <b>{{$comunicado->tipoanuncionombre}}</b></span>
+                <small class="text-muted float-right">{{$comunicado->created_at->diffForHumans()}}</small>
+                <br>
+                <span class="text-muted ml-2">
+                    {{$comunicado->anuncionombre}}
+                </span>
 
-    <div class="col-md-4">
-        <div class="card card-primary">
-            <div class="card-header">
-               <i class="fas fa-sitemap mr-1"></i> Estructura Organica
-            </div>
-            <div class="card-body">
+                <div class="border-bottom" style="height: 0.5em"></div>
+                @empty
+                    <div class="ml-2">No hay comunicados recientes.</div>
 
-                <div id="accordion">
-                    @foreach ($colaboradores as $colaborador)
-                    <div class="card card-light">
-                        <div class="card-header">
-                            <h4 class="card-title w-100">
-                                <a class="d-block w-100" data-toggle="collapse" href="#collapse{{$colaborador->id}}">
-                                    {{ $colaborador->organonombre }}
-                                    <i class="fas fa-chevron-right float-right"></i>
-                                </a>
-
-                            </h4>
-
-                        </div>
-                      <div id="collapse{{$colaborador->id}}" class="collapse {{$colaborador->organonivel == 2 ? 'show' : ''}}" data-parent="#accordion">
-                        <div class="card-body">
-                            <p>
-                                @if($colaborador->organocorreo)
-                                    <span class="text-muted"><i class="far fa-envelope mr-1"></i>
-                                        {{ $colaborador->organocorreo }}
-                                    </span>
-                                @endif
-                                @if($colaborador->organocelular)
-                                    <br><span class="text-muted"><i class="fas fa-mobile-alt mr-1"></i> {{ $colaborador->organocelular }}
-                                        @if($colaborador->organotelefono)
-                                            <i class="fas fa-phone-volume ml-3 mr-1"></i> {{ $colaborador->organotelefono }}
-                                        @endif
-                                    </span>
-                                @endif
-
-                                @if($colaborador->organopqr)
-                                    <br><a class="text-primary" href="{{route('admin.pqrs.create')}}"><u>Crear PQR</u> <i class="fas fa-long-arrow-alt-right"></i></a>
-                                @endif
-
-                            </p>
-                            Miembro(s):
-                            <p class="text-muted">
-                                @php
-                                    $miembros = json_decode($colaborador->miembros, true);
-                                @endphp
-
-                                @foreach($miembros as $miembro => $valor)
-                                    <i class="fas fa-caret-right"></i> {{$miembro}}
-                                    @if($valor)
-                                        <small class="font-italic text-primary ml-1">({{$valor}})</small>
-                                    @endif
-                                    <br>
-                                @endforeach
-                            </p>
-                        </div>
-                      </div>
-                    </div>
-                    @endforeach
-
-                  </div>
-
+                @endforelse
             </div>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
     </div>
-    <!-- /.col -->
 
 </div>
 <!-- /.row-->

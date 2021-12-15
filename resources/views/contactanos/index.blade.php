@@ -101,7 +101,7 @@
                 <img src="{{ asset('image/logo/logo-contactanos.png') }}" alt="" class="dark-version-logo mb-4">
 
                 <div class="txt5 mt-4">Informacion de contacto </div>
-                <div class="txt4 mt-4"><i class="fa fa-envelope-o mr-2" aria-hidden="true"></i> support@portero.com.co </div>
+                <div class="txt4 mt-4"><i class="fa fa-envelope-o mr-2" aria-hidden="true"></i> porteroenlinea@gmail.com </div>
                 <div class="txt4 mt-4"><i class="fa fa-phone mr-2" aria-hidden="true"></i> +57 (300) 742 4455 </div>
 
             </div>
