@@ -50,6 +50,7 @@ class RegistroController extends Controller
                 $ciudads = Ciudad::whereId(1)->pluck('ciudadnombre', 'id');
                 $barrios = Barrio::whereId(1)->pluck('barrionombre', 'id');
                 $bloques = [];
+
                 if($request->get('item')){
                     if (Conjunto::whereConjuntokey($request->get('item'))->exists()) {
                         $conjuntos = Conjunto::whereConjuntokey($request->get('item'))->pluck('conjuntonombre', 'id');
@@ -64,6 +65,7 @@ class RegistroController extends Controller
                     $conjuntos = Conjunto::whereConjuntoestado(1)->pluck('conjuntonombre', 'id');
                     $conjuntos->prepend('Seleccione la copropiedad', '');
                 }
+
                 $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
                 $tipo_propietarios = TipoPropietario::all()->pluck('tipopropietarionombre', 'id');
 
@@ -202,14 +204,22 @@ class RegistroController extends Controller
 
     public function edit(Registro $registro)
     {
+
         $this->authorize('pendiente', $registro);
 
         $personaid = Auth::user()->personaid;
         if(!$personaid) return redirect()->route('admin.index');
-        $registro = Registro::join('unidads','registros.unidadid','unidads.id')
+        // $registro = Registro::join('unidads','registros.unidadid','unidads.id')
+        //     ->join('bloques','bloques.id','=','unidads.bloqueid')
+        //     ->join('conjuntos','conjuntos.id','bloques.conjuntoid')
+        //     ->select('registros.id','registros.unidadid','conjuntoid','bloqueid','registros.estado_id', 'registros.id as registroid')
+        //     ->where('registros.id', $registro->id)
+        //     ->first();
+
+        $registro = Unidad::join('registros','registros.unidadid','unidads.id')
             ->join('bloques','bloques.id','=','unidads.bloqueid')
             ->join('conjuntos','conjuntos.id','bloques.conjuntoid')
-            ->select('registros.id','registros.unidadid','conjuntoid','bloqueid','registros.estado_id', 'registros.id as registroid')
+            ->select('unidads.id','registros.unidadid','conjuntoid','bloqueid','registros.estado_id', 'registros.id as registroid')
             ->where('registros.id', $registro->id)
             ->first();
 
@@ -250,8 +260,9 @@ class RegistroController extends Controller
         }
     }
 
-    public function update(Request $request, Registro $registro)
+    public function update(Request $request)
     {
+        $registro = Registro::whereId($request->get('registroid'))->first();
         $this->authorize('pendiente', $registro);
 
         $unidad = Unidad::find($registro->unidadid);

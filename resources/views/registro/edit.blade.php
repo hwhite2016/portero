@@ -24,7 +24,7 @@
     @csrf
     <div class="card-header bg-light">
         <h1 class="card-title"><i class="far fa-file-alt"></i> <label>Formulario de registro</label></h1>
-        {{ Form::hidden('registroid', $registro->id) }}
+        {{ Form::hidden('registroid', $registro->registroid) }}
     </div>
     <div class="card-body">
         <div class="row">
@@ -86,25 +86,34 @@
                 </div>
             </div>
 
-            <div class="col-md-5">
+            {{-- <div class="col-md-5">
                 <div class="form-group">
                     {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
                     {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'100%']) !!}
                 </div>
+            </div> --}}
+
+            <div class="col-md-5">
+                <div class="form-group"> <!-- Parqueaderos -->
+                    {{ Form::label('parqueaderoid', 'Parqueaderos asignados') }}
+                    <div class="input-group">
+                        {!! Form::select('parqueaderos[]', $parqueaderos, old('parqueaderos[]'), ['class' => 'form-control select2', 'multiple'=>'multiple', 'data-placeholder'=>'Seleccione los parqueaderos asignados', 'data-width'=>'72%']) !!}
+                        @if($registro->estado_id != 3)
+                        <div class="input-group-prepend">
+                            {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
+                        </div>
+                        @endif
+                    </div>
+                </div>
             </div>
+
+
         </div>
         <!-- /.Row -->
 
     </div>
     <!-- /.card-body -->
     @if($registro->estado_id != 3)
-    <div class="card-footer">
-        {!! Form::submit('Guardar', ['class'=>'btn btn-primary']) !!}
-        <a href="{{route('registros.estado', $registro->registroid)}}" class="btn btn-success"><i class="fas fa-spell-check"></i> &nbsp Enviar a revisión</a>
-        <br><small class="text-secondary">[ Hacer click en el botón verde al finalizar todo el formulario ]</small>
-
-    </div>
-    <!-- /.card-footer -->
     {!! Form::close() !!}
     @endif
 </div>
@@ -153,7 +162,13 @@
         </div>
         @endif
 
-
+        @if($registro->estado_id != 3)
+        <div class="card-footer">
+            <a id="check"  class="btn btn-success"><i class="fas fa-spell-check"></i> &nbsp Enviar a revisión</a>
+            <br><small class="text-secondary">[ Hacer click en este botón solo cuando haya finalizado todo el formulario ]</small>
+        </div>
+        <!-- /.card-footer -->
+        @endif
 
 @stop
 
@@ -295,6 +310,25 @@
         }).then((result) => {
           if (result.isConfirmed) {
             this.submit();
+          }
+        })
+    });
+
+    $('#check').click(function(e){
+        e.preventDefault();
+
+        Swal.fire({
+          title: 'Antes de enviar el formulario, verifique que ha ingresado los datos solicitados.',
+          text: "(Parqueaderos, residentes, vehiculos y mascotas.)",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Enviar a revisión',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $(location).attr('href',"{{route('registros.estado', $registro->registroid)}}");
           }
         })
     });
