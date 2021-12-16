@@ -270,7 +270,7 @@ class RegistroController extends Controller
             ]);
         }
 
-        $registro->parqueaderos()->sync($request->parqueaderos);
+        $unidad->parqueaderos()->sync($request->parqueaderos);
 
         return redirect()->route('registros.edit', $registro->id)->with('info','El registro fue actualizado de forma exitosa');
 
