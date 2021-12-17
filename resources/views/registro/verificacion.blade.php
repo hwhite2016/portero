@@ -20,12 +20,14 @@
     </div>
     <div class="card-body">
         <li>Programación y reporte de Visitantes</li>
-        <li>Notificación de Correspondencia</li>
+        <li>Notificación de Correspondencia y/o Paqueteria</li>
         <li>Reserva de Zonas Comunes</li>
-        <li>Noticias y anuncios</li>
-        <li>Boton de pánico</li>
+        <li>Comunicados (Email - Telegram)</li>
+        <li>Documentos en linea</li>
+        <li>Estructura Orgánica</li>
         <li>Sistema de PQRS (Peticiones, Quejas, Reclamos y Sugerencias)</li>
-        <li>Pago de la Cuota de Administración</li>
+        <li><s>Pago Cuota de Administración</s></li>
+        <li><s>Cartera</s></li>
 
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exports\UnidadsExport;
 use App\Http\Controllers\Controller;
+use App\Mail\VerificadoMailable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Unidad;
@@ -21,6 +22,7 @@ use App\Models\Registro;
 use App\Models\TipoDocumento;
 use App\Models\TipoPropietario;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UnidadController extends Controller
@@ -217,13 +219,22 @@ class UnidadController extends Controller
             $user = User::join('residentes','residentes.personaid','users.personaid')
                     ->join('registros','registros.unidadid','residentes.unidadid')
                     ->where('residentes.unidadid','=',$unidad->id)
-                    ->select('users.id','registros.personaid')
+                    ->select('users.id','name', 'email','registros.personaid')
                     ->first();
             if($request->get('estado_id') == 4){
                 $user->roles()->sync(5);
                 //$user->assignRole($request->rol);
             }else{
                 $user->roles()->sync(1);
+            }
+
+            if ($request->get('bienvenida') == 1){
+                $data = [
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ];
+                $correo = new VerificadoMailable($data);
+                Mail::to($user->email)->queue($correo);
             }
         }
 

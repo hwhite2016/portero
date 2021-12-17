@@ -18,7 +18,7 @@
     @if($contacto['role_id'] != 5)
         <p>Reciba un cordial saludo.</p>
     @else
-        <p>Recibe un cordial saludo por parte de la Administración. ¡Ahora eres parte de nuestra familia!</p>
+        <p>Recibe un cordial saludo por parte de la Administración. ¡A partir de ahora haces parte de esta plataforma!</p>
     @endif
 
     @if($contacto['role_id'] != 5)
@@ -52,11 +52,15 @@
     @else
         <p>Opciones disponibles en su Plan:</p>
         <ol>
-            <li>Gestión de Visitantes</li>
-            <li>Gestión de Correspondencia y/o Paqueteria</li>
+            <li>Programación y reporte de Visitantes</li>
+            <li>Notificación de Correspondencia y/o Paqueteria</li>
             <li>Reserva de Zonas Comunes</li>
+            <li>Comunicados (Email - Telegram)</li>
+            <li>Documentos en linea</li>
+            <li>Estructura Orgánica</li>
             <li>Sistema de PQRS (Peticiones, Quejas, Reclamos y Sugerencias)</li>
-            <li>Pago de la Cuota de Administración</li>
+            <li><s>Pago Cuota de Administración</s></li>
+            <li><s>Cartera</s></li>
         </ol>
 
         <p>Si tiene preguntas, por favor coloquese en contacto con la administración del conjunto</p>

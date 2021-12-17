@@ -76,6 +76,10 @@
                             {{$message}}
                         </small>
                     @enderror
+                        <label>
+                        {!! Form::checkbox('bienvenida', 1, false, ['class'=>'mr-1','id'=>'bienvenida']) !!}
+                        <small class="text-muted">Enviar correo de bienvenida</small>
+                        </label>
                 </div>
             </div>
 
@@ -130,6 +134,7 @@
 
         {!! Form::reset('Cancelar', ['class'=>'btn btn-secondary']) !!}
         {!! Form::submit('Guardar', ['class'=>'btn btn-primary', 'id'=>'guardarUnidad']) !!}
+
     </div>
     <!-- /.card-footer -->
     {!! Form::close() !!}
@@ -266,6 +271,16 @@
             $('#propietarioid option').each(function() {
                     $(this).remove();
             });
+        })
+
+        $("#estado_id").on('change', function(e) {
+
+            if($("#estado_id").val() == 4){
+                $('#bienvenida').prop('checked', true);
+            }else{
+                $('#bienvenida').prop('checked', false);
+            }
+
         })
 
         $('#tipoModal').on('show.bs.modal', function (event) {

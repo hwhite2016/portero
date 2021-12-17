@@ -111,7 +111,7 @@ class EmpleadoController extends Controller
                     'password' => $psswd
                 ];
                 $correo = new WelcomeMailable($data);
-                Mail::to('victorlopez23@hotmail.com')->send($correo);
+                Mail::to($request->get('personacorreo'))->send($correo);
             }
         }
 
