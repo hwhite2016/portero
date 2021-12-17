@@ -25,6 +25,9 @@ class UnidadIndex extends Component
     public function updatingSearch(){
     	$this->resetPage();
     }
+    public function updatingEstado_id(){
+    	$this->resetPage();
+    }
 
     public function render()
     {
