@@ -1,5 +1,42 @@
 <div>
     @php $texto = 'o' @endphp
+    <div class="row">
+        @foreach ($totales as $total)
+            @php
+               $color = 'light';
+               $porcentaje = floor(($total->cont/$unidades)*100);
+               if($porcentaje >= 80){
+                    $color = 'success';
+               }elseif($porcentaje < 80 && $porcentaje >= 60 ){
+                   $color = 'info';
+               }elseif($porcentaje < 60 && $porcentaje >= 20 ){
+                   $color = 'warning';
+               }else{
+                   $color = 'danger';
+               }
+            @endphp
+            <div class="col-md-3 mt-3">
+                <div class="card card-outline card-secondary">
+                    <div class="card-header">
+                    <div class="progress-group c-pointer" wire:click="estado('{{$total->estado_id}}')">
+                        <span>{{$porcentaje}}%</span>
+                        <span class="float-right"><b>{{$total->cont}}</b>/{{$unidades}} <small>Unds.</small></span>
+                        <div class="progress progress-sm">
+                            <div class="progress-bar bg-{{$color}}" style="width: {{$porcentaje}}%"></div>
+                        </div>
+
+                            <label class="c-pointer text-muted">{{strtoupper($total->estadonombre)}}
+                            <i class="fas fa-arrow-circle-right"></i></label>
+
+                    </div>
+                    <!-- /.progress-group -->
+                    </div>
+                </div>
+            </div>
+
+        @endforeach
+
+    </div>
     <div class="card">
     	<div class="card-header">
     		<div class="row">
@@ -33,6 +70,7 @@
                     @endcan
                     <a class="btn btn-default float-right mr-2" data-toggle="tooltip" title="Ver residentes" href="{{route('admin.residentes.index')}}"><i class="fas fa-angle-double-right"></i></a>
                     <a class="btn btn-default float-right mr-2" data-toggle="tooltip" title="Ver bloques" href="{{route('admin.bloques.index')}}"><i class="fas fa-angle-double-left"></i></a>
+                    <a class="btn btn-default float-right mr-2" data-toggle="tooltip" title="Ver todas las unidades" href="{{route('admin.unidads.index')}}"><i class="fas fa-sync-alt"></i></a>
                 </div>
     		</div>
 

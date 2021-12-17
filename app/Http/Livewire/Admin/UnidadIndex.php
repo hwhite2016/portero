@@ -12,11 +12,15 @@ class UnidadIndex extends Component
 {
     use WithPagination;
     public $search;
-    public $sort = 'bloquenombre';
-    public $direction = 'ASC';
+    public $sort = 'estado_id';
+    public $estado_id = [1,2,3,4];
+    public $direction = 'DESC';
     public $cant = 15;
     public $bloqueid;
     protected $paginationTheme = 'bootstrap';
+    protected $queryString = [
+        'estado_id' => ['except' => [1,2,3,4]]
+    ];
 
     public function updatingSearch(){
     	$this->resetPage();
@@ -51,14 +55,25 @@ class UnidadIndex extends Component
                     ->orwhere('claseunidaddescripcion', 'LIKE', '%' . $this->search . '%')
                     ->orwhere('estadonombre', 'LIKE', '%' . $this->search . '%');
                 })
+                ->whereIn('estado_id', $this->estado_id)
                 ->groupBy('unidads.id', 'unidads.bloqueid', 'conjuntonombre', 'bloques.bloquenombre', 'unidads.claseunidadid', 'clase_unidads.claseunidadnombre', 'clase_unidads.claseunidaddescripcion', 'unidadnombre', 'estado_id')
                 ->orderBy($this->sort, $this->direction)
                 ->paginate($this->cant);
 
+        $unidades = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+                ->whereIn('conjuntoid', session('dependencias'))
+                ->count();
+
+        $totales = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+                ->join('estado_registros', 'estado_registros.id', 'unidads.estado_id')
+                ->select('estado_id', 'estadonombre', Unidad::raw('count(*) as cont') )
+                ->whereIn('conjuntoid', session('dependencias'))
+                ->groupBy('estado_id')->get();
+
         if ($bloqueid) {
-            return view('livewire.admin.unidad-index', compact('unidads', 'bloqueid', 'total_unidades'));
+            return view('livewire.admin.unidad-index', compact('unidads', 'bloqueid', 'total_unidades', 'unidades', 'totales'));
         }else{
-            return view('livewire.admin.unidad-index', compact('unidads', 'total_unidades'));
+            return view('livewire.admin.unidad-index', compact('unidads', 'total_unidades', 'unidades', 'totales'));
         }
 
     }
@@ -77,6 +92,11 @@ class UnidadIndex extends Component
         }
 
 
+    }
+
+    public function estado($estado)
+    {
+        $this->estado_id = [$estado];
     }
 
     public function edit($id)

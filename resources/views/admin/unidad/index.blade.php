@@ -11,6 +11,7 @@
 @stop
 
 @section('content')
+
     @if (isset($id))
         @livewire('admin.unidad-index', ['bloqueid' => $id])
     @else
