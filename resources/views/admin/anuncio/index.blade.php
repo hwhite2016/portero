@@ -7,7 +7,11 @@
 @section('plugins.Sweetalert2', 'true')
 
 @section('content_header')
-
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        Los comunicados que se envien a los residentes de las unidades de un bloque, o a los residentes de las unidades de todo un conjunto, solo seran recibidas por aquellos residentes cuyas unidades hayan sido verificadas por la administración.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')

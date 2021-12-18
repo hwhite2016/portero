@@ -12,8 +12,8 @@ class AnunciosIndex extends Component
 {
     use WithPagination;
     public $search;
-    public $sort = 'anuncionombre';
-    public $direction = 'ASC';
+    public $sort = 'anuncioestado';
+    public $direction = 'DESC';
     public $cant = 15;
     protected $paginationTheme = 'bootstrap';
 
@@ -25,7 +25,7 @@ class AnunciosIndex extends Component
     {
         $anuncios = Anuncio::join("tipo_anuncios","tipo_anuncios.id", "=", "anuncios.tipoanuncioid")
             ->leftJoin('bloques', 'bloques.id', 'anuncios.bloqueid')
-            ->select(Anuncio::raw('anuncios.id, anuncionombre, tipoanuncionombre, anunciofechaentrega, anuncioadjunto,anuncios.bloqueid,unidadid,bloquenombre'))
+            ->select(Anuncio::raw('anuncios.id, anuncionombre, tipoanuncionombre, anunciofechaentrega, anuncioestado, anuncioadjunto,anuncios.bloqueid,unidadid,bloquenombre,anuncios.updated_at'))
             ->whereIn('anuncios.conjuntoid', session('dependencias'))
             ->where(function ($query) {
                 return $query->where('anuncionombre', 'LIKE', '%' . $this->search . '%')

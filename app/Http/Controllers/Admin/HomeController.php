@@ -62,8 +62,11 @@ class HomeController extends Controller
             ->get();
 
             $comunicados = Anuncio::join('tipo_anuncios', 'tipo_anuncios.id', 'anuncios.tipoanuncioid')
-            ->select('tipoanuncionombre','anuncionombre','anuncios.created_at')
-            ->latest()->take(5)->get();
+             ->select('conjuntoid','anuncios.id','tipoanuncioid','tipoanuncionombre','anuncionombre','anuncioadjunto','anunciofechaentrega','anuncios.created_at','anuncios.updated_at')
+             ->whereAnuncioestado(1)
+             ->whereBloqueid(NULL)
+             ->latest()->take(10)
+             ->get();
 
              return view('admin.conjunto.index', compact('conjuntos','organos', 'colaboradores', 'comunicados'));
     }

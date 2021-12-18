@@ -20,13 +20,19 @@
                 <div class="row">
                     @foreach($unidades as $unidad)
                         <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4	col-xxl-3">
-                            <div class="card card-primary shadow-lg {{($unidades->count()<=2?'':'collapsed-card')}}">
+                            <div class="card card-light shadow-lg {{($unidades->count()<=15?'':'collapsed-card')}}">
                                 <div class="card-header">
-                                    <h3 class="card-title">{{$unidad->bloquenombre}} / {{$unidad->unidadnombre}}</h3>
+                                    <h3 class="card-title">
+                                        {{$unidad->bloquenombre}} / {{$unidad->unidadnombre}}
+                                    </h3>
+
                                     <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-{{($unidades->count()<=2?'minus':'plus')}}"></i>
+                                        <span class="badge badge-{{($unidad->estado_id==4?'success':'warning')}}"> <i class="fas fa-check mr-1"></i> {{$unidad->estadonombre}}</span>
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-{{($unidades->count()<=15?'minus':'plus')}}"></i>
                                         </button>
-                                      </div>
+
+                                    </div>
                                       <!-- /.card-tools -->
                                 </div>
                                 <!-- /.card-header -->

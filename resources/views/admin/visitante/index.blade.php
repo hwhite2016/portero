@@ -59,9 +59,13 @@
                         <td> {{ $visitante->personacelular }} </td>
                         <td>
                             @if(date('Y-m-d H:i:s', time()) < $visitante->visitanteingreso)
-                            <span class="text-danger" data-toggle="tooltip" title="Visitante programado"><i class='far fa-clock'></i> {{ $visitante->visitanteingreso }} </span>
+                            <span class="text-danger" data-toggle="tooltip" title="Visitante programado">
+                                <i class='far fa-clock'></i> {{ $visitante->visitanteingreso }}<br>
+                                <small>{{ Carbon\Carbon::parse($visitante->visitanteingreso)->diffForHumans() }}</small>
+                            </span>
                             @else
-                                {{ $visitante->visitanteingreso }}
+                                {{ $visitante->visitanteingreso }}<br>
+                                <small>{{ Carbon\Carbon::parse($visitante->visitanteingreso)->diffForHumans() }}</small>
                             @endif
 
                         </td>

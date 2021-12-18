@@ -32,6 +32,33 @@ class AnuncioController extends Controller
        return view('admin.anuncio.index');
     }
 
+    public function getBlock($id){
+
+        $bloque = Bloque::join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
+        ->whereConjuntoid($id)
+        ->select('bloques.id', 'bloquenombre')
+        ->get();
+        if(isset($bloque)){
+           return response()->json(['bloque' => $bloque], 200);
+        }else{
+            return "No se encontraron resultados" . $id ;
+        }
+    }
+
+    public function getHome($id){
+
+        $unidad = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+        ->whereBloqueid($id)
+        ->where('unidads.estado_id', 4)
+        ->select('unidads.id', 'unidadnombre')
+        ->get();
+        if(isset($unidad)){
+           return response()->json(['unidad' => $unidad], 200);
+        }else{
+            return "No se encontraron resultados" . $id ;
+        }
+    }
+
     public function create()
     {
         $conjuntos = Conjunto::whereIn('id', session('dependencias'))->pluck('conjuntonombre', 'id');
@@ -163,7 +190,8 @@ class AnuncioController extends Controller
 
         $comunicado = Anuncio::find($id);
         $comunicado->update([
-            'anunciofechaentrega'=> now()
+            'anunciofechaentrega'=> now(),
+            'anuncioestado'=> 1
         ]);
 
         return redirect()->route('admin.anuncios.index')->with('info','El comunicado fue enviado de forma exitosa');
@@ -187,6 +215,7 @@ class AnuncioController extends Controller
                 $users = User::join('residentes', 'residentes.personaid', 'users.personaid')
                 ->join('unidads', 'unidads.id', 'residentes.unidadid')
                 ->select('name','email','unidadnombre')
+                ->where('unidads.estado_id', 4)
                 ->whereIn('unidads.id', $unidades)
                 ->get();
             }else{
@@ -194,6 +223,7 @@ class AnuncioController extends Controller
                 ->join('unidads', 'unidads.id', 'residentes.unidadid')
                 ->join('bloques', 'bloques.id', 'unidads.bloqueid')
                 ->select('name','email','unidadnombre')
+                ->where('unidads.estado_id', 4)
                 ->where('bloques.id', $anuncio->bloqueid)
                 ->get();
             }
@@ -203,43 +233,53 @@ class AnuncioController extends Controller
             ->join('residentes', 'residentes.personaid', 'users.personaid')
             ->join('unidads', 'unidads.id', 'residentes.unidadid')
             ->select('name','email')
+            ->where('unidads.estado_id', 4)
             ->whereIn('conjunto_id', session('dependencias'))
             ->get();
         }
 
-        $data = [
-            'subject' => 'Nuevo Comunicado',
-            'conjunto' => $anuncio->conjuntonombre,
-            'administrador' => $anuncio->personanombre,
-            'tipo' => $anuncio->tipoanuncionombre,
-            'titulo' => $anuncio->anuncionombre,
-            'mensaje' => $anuncio->anunciodescripcion,
-            'ruta' => NULL
-        ];
+        if($users->count()){
+            $data = [
+                'subject' => 'Nuevo Comunicado',
+                'conjunto' => $anuncio->conjuntonombre,
+                'administrador' => $anuncio->personanombre,
+                'tipo' => $anuncio->tipoanuncionombre,
+                'titulo' => $anuncio->anuncionombre,
+                'mensaje' => $anuncio->anunciodescripcion,
+                'ruta' => NULL
+            ];
 
-        if($anuncio->anuncioadjunto) {
-            $destinationPath = public_path('storage/'.$anuncio->conjuntoid.'/'.'comunicados');
-            $ruta = $destinationPath.'/'.$anuncio->anuncioadjunto;
-            $data['ruta'] = $ruta;
+            if($anuncio->anuncioadjunto) {
+                $destinationPath = public_path('storage/'.$anuncio->conjuntoid.'/'.'comunicados');
+                $ruta = $destinationPath.'/'.$anuncio->anuncioadjunto;
+                $data['ruta'] = $ruta;
+            }
+
+            foreach($users as $user){
+                $data['name'] = $user->name;
+                Mail::to($user->email)->send(new ComunicadoMailable($data));
+            }
+
+            $comunicado = Anuncio::find($id);
+            $comunicado->update([
+                'anunciofechaentrega'=> now(),
+                'anuncioestado'=> 1
+            ]);
+
+            return redirect()->route('admin.anuncios.index')->with('info','El comunicado fue enviado de forma exitosa');
+        }else{
+            return redirect()->route('admin.anuncios.index')->with('error','Error: No se pudo enviar el comunicado, porque no hay unidades verificadas aún.');
         }
-
-        foreach($users as $user){
-            $data['name'] = $user->name;
-            Mail::to($user->email)->send(new ComunicadoMailable($data));
-        }
-
-        $comunicado = Anuncio::find($id);
-        $comunicado->update([
-            'anunciofechaentrega'=> now()
-        ]);
-
-        return redirect()->route('admin.anuncios.index')->with('info','El comunicado fue enviado de forma exitosa');
 
     }
 
     public function show($id)
     {
-        //
+        $anuncio = Anuncio::join('tipo_anuncios', 'tipo_anuncios.id', 'anuncios.tipoanuncioid')
+        ->select('conjuntoid','anuncios.id','tipoanuncioid','tipoanuncionombre','anuncionombre','anuncioadjunto','anunciodescripcion','anuncios.updated_at','anunciofechaentrega')
+        ->where('anuncios.id', $id)
+        ->first();
+        return view('admin.anuncio.show', compact('anuncio'));
     }
 
     public function edit($id)
@@ -313,6 +353,7 @@ class AnuncioController extends Controller
 
         $anuncio->anuncionombre = $request->get('anuncionombre');
         $anuncio->anunciodescripcion = $request->get('anunciodescripcion');
+        $anuncio->anuncioestado = $request->get('anuncioestado');
 
 
         $anuncio->save();

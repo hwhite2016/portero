@@ -195,7 +195,7 @@
                     dataType: "json",
                     success: function (data) {
                         modal.find('.modal-title').text('Terminos y condiciones de uso')
-                        modal.find('.modal-body').html(data.zonaterminos)
+                        modal.find('.modal-body').html(data.zonaterminos.replace(/\n/g,"<br>"))
                     },
                     error: function (error) {
                         funError(error);

@@ -45,24 +45,7 @@ class ResidenteController extends Controller
 
     public function list()
     {
-        $unidades = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
-             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
-             ->join('residentes','unidads.id','=','residentes.unidadid')
-             ->leftJoin('vehiculos','unidads.id','=','vehiculos.unidadid')
-             ->leftJoin('tipo_vehiculos','tipo_vehiculos.id','=','vehiculos.tipovehiculoid')
-             ->leftJoin('unidads_parqueaderos', 'unidad_id', 'unidads.id')
-             ->leftJoin('parqueaderos', 'parqueaderos.id', 'parqueadero_id')
-             ->join('personas','personas.id','=','residentes.personaid')
-             ->join('tipo_residentes','tipo_residentes.id','=','residentes.tiporesidenteid')
-             ->select('conjuntonombre','bloquenombre','unidadnombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' - ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
-             ->whereIn('conjuntos.id', session('dependencias'))
-             ->GroupByRaw('conjuntonombre, bloquenombre, unidadnombre')
-             ->orderBy('bloquenombre', 'ASC')
-             ->orderBy('unidadnombre', 'ASC')
-             ->get();
-        //return $unidades;
-
-        return view('admin.residente.list')->with('unidades', $unidades);
+        return view('admin.residente.list');
     }
 
     public function create(Request $request)
@@ -172,7 +155,7 @@ class ResidenteController extends Controller
                             'password' => $psswd
                         ];
                         $correo = new WelcomeMailable($data);
-                        Mail::to($request->get('personacorreo'))->send($correo);
+                        Mail::to($request->get('personacorreo'))->queue($correo);
                     }
                 }
             }

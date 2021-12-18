@@ -22,6 +22,7 @@ class ResidentesIndex extends Component
     {
 
         $unidades = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
+             ->join('estado_registros','estado_registros.id','=','unidads.estado_id')
              ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
              ->join('residentes','unidads.id','=','residentes.unidadid')
              ->leftJoin('vehiculos','unidads.id','=','vehiculos.unidadid')
@@ -30,7 +31,7 @@ class ResidentesIndex extends Component
              ->leftJoin('parqueaderos', 'parqueaderos.id', 'parqueadero_id')
              ->join('personas','personas.id','=','residentes.personaid')
              ->join('tipo_residentes','tipo_residentes.id','=','residentes.tiporesidenteid')
-             ->select('conjuntonombre','bloquenombre','unidadnombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' | ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
+             ->select('conjuntonombre','bloquenombre','unidadnombre','estado_id','estadonombre', DB::raw("JSON_OBJECTAGG(concat(personadocumento,' | ', personanombre), tiporesidentenombre) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
              ->whereIn('conjuntos.id', session('dependencias'))
              ->where(function($q){
                 $q->where('unidads.unidadnombre', 'LIKE', '%' . $this->search . '%')
@@ -42,8 +43,8 @@ class ResidentesIndex extends Component
                 ->orwhere('parqueaderos.parqueaderonumero', 'LIKE', '%' . $this->search . '%');
              })
 
-             ->GroupByRaw('conjuntonombre, bloquenombre, unidadnombre')
-             ->orderBy('bloquenombre', 'ASC')
+             ->GroupByRaw('conjuntonombre, bloquenombre, unidadnombre, estado_id, estadonombre')
+             ->orderBy('estado_id', 'DESC')
              ->orderBy('unidadnombre', 'ASC')
              ->paginate();
 

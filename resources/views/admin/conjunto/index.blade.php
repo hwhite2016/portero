@@ -87,19 +87,45 @@
     <div class="col-md-4">
         <div class="card card-outline card-primary">
             <div class="card-header bg-light">
-                <i class="fas fa-bullhorn"></i> <b>Comunicados</b>
+                <i class="fas fa-caret-right"></i> <b>Comunicados</b>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
                 @forelse ($comunicados as $comunicado)
-                <span class="text-secondary"><i class="fas fa-caret-right"></i> <b>{{$comunicado->tipoanuncionombre}}</b></span>
-                <small class="text-muted float-right">{{$comunicado->created_at->diffForHumans()}}</small>
-                <br>
-                <span class="text-muted ml-2">
-                    {{$comunicado->anuncionombre}}
-                </span>
+                    <span class="text-secondary">
+                    @if($comunicado->tipoanuncioid == 1) {{-- Anuncio --}}
+                        <i class="fas fa-volume-up"></i>
+                    @elseif($comunicado->tipoanuncioid == 2) {{-- Invitacion --}}
+                        <i class="far fa-envelope"></i>
+                    @elseif($comunicado->tipoanuncioid == 3) {{-- Llamado de atencion --}}
+                        <i class="far fa-file-alt"></i>
+                    @elseif($comunicado->tipoanuncioid == 4) {{-- Recordatorio --}}
+                    <i class="far fa-calendar-check"></i>
+                    @elseif($comunicado->tipoanuncioid == 5) {{-- Felicitacion --}}
+                        <i class="fas fa-award"></i>
+                    @else
+                        <i class="fas fa-volume-up"></i>
+                    @endif
+                        <b>{{$comunicado->tipoanuncionombre}}</b>
+                    </span>
+                    <small class="text-muted float-right">
+                        {{ Carbon\Carbon::parse($comunicado->anunciofechaentrega)->diffForHumans() }}
+                    </small>
+                    <br>
+                    <span class="text-muted">
+                        <a href="{{route('admin.anuncios.show', $comunicado->id)}}">
+                            {{$comunicado->anuncionombre}}
+                        </a>
+                        @if($comunicado->anuncioadjunto)
+                            <small class="float-right">
+                                <a class=" text-secondary" target="_blank" href="/storage/{{$comunicado->conjuntoid}}/comunicados/{{$comunicado->anuncioadjunto}}">
+                                    [ <i class="fas fa-download"></i> ]
+                                </a>
+                            </small>
+                        @endif
+                    </span>
 
-                <div class="border-bottom" style="height: 0.5em"></div>
+                    <div class="border-bottom" style="height: 0.5em"></div>
                 @empty
                     <div class="ml-2">No hay comunicados recientes.</div>
 

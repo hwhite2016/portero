@@ -6,11 +6,14 @@
 @section('plugins.Inputmask', 'true')
 
 @section('content_header')
-
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        Solo se podra hacer la recepción de correspondencia o paqueteria de aquellos residentes cuyas unidades hayan sido verificadas por la administración.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')
-<br>
 <div class="card card-primary">
     {!! Form::model($vehiculo, ['route'=>['admin.vehiculos.update', $vehiculo], 'method'=>'put']) !!}
     @csrf

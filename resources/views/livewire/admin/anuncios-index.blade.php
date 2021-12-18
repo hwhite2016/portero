@@ -1,5 +1,4 @@
 <div>
-    <br>
     <div class="card">
     	<div class="card-header">
     		<div class="row">
@@ -86,6 +85,20 @@
                                         <i class="fas fa-sort float-right mt-1"></i>
                                     @endif
                                 </th>
+                                <th scope="col" class="c-pointer" wire:click="order('anuncioestado')">
+                                    Estado
+                                    {{-- Sort --}}
+                                    @if ($sort == "anuncioestado")
+                                        @if ($direction == "ASC")
+                                            <i class="fas fa-sort-up float-right mt-1"></i>
+                                        @else
+                                            <i class="fas fa-sort-down float-right mt-1"></i>
+                                        @endif
+
+                                    @else
+                                        <i class="fas fa-sort float-right mt-1"></i>
+                                    @endif
+                                </th>
                                 <th scope="col">...</th>
                             </tr>
                         </thead>
@@ -113,7 +126,10 @@
                                         @endif
                                     </td>
                                     <td class="c-pointer text-center" wire:click="edit({{$anuncio->id}})">
-                                        {{ $anuncio->anunciofechaentrega }}
+                                        {{ Carbon\Carbon::parse($anuncio->anunciofechaentrega)->diffForHumans() }}
+                                    </td>
+                                    <td class="c-pointer text-center" wire:click="edit({{$anuncio->id}})">
+                                        <span class="badge badge-{{($anuncio->anuncioestado==1?'success':'danger')}}"> {{($anuncio->anuncioestado==1?'Activo':'Inactivo')}}</span>
                                     </td>
 
                                     <td class="text-center">
@@ -122,11 +138,11 @@
                                         @endcan
 
                                         @can('admin.anuncios.edit')
-                                            <a href="{{route('admin.anuncios.email', $anuncio->id)}}" id="enviar_{{$anuncio->id}}" class="enviar btn btn-sm btn-success">
+                                            <a href="{{route('admin.anuncios.email', $anuncio->id)}}" class="enviar btn btn-sm btn-default">
                                                 <i class="fas fa-envelope"></i> Email
                                             </a>
                                             @if(!$anuncio->bloqueid)
-                                            <a href="{{route('admin.anuncios.telegram', $anuncio->id)}}" id="enviar_{{$anuncio->id}}" class="enviar btn btn-sm btn-info">
+                                            <a href="{{route('admin.anuncios.telegram', $anuncio->id)}}" class="enviar btn btn-sm btn-default">
                                                 <i class="fas fa-paper-plane"></i> Telegram
                                             </a>
                                             @endif

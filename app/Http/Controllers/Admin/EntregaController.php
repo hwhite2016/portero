@@ -66,6 +66,7 @@ class EntregaController extends Controller
             ->select(
             Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
             ->whereIn('conjuntoid', session('dependencias'))
+            ->where('unidads.estado_id', 4)
             ->orderBy('unidad','ASC')
             ->pluck('unidad', 'unidads.id');
 
@@ -141,6 +142,7 @@ class EntregaController extends Controller
             ->select(
             Unidad::raw("CONCAT(bloquenombre,' - ',unidadnombre) AS unidad"),'unidads.id')
             ->whereIn('conjuntoid', session('dependencias'))
+            ->where('unidads.estado_id', 4)
             ->orderBy('unidad','ASC')
             ->pluck('unidad', 'unidads.id');
 

@@ -6,11 +6,14 @@
 {{-- @section('plugins.Inputmask', 'true') --}}
 
 @section('content_header')
-
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        Solo se podra hacer la recepción de correspondencia o paqueteria de aquellos residentes cuyas unidades hayan sido verificadas por la administración.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')
-<br>
 <div class="card">
     {!! Form::open(['route'=>'admin.entregas.store', 'method'=>'post']) !!}
     @csrf
@@ -36,7 +39,7 @@
 
             <div class="col-12 col-md-3">
                 <div class="form-group">
-                    {{ Form::label('unidadid', '* Unidad') }}
+                    {{ Form::label('unidadid', '* Unidad') }} <small class="font-italic ml-1">(Viviendas verificadas)</small>
                     {!! Form::select('unidadid', $unidads, null, ['class' => 'form-control select2','style'=>'width: 100%','data-placeholder'=>'Seleccione la vivienda']) !!}
                     @error('unidadid')
                         <small class="text-danger">

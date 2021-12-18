@@ -95,6 +95,9 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/anuncios/email/{id}', [AnuncioController::class, 'email'])->name('admin.anuncios.email');
     Route::get('/anuncios/telegram/{id}', [AnuncioController::class, 'telegram'])->name('admin.anuncios.telegram');
     Route::get('/anuncios/del/{id}', [AnuncioController::class, 'delFile'])->name('admin.anuncios.delFile');
+    Route::get('/anuncios/show/{id}', [AnuncioController::class, 'show'])->name('admin.anuncios.show');
+    Route::get('/anuncios/getBlock/{id}', [AnuncioController::class, 'getBlock'])->name('admin.anuncios.bloque');
+    Route::get('/anuncios/getHome/{id}', [AnuncioController::class, 'getHome'])->name('admin.anuncios.unidad');
 
     Route::resource('/organos', OrganoController::class)->names('admin.organos');
     Route::get('/estructura', [OrganoController::class, 'estructura'])->name('admin.organos.estructura');

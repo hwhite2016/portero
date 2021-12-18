@@ -6,11 +6,14 @@
 @section('plugins.Select2', 'true')
 
 @section('content_header')
-    {{-- <h1 class="ml-3">Crear Unidad</h1> --}}
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        Los comunicados que se envien a los residentes de las unidades de un bloque, o a los residentes de las unidades de todo un conjunto, solo seran recibidas por aquellos residentes cuyas unidades hayan sido verificadas por la administración.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')
-<br>
 <div class="card">
     {!! Form::open(['route'=>'admin.anuncios.store', 'method'=>'post', 'enctype'=>'multipart/form-data']) !!}
     @csrf
@@ -58,7 +61,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group"> <!-- Unidad -->
-                    {{ Form::label('unidadid', '* Unidad') }}
+                    {{ Form::label('unidadid', '* Unidad') }} <small class="font-italic ml-1">(Viviendas verificadas)</small>
                     {!! Form::select('unidadid[]', [], old('unidadid[]'), ['id'=>'unidadid','class' => 'form-control  select2','multiple'=>'multiple', 'style'=>'width: 100%','data-placeholder'=>'Seleccione la unidad']) !!}
                     @error('unidadid')
                         <small class="text-danger">
@@ -68,7 +71,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group"> <!-- Titulo anuncio -->
                     {{ Form::label('anuncionombre', '* Titulo del Comunicado') }}
                     {{ Form::text('anuncionombre', old('anuncionombre'), array('class' => 'form-control')) }}
@@ -80,7 +83,9 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+
+
+            <div class="col-md-5">
                 <div class="form-group"> <!-- Adjunto -->
                     {{ Form::label('anuncioadjunto', 'Adjuntar archivo') }}
                     <small class="font-italic"> (Opcional - Solo imagenes y archivos pdf)</small>
@@ -100,7 +105,7 @@
             <div class="col-12">
                 <div class="form-group"> <!-- Contenido -->
                     {{ Form::label('anunciodescripcion', 'Contenido del Comunicado') }} <small class="font-italic"> (Max. 1.500 caractéres)</small>
-                    {!! Form::textarea('anunciodescripcion', null, ['spellcheck' => true, 'class' => 'form-control' , 'rows' => 4, 'cols' => 20, 'style' => 'resize:none']) !!}
+                    {!! Form::textarea('anunciodescripcion', null, ['spellcheck' => true, 'class' => 'form-control' , 'rows' => 4, 'cols' => 20, 'style' => 'resize:vertical']) !!}
                     @error('anunciodescripcion')
                         <small class="text-danger">
                             {{$message}}
@@ -161,7 +166,7 @@
             });
 
             var id = $( "#conjuntoid" ).val();
-            var url = "{{ route('registros.bloque', ":id") }}";
+            var url = "{{ route('admin.anuncios.bloque', ":id") }}";
             url = url.replace(':id', id);
 
             $.ajax({
@@ -191,7 +196,7 @@
             });
 
             var id = $( "#bloqueid" ).val();
-            var url = "{{ route('registros.unidad', ":id") }}";
+            var url = "{{ route('admin.anuncios.unidad', ":id") }}";
             url = url.replace(':id', id);
 
             $.ajax({

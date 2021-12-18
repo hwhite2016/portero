@@ -7,11 +7,14 @@
 @section('plugins.Timepicker', 'true')
 
 @section('content_header')
-    {{-- <h1 class="ml-3">Crear Visitante</h1> --}}
+    <div class='alert alert-default-primary alert-dismissible fade show' role='alert'>
+        <i class="fas fa-info-circle"></i>&nbsp;
+        Solo se podra registrar en el sistema los visitantes de aquellos residentes cuyas unidades hayan sido verificadas por la administración.
+        <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+    </div>
 @stop
 
 @section('content')
-<br>
 <div class="card card-primary">
     {!! Form::open(['route'=>'admin.visitantes.store', 'method'=>'post']) !!}
     @csrf
