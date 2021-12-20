@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\InvitadoController;
 use App\Http\Controllers\Admin\NormaController;
 use App\Http\Controllers\Admin\NotificationsController;
 use App\Http\Controllers\Admin\OrganoController;
+use App\Http\Controllers\Admin\PerfilController;
 use App\Http\Controllers\Admin\PqrController;
 use App\Http\Controllers\Admin\ReservaController;
 use App\Http\Controllers\Admin\SeguimientoController;
@@ -98,6 +99,7 @@ Route::middleware(['auth:sanctum', 'verified', 'rol'])->group(function () {
     Route::get('/anuncios/show/{id}', [AnuncioController::class, 'show'])->name('admin.anuncios.show');
     Route::get('/anuncios/getBlock/{id}', [AnuncioController::class, 'getBlock'])->name('admin.anuncios.bloque');
     Route::get('/anuncios/getHome/{id}', [AnuncioController::class, 'getHome'])->name('admin.anuncios.unidad');
+    Route::resource('/perfil', PerfilController::class)->names('admin.perfil');
 
     Route::resource('/organos', OrganoController::class)->names('admin.organos');
     Route::get('/estructura', [OrganoController::class, 'estructura'])->name('admin.organos.estructura');

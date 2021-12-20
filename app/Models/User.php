@@ -64,7 +64,7 @@ class User extends Authenticatable
 
     public function adminlte_profile_url()
     {
-        return 'user/profile';
+        return 'admin/perfil/edit';
     }
 
     public function adminlte_rol_url()
