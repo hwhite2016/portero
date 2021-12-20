@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Conjunto;
 use App\Models\Persona;
+use App\Models\Residente;
 use App\Models\TipoDocumento;
 use App\Models\Unidad;
 use App\Models\User;
@@ -29,10 +30,19 @@ class PerfilController extends Controller
             ->where('personas.id', Auth::user()->personaid)
             ->first();
 
+        $unidad = Unidad::join('residentes','unidads.id','=','residentes.unidadid')
+            ->select('unidads.id')
+            ->where('residentes.personaid', Auth::user()->personaid)->first();
+
+        $residentes = Residente::join('personas','personas.id','residentes.personaid')
+            ->select('personanombre')
+            ->where('unidadid', $unidad->id)
+            ->get();
+
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $conjuntos = Conjunto::whereIn('id', session('dependencias'))->pluck('conjuntonombre', 'id');
         $unidads = Unidad::join('bloques','bloques.id','=','unidads.bloqueid')
-            ->join('residentes','residentes.unidadid','=','unidads.id')
+            ->join('residentes','unidads.id','=','residentes.unidadid')
             ->join('personas','personas.id','=','residentes.personaid')
             ->join('conjuntos','conjuntos.id','=','bloques.conjuntoid')
             ->join('barrios','barrios.id','=','conjuntos.barrioid')
@@ -40,12 +50,13 @@ class PerfilController extends Controller
             ->leftJoin('parqueaderos', 'parqueaderos.id', 'parqueadero_id')
             ->leftJoin('vehiculos','unidads.id','=','vehiculos.unidadid')
             ->leftJoin('tipo_vehiculos','tipo_vehiculos.id','=','vehiculos.tipovehiculoid')
-            ->select('barrionombre','bloquenombre','unidadnombre','unidads.id', DB::raw("JSON_OBJECTAGG(personanombre, tiporesidenteid) AS residentes"), DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
+            ->select('barrionombre','bloquenombre','unidadnombre','unidads.id', DB::raw("JSON_OBJECTAGG(coalesce(concat(tipovehiculonombre,' ',vehiculomarca),0), coalesce(vehiculoplaca,0) ) AS vehiculos"), DB::raw("JSON_OBJECTAGG(coalesce(parqueaderonumero,0), coalesce(parqueaderopiso,0) ) AS parqueaderos"))
             ->whereIn('bloques.conjuntoid', session('dependencias'))
             ->where('residentes.personaid', Auth::user()->personaid)
             ->GroupByRaw('barrionombre,bloquenombre,unidadnombre,unidads.id')
             ->first();
-        return view('admin.perfil.edit', compact('user','persona','tipo_documentos','conjuntos','unidads'));
+
+        return view('admin.perfil.edit', compact('user','persona','residentes','tipo_documentos','conjuntos','unidads'));
 
     }
 

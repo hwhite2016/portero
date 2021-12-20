@@ -46,12 +46,8 @@
                     <li class="list-group-item">
                     <b>Residentes</b>
                     <a class="float-right">
-                        @php
-                            $residentes = json_decode($unidads->residentes, true);
-                        @endphp
-
-                        @foreach($residentes as $residente => $valor)
-                            {{$residente}}<br>
+                        @foreach($residentes as $residente)
+                            <span class="float-right">{{$residente->personanombre}}</span><br>
                         @endforeach
                     </a>
                     </li>
