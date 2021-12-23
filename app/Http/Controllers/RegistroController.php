@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ValidarRegistroRequest;
+use App\Mail\PorrevisarMailable;
 use App\Mail\WelcomeMailable;
 use App\Models\Barrio;
 use App\Models\Bloque;
@@ -14,6 +15,7 @@ use App\Models\Unidad;
 use App\Models\TipoDocumento;
 use App\Models\Conjunto;
 use App\Models\Mascota;
+use App\Models\Organo;
 use App\Models\Pais;
 use App\Models\Parqueadero;
 use App\Models\Persona;
@@ -80,14 +82,31 @@ class RegistroController extends Controller
     }
 
     public function estado($id){
-        $registro = Registro::find($id);
-        $unidad = Unidad::find($registro->unidadid);
+         $registro = Registro::find($id);
+         $unidad = Unidad::find($registro->unidadid);
         $registro->update([
             'estado_id' => 3,
         ]);
         $unidad->update([
             'estado_id' => 3,
         ]);
+
+        $organo = Organo::join('bloques','bloques.conjuntoid','organos.conjuntoid')
+            ->join('unidads','unidads.bloqueid','bloques.id')
+            ->join('registros', 'registros.unidadid', 'unidads.id')
+            ->join('personas','personas.id','registros.personaid')
+            ->where('registros.id', $registro->id)
+            ->whereOrganonivel(2)
+            ->select('personanombre','organocorreo','unidadnombre','bloquenombre')->first();
+
+            $data = [
+            'name' => $organo->personanombre,
+            'email' => $organo->organocorreo,
+            'unidad' => $organo->unidadnombre,
+            'bloque' => $organo->bloquenombre,
+        ];
+        $correo = new PorrevisarMailable($data);
+        Mail::to('victorlopez23@hotmail.com')->queue($correo);
 
         return view('registro.verificacion')->with('info','El registro ha finalizado exitosamente y esta en proceso de validación.');
     }
@@ -332,9 +351,9 @@ class RegistroController extends Controller
         if (Persona::where('personadocumento', '=', $request->get('personadocumento'))->exists()) {
             $persona = Persona::where('personadocumento','=',$request->get('personadocumento'))->first();
         }else{
-            $request->validate([
-                'personacorreo'=>'unique:personas',
-            ]);
+            // $request->validate([
+            //     'personacorreo'=>'unique:personas',
+            // ]);
             $persona = Persona::create([
                 'tipodocumentoid'=>$request->get('tipodocumentoid'),
                 'personadocumento'=>$request->get('personadocumento'),
@@ -401,7 +420,7 @@ class RegistroController extends Controller
         $request->validate([
             'conjuntoid'=>'required',
             'unidadid'=>'required',
-            'vehiculoplaca' => 'unique:vehiculos'
+            //'vehiculoplaca' => 'unique:vehiculos'
         ]);
 
         Vehiculo::create([

@@ -41,9 +41,9 @@
                       <th>Nombre</th>
                       <th>Unidad</th>
                       <th>Tipo</th>
+                      <th>Relacion</th>
                       <th>Celular</th>
                       <th>Correo</th>
-                      <th>Relacion</th>
                       <th width="5%">...</th>
 
                     </tr>
@@ -51,15 +51,27 @@
                   <tbody>
                     @foreach ($residentes as $residente)
                       <tr>
-                        <td> {{ $residente->personanombre }} </td>
+                        <td>
+                             {{ $residente->personanombre }}
+                        </td>
                         <td>
                           <label class="text-uppercase fw-bold"> {{ $residente->unidadnombre }} </label>
                           <small> ({{ $residente->bloquenombre }}) </small>
                         </td>
                         <td> {{ $residente->tiporesidentenombre }} </td>
-                        <td> {{ $residente->personacelular }} </td>
-                        <td> {{ $residente->personacorreo }} </td>
                         <td> {{ $residente->relationname }} </td>
+                        <td> {{ $residente->personacelular }} </td>
+                        <td>
+                            @if($residente->personacorreo)
+                                @if($residente->email)
+                                    <span class="text-muted" data-toggle="tooltip" title="Usuario con acceso"><i class="fas fa-key mr-1"></i></span>
+                                @else
+                                    <span class="text-muted" data-toggle="tooltip" title="Usuario SIN de acceso"><i class="fas fa-ban mr-1"></i></span>
+                                @endif
+                            @endif
+                            {{ $residente->personacorreo }}
+                        </td>
+
 
                         <td>
                             @can('admin.residentes.destroy')

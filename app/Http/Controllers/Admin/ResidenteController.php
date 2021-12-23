@@ -36,7 +36,8 @@ class ResidenteController extends Controller
              ->join('personas','personas.id','=','residentes.personaid')
              ->join('tipo_residentes','tipo_residentes.id','=','residentes.tiporesidenteid')
              ->join('relations','relations.id','=','residentes.relationid')
-             ->select(Residente::raw('residentes.id, conjuntonombre, bloquenombre, unidadnombre, personanombre, personacorreo, personacelular, tiporesidenteid, tiporesidentenombre, relationname'))
+             ->leftJoin('users','users.personaid','residentes.personaid')
+             ->select(Residente::raw('residentes.id, conjuntonombre, bloquenombre, unidadnombre, personanombre, personacorreo, personacelular, tiporesidenteid, tiporesidentenombre, relationname, users.email'))
              ->whereIn('conjuntos.id', session('dependencias'))
              ->orderBy('personanombre', 'ASC')
              ->get();
@@ -134,20 +135,21 @@ class ResidenteController extends Controller
         }
 
         if($request->get('personacorreo')){
-            if (User::where('personaid', '=', $persona->id)->exists()) {
-                $user = User::where('personaid','=',$persona->id)->first();
-            }else{
+            if ($request->get('bienvenida') == 1){
+                if (User::where('personaid', '=', $persona->id)->exists()) {
+                    $user = User::where('personaid','=',$persona->id)->first();
+                }else{
 
-                if($request->get('personacorreo')){
-                    $psswd = substr( md5(microtime()), 1, 8);
-                    $user = User::create([
-                        'personaid' => $persona->id,
-                        'name' => $request->get('personanombre'),
-                        'email' => $request->get('personacorreo'),
-                        'password' => bcrypt($psswd)
-                    ]);
+                    if($request->get('personacorreo')){
+                        $psswd = substr( md5(microtime()), 1, 8);
+                        $user = User::create([
+                            'personaid' => $persona->id,
+                            'name' => $request->get('personanombre'),
+                            'email' => $request->get('personacorreo'),
+                            'password' => bcrypt($psswd)
+                        ]);
 
-                    if ($request->get('bienvenida') == 1){
+
                         $data = [
                             'role_id' => $request->get('role_id'),
                             'name' => $request->get('personanombre'),
@@ -156,10 +158,11 @@ class ResidenteController extends Controller
                         ];
                         $correo = new WelcomeMailable($data);
                         Mail::to($request->get('personacorreo'))->queue($correo);
+
                     }
                 }
+                $user->assignRole($request->rol);
             }
-            $user->assignRole($request->rol);
         }
 
         if (Unidad::where('id', '=', $request->get('unidadid'))->exists()) {

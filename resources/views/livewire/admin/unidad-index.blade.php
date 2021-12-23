@@ -4,7 +4,7 @@
         @foreach ($totales as $total)
             @php
                $color = 'light';
-               $porcentaje = floor(($total->cont/$unidades)*100);
+               $porcentaje = round(($total->cont/$unidades)*100);
                if($porcentaje >= 80){
                     $color = 'success';
                }elseif($porcentaje < 80 && $porcentaje >= 60 ){

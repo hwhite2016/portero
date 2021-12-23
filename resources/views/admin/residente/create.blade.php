@@ -173,7 +173,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label>
-                        {!! Form::checkbox('bienvenida', 1, true, ['class'=>'mr-1']) !!}
+                        {!! Form::checkbox('bienvenida', 1, false, ['class'=>'mr-1']) !!}
                         {{ config('adminlte.enviar_credenciales')}}
                     </label>
                 </div>
