@@ -4,7 +4,8 @@
         @foreach ($totales as $total)
             @php
                $color = 'light';
-               $porcentaje = round(($total->cont/$unidades)*100);
+               $porcentaje2 = round(($total->cont/$unidades)*100);
+               $porcentaje = round(($total->cont/$unidades)*100, 2);
                if($porcentaje >= 80){
                     $color = 'success';
                }elseif($porcentaje < 80 && $porcentaje >= 60 ){
@@ -22,7 +23,7 @@
                         <span>{{$porcentaje}}%</span>
                         <span class="float-right"><b>{{$total->cont}}</b>/{{$unidades}} <small>Unds.</small></span>
                         <div class="progress progress-sm">
-                            <div class="progress-bar bg-{{$color}}" style="width: {{$porcentaje}}%"></div>
+                            <div class="progress-bar bg-{{$color}}" style="width: {{$porcentaje2}}%"></div>
                         </div>
 
                             <label class="c-pointer text-muted">{{strtoupper($total->estadonombre)}}
