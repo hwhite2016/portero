@@ -6,11 +6,11 @@
                $color = 'light';
                $porcentaje2 = round(($total->cont/$unidades)*100);
                $porcentaje = round(($total->cont/$unidades)*100, 2);
-               if($porcentaje >= 80){
+               if($porcentaje >= 95){
                     $color = 'success';
-               }elseif($porcentaje < 80 && $porcentaje >= 60 ){
+               }elseif($porcentaje < 95 && $porcentaje >= 70 ){
                    $color = 'info';
-               }elseif($porcentaje < 60 && $porcentaje >= 20 ){
+               }elseif($porcentaje < 70 && $porcentaje >= 20 ){
                    $color = 'warning';
                }else{
                    $color = 'danger';
