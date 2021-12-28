@@ -89,14 +89,14 @@
                                 @if($total_unidades->numunidades >= $total_unidades->maxunidades)
                                     <i class="fas fa-check text-success" data-toggle="tooltip" title="Llegó al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
                                     [ <u class="text-success">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                                    <span class="text-success">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                    <span class="text-success">{{ round(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
                                 @elseif($total_unidades->numunidades >= ($total_unidades->maxunidades -5))
                                     <i class="fas fa-exclamation-triangle text-warning" data-toggle="tooltip" title="Esta a punto de llegar al número máximo de unidades permitidas. Contacte al área de soporte para adicionar mas unidades."></i>
                                     [ <u class="text-warning">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                                    <span class="text-warning">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                    <span class="text-warning">{{ round(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
                                 @else
                                     [ <u class="text-danger">{{$total_unidades->numunidades}}</u> de <u class="text-secondary">{{$total_unidades->maxunidades}}</u> Unidades ]
-                                    <span class="text-danger">{{ floor(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
+                                    <span class="text-danger">{{ round(($total_unidades->numunidades / $total_unidades->maxunidades) * 100) }}%</span>
                                 @endif
                             </small>
                         </div>
@@ -164,7 +164,7 @@
                                     </td>
                                     <td class="c-pointer text-center" wire:click="edit({{$unidad->id}})">
                                         @if($unidad->estado_id == 1)
-                                            <span class="badge bg-light">Sin Registro</span>
+                                            <span class="badge bg-light border">Sin Registro</span>
                                         @elseif($unidad->estado_id == 2)
                                             <span class="badge bg-secondary"><i class="fas fa-cog"></i> En Proceso</span>
                                         @elseif($unidad->estado_id == 3)

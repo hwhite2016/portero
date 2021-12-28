@@ -77,7 +77,7 @@
                         </small>
                     @enderror
                         <label>
-                        {!! Form::checkbox('bienvenida', 1, false, ['class'=>'mr-1','id'=>'bienvenida']) !!}
+                        {!! Form::checkbox('bienvenida', 1, false, ['class'=>'mr-1','disabled','id'=>'bienvenida']) !!}
                         <small class="text-muted">Enviar correo de bienvenida</small>
                         </label>
                 </div>
@@ -277,8 +277,10 @@
 
             if($("#estado_id").val() == 4){
                 $('#bienvenida').prop('checked', true);
+                $('#bienvenida').prop('disabled', false);
             }else{
                 $('#bienvenida').prop('checked', false);
+                $('#bienvenida').prop('disabled', true);
             }
 
         })

@@ -106,7 +106,7 @@ class RegistroController extends Controller
             'bloque' => $organo->bloquenombre,
         ];
         $correo = new PorrevisarMailable($data);
-        Mail::to('victorlopez23@hotmail.com')->queue($correo);
+        Mail::to($organo->organocorreo)->queue($correo);
 
         return view('registro.verificacion')->with('info','El registro ha finalizado exitosamente y esta en proceso de validación.');
     }

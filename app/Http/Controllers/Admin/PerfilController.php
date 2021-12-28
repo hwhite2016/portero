@@ -34,10 +34,14 @@ class PerfilController extends Controller
             ->select('unidads.id')
             ->where('residentes.personaid', Auth::user()->personaid)->first();
 
-        $residentes = Residente::join('personas','personas.id','residentes.personaid')
+        if($unidad){
+            $residentes = Residente::join('personas','personas.id','residentes.personaid')
             ->select('personanombre')
             ->where('unidadid', $unidad->id)
             ->get();
+        }else{
+            $residentes = null;
+        }
 
         $tipo_documentos = TipoDocumento::all()->pluck('tipodocumentonombre', 'id');
         $conjuntos = Conjunto::whereIn('id', session('dependencias'))->pluck('conjuntonombre', 'id');

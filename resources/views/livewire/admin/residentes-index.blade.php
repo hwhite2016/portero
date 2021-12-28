@@ -45,7 +45,8 @@
                                         @endphp
 
                                         @foreach($residentes as $residente => $valor)
-                                            <span><i class="fas fa-caret-right"></i> . . . {{substr($residente, strpos($residente, '|') - 3, 50)}}</span><span class="badge badge-{{($valor=='Propietario'?'primary':'secondary')}} float-right">{{$valor}}</span><br>
+                                            <span><i class="fas fa-caret-right"></i> . . {{substr($residente, strpos($residente, '|') - 3, 50)}}</span>
+                                            <span class="badge badge-{{($valor=='Propietario'?'primary':'light border')}} float-right">{{$valor}}</span><br>
                                         @endforeach
                                     </p>
 
